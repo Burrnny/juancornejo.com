@@ -1,0 +1,6 @@
+Fuentes (licencia SIL OFL 1.1):
+- Bevan-Regular.ttf — copia byte-idéntica de github.com/google/fonts ofl/bevan (verificado en revisión T3).
+- Archivo-{Regular,Medium,SemiBold,Bold}.ttf — instancias estáticas generadas localmente con
+  fontTools 4.60.2 (varLib.instancer) desde ofl/archivo/Archivo[wdth,wght].ttf (wdth=100,
+  wght=400/500/600/700), porque la variable expone mal sus instancias en iOS (fvar default=600)
+  y upstream ya no publica estáticos. Uso: empaquetadas en la app, sin redistribución standalone.

@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Propuesta privada: accesible con el enlace, fuera de buscadores. -->
+<meta name="robots" content="noindex, nofollow">
+<!-- CSP propia de esta ruta: el prototipo compila JSX en el navegador con
+     Babel, de ahi 'unsafe-eval'. El resto del sitio sigue con default-src 'none'. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.qrserver.com; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Hibachi Truck &middot; Prototipo de app</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="vendor/bungee.css" rel="stylesheet"></link>
+<style>
+body{margin:0;background:#08080a}
+a{color:#ff5a5f;text-decoration:none}a:hover{color:#ff8285}
+*::-webkit-scrollbar{display:none}
+@keyframes rise{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes drop{from{transform:translateY(-90px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes scanline{0%{top:8%}100%{top:88%}}
+@keyframes tabin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes ticket{from{opacity:0;transform:translateY(30px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#08080a;display:flex;flex-direction:column;align-items:center;padding:44px 24px 64px;gap:26px;font-family:-apple-system, system-ui, sans-serif;box-sizing:border-box">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0"><img src="assets/hibachi-logo.png" style="width:36px;height:auto;display:block" alt="Hibachi Truck"></img></div>
+      <div style="color:#fff;font-size:21px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:1.5px">HIBACHI TRUCK</div>
+    </div>
+    <div style="color:rgba(255,255,255,0.45);font-size:13px">iOS 26 · Liquid Glass · Halal Hibachi Truck — EST 2019 · Daly City, CA</div>
+  </div>
+  <div style="display:flex;gap:44px;flex-wrap:wrap;justify-content:center;align-items:flex-start">
+
+    <!-- ══════════ APP CLIENTE ══════════ -->
+    <div data-screen-label="App Cliente" style="display:flex;flex-direction:column;align-items:center;gap:14px">
+      <div style="padding:6px 16px;border-radius:999px;background:rgba(120,120,128,0.16);border:0.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:1.5px">CUSTOMER APP</div>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+        <div style="position:relative;height:100%;overflow:hidden;background:#0A0A0C">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:64px 0 140px;box-sizing:border-box">
+
+            <!-- ─── TAB MENÚ ─── -->
+            <sc-if value="{{ isMenu }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:10px 20px 0;display:flex;flex-direction:column;gap:16px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:54px;height:54px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,0.4)"><img src="assets/hibachi-logo.png" style="width:48px;height:auto;display:block" alt="Hibachi Truck"></img></div>
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:1px">HIBACHI TRUCK</div>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <div style="width:7px;height:7px;border-radius:50%;background:{{ statusDot }}"></div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:13px">{{ statusTxt }}</div>
+                    </div>
+                  </div>
+                </div>
+                <sc-if value="{{ hasDayNote }}" hint-placeholder-val="{{ false }}">
+                  <div style="border-radius:18px;background:rgba(232,184,75,0.12);padding:12px 14px;display:flex;align-items:flex-start;gap:10px;animation:fadein 0.3s ease">
+                    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="10" cy="10" r="8.2" stroke="#E8B84B" stroke-width="1.8"></circle><path d="M10 6v5" stroke="#E8B84B" stroke-width="2" stroke-linecap="round"></path><circle cx="10" cy="14" r="1.1" fill="#E8B84B"></circle></svg>
+                    <div style="color:#E8B84B;font-size:13px;line-height:1.45;text-wrap:pretty">{{ dayNote }}</div>
+                  </div>
+                </sc-if>
+                <div style="display:flex;align-items:center;gap:9px;padding:11px 15px;border-radius:999px;background:#1C1C1E">
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none" style="flex-shrink:0"><circle cx="7.8" cy="7.8" r="5.3" stroke="rgba(235,235,245,0.5)" stroke-width="1.9"></circle><path d="M11.8 11.8L16 16" stroke="rgba(235,235,245,0.5)" stroke-width="1.9" stroke-linecap="round"></path></svg>
+                  <input value="{{ q }}" onChange="{{ qType }}" placeholder="{{ t.searchMenu }}" style="flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-size:15px;font-family:-apple-system,system-ui"></input>
+                  <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ qClear }}" style="width:22px;height:22px;border-radius:999px;background:rgba(120,120,128,0.35);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">×</div>
+                  </sc-if>
+                </div>
+                <sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:9px;animation:fadein 0.25s ease">
+                    <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ resultsTxt }}</div>
+                    <div style="border-radius:24px;background:#1C1C1E;overflow:hidden;display:flex;flex-direction:column">
+                      <sc-for list="{{ results }}" as="rs" hint-placeholder-count="4">
+                        <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;opacity:{{ rs.op }};border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                          <div onClick="{{ rs.open }}" style="width:52px;height:52px;border-radius:13px;overflow:hidden;flex-shrink:0;background:#2C2C2E;cursor:pointer"><img src="{{ rs.img }}" style="width:100%;height:100%;object-fit:cover" alt=""></img></div>
+                          <div onClick="{{ rs.open }}" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;cursor:pointer">
+                            <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px;line-height:1.3">{{ rs.n }}</div>
+                            <div style="color:rgba(235,235,245,0.6);font-size:12px">{{ rs.catName }}</div>
+                          </div>
+                          <div style="color:#fff;font-size:12px;font-family:'Bungee',-apple-system,system-ui;">{{ rs.priceTxt }}</div>
+                          <div onClick="{{ rs.add }}" style="width:36px;height:36px;border-radius:999px;background:{{ rs.btnBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;font-weight:600;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.22);transition:transform 0.15s ease" style-active="transform:scale(0.88)">{{ rs.btnTxt }}</div>
+                        </div>
+                      </sc-for>
+                      <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+                        <div style="padding:28px 0;text-align:center;color:rgba(235,235,245,0.5);font-size:14px">{{ t.noResults }}</div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-for list="{{ activeOrders }}" as="ao" hint-placeholder-count="1">
+                  <div style="border-radius:22px;background:#1C1C1E;padding:14px 16px;display:flex;flex-direction:column;gap:8px;animation:rise 0.4s ease">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                      <div style="color:rgba(235,235,245,0.72);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.myOrder }} {{ ao.id }}</div>
+                      <div style="padding:4px 10px;border-radius:999px;background:{{ ao.chipBg }};color:{{ ao.chipColor }};font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;white-space:nowrap">{{ ao.statusTxt }}</div>
+                    </div>
+                    <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px;line-height:1.35">{{ ao.lineTxt }}</div>
+                    <div style="color:rgba(235,235,245,0.72);font-size:13px">{{ ao.statusLine }}</div>
+                    <sc-if value="{{ ao.inQueue }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:16px;background:#0A0A0C">
+                        <div style="display:flex;gap:4px">
+                          <sc-for list="{{ ao.queueDots }}" as="qd" hint-placeholder-count="4">
+                            <div style="width:8px;height:8px;border-radius:50%;background:{{ qd.c }}"></div>
+                          </sc-for>
+                        </div>
+                        <div style="color:rgba(235,235,245,0.8);font-size:12.5px">{{ ao.queueTxt }}</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ ao.canReview }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:8px;padding-top:2px">
+                        <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ t.rateQ }}</div>
+                        <div style="display:flex;gap:7px">
+                          <sc-for list="{{ ao.stars }}" as="st" hint-placeholder-count="5">
+                            <div onClick="{{ st.set }}" style="width:40px;height:40px;border-radius:999px;background:rgba(120,120,128,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.88)"><svg width="19" height="19" viewBox="0 0 22 22"><path d="M11 2l2.7 5.7 6.1.7-4.6 4.2 1.3 6L11 15.5 5.5 18.6l1.3-6L2.2 8.4l6.1-.7z" fill="{{ st.color }}"></path></svg></div>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ ao.reviewed }}" hint-placeholder-val="{{ false }}">
+                      <div style="color:#E8B84B;font-size:12.5px">{{ ao.reviewTxt }}</div>
+                    </sc-if>
+                    <sc-if value="{{ ao.isContra }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;gap:8px;margin-top:2px">
+                        <div onClick="{{ ao.accept }}" style="flex:1;padding:10px 0;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;transition:transform 0.15s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,0.25)" style-active="transform:scale(0.96)">{{ t.accept }}</div>
+                        <div onClick="{{ ao.reject }}" style="flex:1;padding:10px 0;border-radius:999px;background:rgba(120,120,128,0.24);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.96)">{{ t.reject }}</div>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ noCat }}" hint-placeholder-val="{{ true }}">
+                  <div style="color:#fff;font-size:23px;font-family:'Bungee',-apple-system,system-ui;line-height:1.3;letter-spacing:0.2px;margin-top:2px;text-wrap:pretty">{{ t.hello }}</div>
+                  <div onClick="{{ catFirst.open }}" style="position:relative;border-radius:26px;overflow:hidden;height:200px;cursor:pointer;background:#1C1C1E;transition:transform 0.2s ease" style-active="transform:scale(0.98)">
+                    <img src="{{ catFirst.img }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" alt=""></img>
+                    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,12,0) 30%,rgba(10,10,12,0.9) 100%)"></div>
+                    <div style="position:absolute;top:14px;left:14px;padding:5px 11px;border-radius:999px;background:rgba(120,120,128,0.3);backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);border:0.5px solid rgba(255,255,255,0.16);box-shadow:inset 1px 1px 1px rgba(255,255,255,0.14);color:#fff;font-size:10px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase;white-space:nowrap">{{ t.popular }}</div>
+                    <div style="position:absolute;left:16px;right:16px;bottom:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+                      <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                        <div style="color:#fff;font-size:22px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:-0.3px">{{ catFirst.name }}</div>
+                        <div style="color:rgba(235,235,245,0.7);font-size:12.5px">{{ catFirst.count }}</div>
+                      </div>
+                      <div style="width:38px;height:38px;flex-shrink:0;border-radius:999px;background:rgba(120,120,128,0.3);backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);border:0.5px solid rgba(255,255,255,0.18);box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center">
+                        <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M2 2l6 6.5L2 15" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <sc-if value="{{ hasLast }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ repeatLast }}" style="border-radius:22px;background:#1C1C1E;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.98)">
+                      <div style="width:40px;height:40px;border-radius:13px;background:rgba(52,199,89,0.14);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                        <svg width="19" height="19" viewBox="0 0 20 20" fill="none"><path d="M3 10a7 7 0 1 1 2.3 5.2" stroke="#34C759" stroke-width="2" stroke-linecap="round"></path><path d="M3 5.5V10h4.5" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      </div>
+                      <div style="flex:1;min-width:0">
+                        <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.repeatT }}</div>
+                        <div style="color:rgba(235,235,245,0.72);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ lastOrderTxt }}</div>
+                      </div>
+                      <svg width="8" height="14" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" stroke="rgba(235,235,245,0.45)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ hasFavs }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                      <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.favs }}</div>
+                      <div style="display:flex;gap:9px;overflow-x:auto;margin:0 -20px;padding:2px 20px">
+                        <sc-for list="{{ favItems }}" as="fv" hint-placeholder-count="2">
+                          <div onClick="{{ fv.add }}" style="flex-shrink:0;width:134px;border-radius:20px;background:#1C1C1E;overflow:hidden;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.96)">
+                            <div style="height:78px;background:#2C2C2E"><img src="{{ fv.img }}" style="width:100%;height:100%;object-fit:cover" alt=""></img></div>
+                            <div style="padding:9px 10px;display:flex;flex-direction:column;gap:1px">
+                              <div style="color:#fff;font-size:11px;font-family:'Bungee',-apple-system,system-ui;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ fv.n }}</div>
+                              <div style="color:#E8B84B;font-size:11px;font-family:'Bungee',-apple-system,system-ui;">{{ fv.priceTxt }}</div>
+                            </div>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-if>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                    <sc-for list="{{ catsRest }}" as="c" hint-placeholder-count="3">
+                      <div onClick="{{ c.open }}" style="position:relative;border-radius:22px;overflow:hidden;height:142px;cursor:pointer;background:#1C1C1E;transition:transform 0.2s ease" style-active="transform:scale(0.97)">
+                        <img src="{{ c.img }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" alt=""></img>
+                        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,12,0) 35%,rgba(10,10,12,0.9) 100%)"></div>
+                        <div style="position:absolute;left:13px;right:13px;bottom:11px;display:flex;flex-direction:column;gap:1px">
+                          <div style="color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ c.name }}</div>
+                          <div style="color:rgba(235,235,245,0.72);font-size:11.5px">{{ c.count }}</div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div onClick="{{ openBuilderCombo }}" style="border-radius:22px;background:#1C1C1E;padding:15px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.98)">
+                    <div style="width:40px;height:40px;border-radius:13px;background:rgba(232,184,75,0.14);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3.5v13M3.5 10h13" stroke="#E8B84B" stroke-width="2.4" stroke-linecap="round"></path></svg>
+                    </div>
+                    <div style="flex:1;min-width:0">
+                      <div style="color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.buildTitle }}</div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ t.buildSub }}</div>
+                    </div>
+                    <svg width="8" height="14" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" stroke="rgba(235,235,245,0.3)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ inCat }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div onClick="{{ closeCat }}" style="width:40px;height:40px;border-radius:999px;background:rgba(120,120,128,0.24);backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.15), inset -1px -1px 1px rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.92)">
+                      <svg width="11" height="18" viewBox="0 0 11 18" fill="none"><path d="M9 2L2.5 9L9 16" stroke="rgba(255,255,255,0.85)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </div>
+                    <div style="color:#fff;font-size:22px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ catName }}</div>
+                  </div>
+                  <div style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:2px 20px">
+                    <sc-for list="{{ subs }}" as="s" hint-placeholder-count="3">
+                      <div onClick="{{ s.sel }}" style="flex-shrink:0;padding:9px 16px;border-radius:999px;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ s.bg }};color:{{ s.color }};backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 1px 1px 1px rgba(255,255,255,0.12);border:0.5px solid rgba(255,255,255,0.10);transition:transform 0.15s ease" style-active="transform:scale(0.95)">{{ s.name }}</div>
+                    </sc-for>
+                  </div>
+                  <div style="border-radius:24px;background:#1C1C1E;overflow:hidden;display:flex;flex-direction:column">
+                    <sc-for list="{{ items }}" as="it" hint-placeholder-count="5">
+                      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;opacity:{{ it.op }};border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                        <div onClick="{{ it.open }}" style="width:58px;height:58px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#2C2C2E;cursor:pointer">
+                          <img src="{{ it.img }}" style="width:100%;height:100%;object-fit:cover" alt=""></img>
+                        </div>
+                        <div onClick="{{ it.open }}" style="flex:1;display:flex;flex-direction:column;gap:2px;cursor:pointer;min-width:0">
+                          <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px;line-height:1.3">{{ it.n }}</div>
+                          <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ it.sub }}</div>
+                          <div style="color:rgba(235,235,245,0.8);font-size:12px;font-family:'Bungee',-apple-system,system-ui;margin-top:2px">{{ it.priceTxt }}</div>
+                        </div>
+                        <div onClick="{{ it.fav }}" style="width:36px;height:36px;border-radius:999px;background:rgba(120,120,128,0.18);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:transform 0.15s ease" style-active="transform:scale(0.86)"><svg width="14" height="14" viewBox="0 0 22 22"><path d="M11 2l2.7 5.7 6.1.7-4.6 4.2 1.3 6L11 15.5 5.5 18.6l1.3-6L2.2 8.4l6.1-.7z" fill="{{ it.favColor }}"></path></svg></div>
+                        <div onClick="{{ it.add }}" style="width:36px;height:36px;border-radius:999px;background:{{ it.btnBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;font-weight:600;cursor:pointer;transition:transform 0.15s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,0.22)" style-active="transform:scale(0.88)">{{ it.btnTxt }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ catBuildable }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ openBuilderHere }}" style="border-radius:20px;background:rgba(232,184,75,0.10);padding:13px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.98)">
+                      <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 3.5v13M3.5 10h13" stroke="#E8B84B" stroke-width="2.4" stroke-linecap="round"></path></svg>
+                      <div style="color:#E8B84B;font-size:12px;font-family:'Bungee',-apple-system,system-ui;">{{ buildHereTxt }}</div>
+                    </div>
+                  </sc-if>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <!-- ─── TAB VISITA ─── -->
+            <sc-if value="{{ isVisit }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:10px 20px 0;display:flex;flex-direction:column;gap:14px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="color:#fff;font-size:25px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px">{{ t.visitTitle }}</div>
+                <div style="position:relative;border-radius:26px;overflow:hidden;background:#1C1C1E">
+                  <div style="position:relative;height:186px;background-image:linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(105deg, transparent 46%, rgba(255,255,255,0.06) 46%, rgba(255,255,255,0.06) 54%, transparent 54%);background-size:26px 26px, 26px 26px, 100% 100%;background-color:#131315;display:flex;align-items:center;justify-content:center">
+                    <div style="width:15px;height:15px;border-radius:50%;background:#E8383C;box-shadow:0 0 0 5px rgba(232,56,60,0.2), 0 0 0 12px rgba(232,56,60,0.08)"></div>
+                    <div style="position:absolute;bottom:10px;left:12px;font-family:ui-monospace,monospace;color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:0.8px">{{ mapLabel }}</div>
+                  </div>
+                  <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+                    <div style="color:#fff;font-size:13.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px">{{ address }}</div>
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <div style="color:rgba(235,235,245,0.72);font-size:13.5px">{{ t.hoursL }}</div>
+                        <div style="color:#fff;font-size:13.5px;font-weight:600">{{ hours }}</div>
+                      </div>
+                      <div style="height:0.5px;background:rgba(84,84,88,0.4)"></div>
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                        <div style="color:rgba(235,235,245,0.72);font-size:13.5px">{{ t.daysL }}</div>
+                        <div style="color:#fff;font-size:13.5px;font-weight:600;text-align:right">{{ days }}</div>
+                      </div>
+                      <div style="height:0.5px;background:rgba(84,84,88,0.4)"></div>
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <div style="color:rgba(235,235,245,0.72);font-size:13.5px">{{ t.waitL }}</div>
+                        <div style="color:#fff;font-size:13.5px;font-weight:600">{{ waitTxt }}</div>
+                      </div>
+                      <div style="height:0.5px;background:rgba(84,84,88,0.4)"></div>
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <div style="color:rgba(235,235,245,0.72);font-size:13.5px">{{ t.phoneL }}</div>
+                        <a href="tel:6503023849" style="color:#ff8285;font-size:13.5px;font-weight:600">650-302-3849</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:9px">
+                  <a href="{{ wazeUrl }}" target="_blank" style="flex:1;padding:13px 0;border-radius:999px;background:rgba(120,120,128,0.24);backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.14), inset -1px -1px 1px rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.13);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;transition:transform 0.15s ease" style-active="transform:scale(0.96)">Waze</a>
+                  <a href="{{ gmapsUrl }}" target="_blank" style="flex:1;padding:13px 0;border-radius:999px;background:rgba(120,120,128,0.24);backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.14), inset -1px -1px 1px rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.13);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;transition:transform 0.15s ease" style-active="transform:scale(0.96)">Google Maps</a>
+                  <a href="{{ amapsUrl }}" target="_blank" style="flex:1;padding:13px 0;border-radius:999px;background:rgba(120,120,128,0.24);backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.14), inset -1px -1px 1px rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.13);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;transition:transform 0.15s ease" style-active="transform:scale(0.96)">Apple Maps</a>
+                </div>
+                <div onClick="{{ goTakeout }}" style="border-radius:24px;padding:18px;cursor:pointer;background:linear-gradient(180deg,#E8383C,#B8181D);box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);display:flex;align-items:center;justify-content:space-between;transition:transform 0.2s ease" style-active="transform:scale(0.97)">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <div style="color:#fff;font-size:15px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.takeout }}</div>
+                    <div style="color:rgba(255,255,255,0.75);font-size:12.5px">{{ t.takeoutSub }}</div>
+                  </div>
+                  <svg width="10" height="17" viewBox="0 0 10 17" fill="none"><path d="M2 2l6 6.5L2 15" stroke="rgba(255,255,255,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+                <a href="https://www.doordash.com/store/1304288" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 0;border-radius:999px;background:#EB1700;box-shadow:inset 0 1px 0 rgba(255,255,255,0.22);transition:transform 0.15s ease" style-active="transform:scale(0.97)">
+                  <span style="color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px">{{ t.ddBtn }}</span>
+                </a>
+                <a href="https://www.instagram.com/hibachi_truck" target="_blank" style="text-align:center;color:rgba(235,235,245,0.45);font-size:13px;padding:4px 0">@hibachi_truck</a>
+              </div>
+            </sc-if>
+
+            <!-- ─── TAB PREMIOS ─── -->
+            <sc-if value="{{ isRew }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:10px 20px 0;display:flex;flex-direction:column;gap:14px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="color:#fff;font-size:25px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px">{{ t.rewTitle }}</div>
+                <div style="border-radius:26px;background:#1C1C1E;padding:18px;display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between">
+                    <div style="display:flex;align-items:baseline;gap:8px">
+                      <div style="color:#E8B84B;font-size:30px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ points }}</div>
+                      <div style="color:rgba(235,235,245,0.6);font-size:14px">{{ t.pts }}</div>
+                    </div>
+                    <div style="padding:5px 12px;border-radius:999px;background:rgba(232,184,75,0.16);color:#E8B84B;font-size:11px;font-family:'Bungee',-apple-system,system-ui;white-space:nowrap">{{ t.lvl }} {{ level }}</div>
+                  </div>
+                  <div style="height:6px;border-radius:999px;background:rgba(120,120,128,0.28);overflow:hidden">
+                    <div style="height:100%;border-radius:999px;background:#E8B84B;width:{{ progressPct }};transition:width 0.4s ease"></div>
+                  </div>
+                  <div style="color:rgba(235,235,245,0.72);font-size:13px">{{ nextTxt }}</div>
+                </div>
+                <sc-if value="{{ hasExpiring }}" hint-placeholder-val="{{ false }}">
+                  <div style="border-radius:18px;background:rgba(232,184,75,0.12);padding:12px 14px;display:flex;align-items:flex-start;gap:10px">
+                    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="10" cy="10" r="8.2" stroke="#E8B84B" stroke-width="1.8"></circle><path d="M10 5.5V10l3 1.8" stroke="#E8B84B" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    <div style="color:#E8B84B;font-size:13px;line-height:1.45;text-wrap:pretty">{{ expiringTxt }}</div>
+                  </div>
+                </sc-if>
+                <div style="border-radius:26px;background:#1C1C1E;padding:16px;display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between">
+                    <div style="color:#fff;font-size:15px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.puzzle }}</div>
+                    <div style="color:rgba(235,235,245,0.72);font-size:12px">{{ t.puzzleSub }}</div>
+                  </div>
+                  <div style="border-radius:16px;overflow:hidden;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:#0A0A0C">
+                    <sc-for list="{{ pieces }}" as="pc" hint-placeholder-count="15">
+                      <div style="height:62px;position:relative;background-image:{{ pc.bgi }};background-size:500% 300%;background-position:{{ pc.pos }};background-color:#111113;display:flex;align-items:center;justify-content:center">
+                        <sc-if value="{{ pc.lock }}" hint-placeholder-val="{{ false }}">
+                          <div style="color:rgba(235,235,245,0.3);font-size:11px;font-weight:700">{{ pc.lv }}</div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:11px;font-family:'Bungee',-apple-system,system-ui;text-transform:uppercase;letter-spacing:0.3px;padding:0 4px">{{ t.coupons }}</div>
+                  <div style="border-radius:26px;background:#1C1C1E;overflow:hidden">
+                    <sc-for list="{{ coupons }}" as="cp" hint-placeholder-count="6">
+                      <div style="display:flex;align-items:center;gap:12px;padding:11px 14px;opacity:{{ cp.op }};border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                        <div style="width:38px;height:38px;border-radius:12px;background:{{ cp.badgeBg }};display:flex;align-items:center;justify-content:center;color:{{ cp.badgeColor }};font-size:13px;font-weight:800;flex-shrink:0">{{ cp.lv }}</div>
+                        <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
+                          <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px">{{ cp.name }}</div>
+                          <div style="color:rgba(235,235,245,0.72);font-size:12px">{{ cp.subTxt }}</div>
+                        </div>
+                        <sc-if value="{{ cp.canOpen }}" hint-placeholder-val="{{ false }}">
+                          <div onClick="{{ cp.open }}" style="padding:8px 14px;border-radius:999px;background:rgba(120,120,128,0.28);color:#fff;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;transition:transform 0.15s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,0.12)" style-active="transform:scale(0.94)">{{ t.see }}</div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- ─── TAB AJUSTES ─── -->
+            <sc-if value="{{ isSet }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:10px 20px 0;display:flex;flex-direction:column;gap:14px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="color:#fff;font-size:25px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px">{{ t.setTitle }}</div>
+                <div style="border-radius:24px;background:#1C1C1E;padding:16px;display:flex;flex-direction:column;gap:10px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.phoneL }}</div>
+                  <sc-if value="{{ phoneEditing }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:8px">
+                      <input value="{{ phoneDraft }}" onChange="{{ phoneType }}" style="flex:1;padding:10px 14px;border-radius:14px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.16);color:#fff;font-size:15px;outline:none;min-width:0;font-family:-apple-system,system-ui"></input>
+                      <div onClick="{{ phoneSave }}" style="padding:10px 16px;border-radius:14px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;display:flex;align-items:center;transition:transform 0.15s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,0.25)" style-active="transform:scale(0.95)">{{ t.save }}</div>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ phoneNotEditing }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <div style="color:#fff;font-size:17px;font-weight:600">{{ phone }}</div>
+                      <div onClick="{{ phoneEditStart }}" style="padding:7px 14px;border-radius:999px;background:rgba(120,120,128,0.28);color:#fff;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.94)">{{ t.edit }}</div>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="border-radius:24px;background:#1C1C1E;padding:16px;display:flex;flex-direction:column;gap:10px;align-items:center">
+                  <div style="align-self:flex-start;color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.myQr }}</div>
+                  <div style="background:#fff;border-radius:18px;padding:10px">
+                    <img src="{{ clientQrUrl }}" style="width:150px;height:150px;display:block" alt="QR"></img>
+                  </div>
+                  <div style="color:rgba(235,235,245,0.72);font-size:12.5px;text-align:center">{{ t.qrSub }}</div>
+                </div>
+                <div style="border-radius:24px;background:#1C1C1E;overflow:hidden">
+                  <div onClick="{{ goRewards }}" style="padding:15px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                    <div style="display:flex;flex-direction:column;gap:2px">
+                      <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ t.myCoupons }}</div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ couponsCountTxt }}</div>
+                    </div>
+                    <svg width="8" height="14" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" stroke="rgba(235,235,245,0.3)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                  <div onClick="{{ openHistory }}" style="padding:15px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                    <div style="display:flex;flex-direction:column;gap:2px">
+                      <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ t.history }}</div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ historyCountTxt }}</div>
+                    </div>
+                    <svg width="8" height="14" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" stroke="rgba(235,235,245,0.45)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                  <div onClick="{{ openRef }}" style="padding:15px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer">
+                    <div style="display:flex;flex-direction:column;gap:2px">
+                      <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ t.referTitle }}</div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ t.referSub }}</div>
+                    </div>
+                    <svg width="8" height="14" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6" stroke="rgba(235,235,245,0.45)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </div>
+                <div style="border-radius:24px;background:#1C1C1E;padding:16px;display:flex;align-items:center;justify-content:space-between">
+                  <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ t.langL }}</div>
+                  <div style="display:flex;gap:4px;padding:3px;border-radius:999px;background:rgba(120,120,128,0.2)">
+                    <div onClick="{{ langEs }}" style="padding:6px 14px;border-radius:999px;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;background:{{ esBg }};color:{{ esColor }};transition:background 0.2s ease">ES</div>
+                    <div onClick="{{ langEn }}" style="padding:6px 14px;border-radius:999px;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;background:{{ enBg }};color:{{ enColor }};transition:background 0.2s ease">EN</div>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- referidos -->
+          <sc-if value="{{ refOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:52;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closeRef }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:14px;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.referTitle }}</div>
+                <div style="color:rgba(235,235,245,0.72);font-size:13.5px;line-height:1.5;text-wrap:pretty">{{ t.referBody }}</div>
+                <div style="border-radius:22px;background:#0A0A0C;padding:18px;display:flex;flex-direction:column;align-items:center;gap:10px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.yourCode }}</div>
+                  <div style="color:#E8B84B;font-size:26px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:2px">{{ refCode }}</div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px">
+                  <div style="color:rgba(235,235,245,0.72);font-size:13.5px">{{ t.invited }}</div>
+                  <div style="color:#fff;font-size:15px;font-family:'Bungee',-apple-system,system-ui;">{{ refCountTxt }}</div>
+                </div>
+                <div onClick="{{ shareRef }}" style="padding:15px 0;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ t.shareCode }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- botón carrito flotante -->
+          <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ openCart }}" style="position:absolute;right:16px;bottom:112px;z-index:30;padding:12px 18px;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);box-shadow:0 8px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.28);display:flex;align-items:center;gap:8px;cursor:pointer;animation:rise 0.3s ease;transition:transform 0.15s ease" style-active="transform:scale(0.94)">
+              <div style="color:#fff;font-size:14px;font-weight:700">{{ t.cart }}</div>
+              <div style="min-width:22px;height:22px;border-radius:999px;background:#fff;color:#C81E23;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px">{{ cartCount }}</div>
+            </div>
+          </sc-if>
+
+          <!-- tab bar liquid glass -->
+          <div style="position:absolute;left:24px;right:24px;bottom:22px;z-index:25;border-radius:999px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.35), 0 10px 30px rgba(0,0,0,0.4)">
+            <div style="position:absolute;inset:0;backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);background:rgba(120,120,128,0.22)"></div>
+            <div style="position:absolute;inset:0;border-radius:999px;box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.15), inset -1px -1px 1px rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);pointer-events:none"></div>
+            <div style="position:relative;display:flex;padding:7px">
+              <div onClick="{{ cTabs.0.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ cTabs.0.bg }};transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22"><rect x="3" y="3" width="7" height="7" rx="2" fill="{{ cTabs.0.color }}"></rect><rect x="12" y="3" width="7" height="7" rx="2" fill="{{ cTabs.0.color }}"></rect><rect x="3" y="12" width="7" height="7" rx="2" fill="{{ cTabs.0.color }}"></rect><rect x="12" y="12" width="7" height="7" rx="2" fill="{{ cTabs.0.color }}"></rect></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ cTabs.0.color }}">{{ cTabs.0.label }}</div>
+              </div>
+              <div onClick="{{ cTabs.1.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ cTabs.1.bg }};transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22"><path d="M20 3L3 10l7.4 2.4L12.8 20z" fill="{{ cTabs.1.color }}"></path></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ cTabs.1.color }}">{{ cTabs.1.label }}</div>
+              </div>
+              <div onClick="{{ cTabs.2.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ cTabs.2.bg }};transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22"><path d="M11 2l2.7 5.7 6.1.7-4.6 4.2 1.3 6L11 15.5 5.5 18.6l1.3-6L2.2 8.4l6.1-.7z" fill="{{ cTabs.2.color }}"></path></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ cTabs.2.color }}">{{ cTabs.2.label }}</div>
+              </div>
+              <div onClick="{{ cTabs.3.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ cTabs.3.bg }};transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22" fill="none"><path d="M3 7h16" stroke="{{ cTabs.3.color }}" stroke-width="2" stroke-linecap="round"></path><circle cx="8" cy="7" r="2.6" fill="#0A0A0C" stroke="{{ cTabs.3.color }}" stroke-width="2"></circle><path d="M3 15h16" stroke="{{ cTabs.3.color }}" stroke-width="2" stroke-linecap="round"></path><circle cx="14.5" cy="15" r="2.6" fill="#0A0A0C" stroke="{{ cTabs.3.color }}" stroke-width="2"></circle></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ cTabs.3.color }}">{{ cTabs.3.label }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- toast cliente -->
+          <sc-if value="{{ toastC }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:100px;z-index:40;padding:10px 18px;border-radius:999px;background:rgba(44,44,46,0.75);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);box-shadow:inset 1px 1px 1px rgba(255,255,255,0.14), 0 4px 16px rgba(0,0,0,0.4);color:#fff;font-size:13px;font-weight:600;white-space:nowrap;animation:rise 0.3s ease">{{ toastC }}</div>
+          </sc-if>
+
+          <!-- notificación push -->
+          <sc-if value="{{ notifOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ dismissNotif }}" style="position:absolute;top:58px;left:12px;right:12px;z-index:62;border-radius:24px;overflow:hidden;cursor:pointer;animation:drop 0.4s cubic-bezier(0.2,0.9,0.3,1);box-shadow:0 10px 30px rgba(0,0,0,0.55)">
+              <div style="position:absolute;inset:0;backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);background:rgba(60,60,64,0.62)"></div>
+              <div style="position:absolute;inset:0;border-radius:24px;box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.18), inset -1px -1px 1px rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.16);pointer-events:none"></div>
+              <div style="position:relative;padding:12px 14px;display:flex;align-items:flex-start;gap:11px">
+                <div style="width:38px;height:38px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0"><img src="assets/hibachi-logo.png" style="width:34px;height:auto;display:block" alt=""></img></div>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+                    <div style="color:#fff;font-size:13.5px;font-weight:700;letter-spacing:-0.1px">{{ notifTitle }}</div>
+                    <div style="color:rgba(235,235,245,0.55);font-size:11.5px;flex-shrink:0">{{ t.now }}</div>
+                  </div>
+                  <div style="color:rgba(255,255,255,0.85);font-size:13px;line-height:1.35;text-wrap:pretty">{{ notifBody }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ficha de producto con extras -->
+          <sc-if value="{{ prodOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closeProd }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:13px;max-height:88%;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="overflow-y:auto;display:flex;flex-direction:column;gap:13px">
+                  <div style="border-radius:24px;overflow:hidden;height:160px;background:#2C2C2E;flex-shrink:0">
+                    <img src="{{ prodImg }}" style="width:100%;height:100%;object-fit:cover" alt=""></img>
+                  </div>
+                  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+                    <div style="display:flex;flex-direction:column;gap:4px">
+                      <div style="color:#fff;font-size:17px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;line-height:1.25">{{ prodName }}</div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:13.5px;line-height:1.45">{{ prodDesc }}</div>
+                    </div>
+                    <div style="color:#fff;font-size:17px;font-family:'Bungee',-apple-system,system-ui;flex-shrink:0">{{ prodPrice }}</div>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px">
+                    <sc-for list="{{ prodTags }}" as="tg" hint-placeholder-count="2">
+                      <div style="padding:6px 11px;border-radius:999px;background:{{ tg.bg }};color:{{ tg.color }};font-size:10px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ tg.label }}</div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.extras }}</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px">
+                      <sc-for list="{{ extras }}" as="ex" hint-placeholder-count="7">
+                        <div onClick="{{ ex.toggle }}" style="padding:9px 14px;border-radius:999px;font-size:11px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ ex.bg }};color:{{ ex.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ ex.label }}</div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.notes }}</div>
+                    <input value="{{ prodNotes }}" onChange="{{ notesType }}" placeholder="{{ t.notesPh }}" style="padding:12px 14px;border-radius:16px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:14px;outline:none;font-family:-apple-system,system-ui"></input>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+                  <div style="display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(120,120,128,0.22)">
+                    <div onClick="{{ qtyDec }}" style="width:34px;height:34px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer" style-active="transform:scale(0.88)">−</div>
+                    <div style="color:#fff;font-size:16px;font-weight:700;min-width:22px;text-align:center">{{ prodQty }}</div>
+                    <div onClick="{{ qtyInc }}" style="width:34px;height:34px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer" style-active="transform:scale(0.88)">+</div>
+                  </div>
+                  <div onClick="{{ prodAdd }}" style="flex:1;padding:15px 0;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ t.add }} · {{ prodTotal }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- create your own -->
+          <sc-if value="{{ builderOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closeBuilder }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:13px;max-height:86%;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="display:flex;flex-direction:column;gap:3px">
+                  <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.buildTitle }}</div>
+                  <div style="color:rgba(235,235,245,0.72);font-size:13px">{{ builderHint }}</div>
+                </div>
+                <div style="display:flex;gap:4px;padding:3px;border-radius:999px;background:rgba(120,120,128,0.2)">
+                  <div onClick="{{ setComboMode }}" style="flex:1;padding:9px 0;border-radius:999px;text-align:center;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;background:{{ comboModeBg }};color:{{ comboModeColor }};transition:background 0.2s ease">{{ t.comboMode }}</div>
+                  <div onClick="{{ setBurritoMode }}" style="flex:1;padding:9px 0;border-radius:999px;text-align:center;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;background:{{ burritoModeBg }};color:{{ burritoModeColor }};transition:background 0.2s ease">{{ t.burritoMode }}</div>
+                </div>
+                <div style="overflow-y:auto;border-radius:22px;background:#0A0A0C">
+                  <sc-for list="{{ proteins }}" as="pr" hint-placeholder-count="7">
+                    <div onClick="{{ pr.toggle }}" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;border-bottom:0.5px solid rgba(84,84,88,0.35);background:{{ pr.rowBg }};transition:background 0.2s ease">
+                      <div style="width:22px;height:22px;border-radius:7px;border:2px solid {{ pr.border }};background:{{ pr.boxBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1.5 5l3 3L10.5 1.5" stroke="{{ pr.mark }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                      </div>
+                      <div style="flex:1;color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ pr.n }}</div>
+                      <div style="color:rgba(235,235,245,0.65);font-size:12.5px">{{ pr.hint }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div style="display:flex;flex-direction:column;gap:1px">
+                    <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ builderPickTxt }}</div>
+                    <div style="color:rgba(235,235,245,0.6);font-size:11.5px">{{ builderNote }}</div>
+                  </div>
+                  <div style="color:#fff;font-size:19px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ builderPrice }}</div>
+                </div>
+                <div onClick="{{ builderAdd }}" style="padding:15px 0;border-radius:999px;background:{{ builderBtnBg }};color:{{ builderBtnColor }};font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ builderBtnTxt }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- carrito / checkout -->
+          <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closeCart }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:12px;max-height:84%;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.cartTitle }}</div>
+                <div style="overflow-y:auto;display:flex;flex-direction:column">
+                  <sc-for list="{{ cartItems }}" as="ci" hint-placeholder-count="2">
+                    <div style="display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                      <div style="flex:1;min-width:0">
+                        <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ ci.n }}</div>
+                        <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ ci.detail }}</div>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:rgba(120,120,128,0.2)">
+                        <div onClick="{{ ci.dec }}" style="width:34px;height:34px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer" style-active="transform:scale(0.88)">−</div>
+                        <div style="color:#fff;font-size:14px;font-weight:700;min-width:18px;text-align:center">{{ ci.q }}</div>
+                        <div onClick="{{ ci.inc }}" style="width:34px;height:34px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer" style-active="transform:scale(0.88)">+</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:26px 0;text-align:center;color:rgba(235,235,245,0.5);font-size:14px">{{ t.cartEmpty }}</div>
+                  </sc-if>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.pickupQ }}</div>
+                  <div style="display:flex;gap:8px">
+                    <sc-for list="{{ pickups }}" as="pk" hint-placeholder-count="4">
+                      <div onClick="{{ pk.sel }}" style="flex:1;padding:11px 0;border-radius:999px;text-align:center;font-size:11px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ pk.bg }};color:{{ pk.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ pk.label }}</div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ showSlots }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:7px;overflow-x:auto;margin:0 -20px;padding:2px 20px;animation:fadein 0.25s ease">
+                      <sc-for list="{{ slots }}" as="sl" hint-placeholder-count="5">
+                        <div onClick="{{ sl.sel }}" style="flex-shrink:0;padding:11px 15px;border-radius:999px;font-size:11px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ sl.bg }};color:{{ sl.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ sl.label }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.payQ }}</div>
+                  <div style="display:flex;gap:8px">
+                    <sc-for list="{{ pays }}" as="py" hint-placeholder-count="2">
+                      <div onClick="{{ py.sel }}" style="flex:1;padding:10px 0;border-radius:999px;text-align:center;font-size:11px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ py.bg }};color:{{ py.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ py.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between">
+                    <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.tipQ }}</div>
+                    <div style="color:rgba(235,235,245,0.65);font-size:12px">{{ tipAmountTxt }}</div>
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <sc-for list="{{ tips }}" as="tp" hint-placeholder-count="4">
+                      <div onClick="{{ tp.sel }}" style="flex:1;padding:9px 0;border-radius:999px;text-align:center;font-size:11px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ tp.bg }};color:{{ tp.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ tp.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+                <sc-if value="{{ canApplyCoupon }}" hint-placeholder-val="{{ false }}">
+                  <div onClick="{{ toggleCoupon }}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;background:{{ couponRowBg }};cursor:pointer;transition:background 0.2s ease">
+                    <div style="width:22px;height:22px;border-radius:7px;border:2px solid {{ couponCheckBorder }};background:{{ couponCheckBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                      <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1.5 5l3 3L10.5 1.5" stroke="{{ couponCheckMark }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </div>
+                    <div style="flex:1;min-width:0">
+                      <div style="color:#fff;font-size:13.5px;font-weight:600">{{ bestCouponName }}</div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:12px">{{ t.applyCoupon }}</div>
+                    </div>
+                    <div style="color:#E8B84B;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ couponSaveTxt }}</div>
+                  </div>
+                </sc-if>
+                <div style="display:flex;flex-direction:column;gap:4px;padding-top:2px">
+                  <sc-if value="{{ couponApplied }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <div style="color:rgba(235,235,245,0.72);font-size:13px">{{ t.discount }}</div>
+                      <div style="color:#E8B84B;font-size:13px;font-weight:700">−{{ discountTxt }}</div>
+                    </div>
+                  </sc-if>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between">
+                    <div style="color:rgba(235,235,245,0.6);font-size:14px">{{ t.total }}</div>
+                    <div style="display:flex;align-items:baseline;gap:8px">
+                      <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ cartTotal }}</div>
+                      <div style="color:rgba(235,235,245,0.65);font-size:12.5px">{{ earnTxt }}</div>
+                    </div>
+                  </div>
+                </div>
+                <sc-if value="{{ sendError }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;align-items:flex-start;gap:9px;padding:12px 14px;border-radius:18px;background:rgba(232,56,60,0.12);animation:fadein 0.25s ease">
+                    <svg width="17" height="17" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="10" cy="10" r="8.2" stroke="#ff8285" stroke-width="1.8"></circle><path d="M10 5.5v5" stroke="#ff8285" stroke-width="2" stroke-linecap="round"></path><circle cx="10" cy="14" r="1.1" fill="#ff8285"></circle></svg>
+                    <div style="color:#ff8285;font-size:12.5px;line-height:1.45">{{ t.sendErr }}</div>
+                  </div>
+                </sc-if>
+                <div onClick="{{ sendOrder }}" style="padding:15px 0;border-radius:999px;background:{{ sendBtnBg }};color:{{ sendBtnColor }};font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);transition:transform 0.15s ease;display:flex;align-items:center;justify-content:center;gap:9px" style-active="transform:scale(0.97)">
+                  <sc-if value="{{ sending }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;animation:spin 0.7s linear infinite"></div>
+                  </sc-if>{{ sendBtnTxt }}
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- historial -->
+          <sc-if value="{{ historyOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closeHistory }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:12px;max-height:80%;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.history }}</div>
+                <div style="overflow-y:auto;display:flex;flex-direction:column;gap:10px">
+                  <sc-for list="{{ history }}" as="h" hint-placeholder-count="2">
+                    <div style="border-radius:20px;background:#0A0A0C;padding:13px 14px;display:flex;flex-direction:column;gap:8px">
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <div style="color:#fff;font-size:12px;font-family:'Bungee',-apple-system,system-ui;">{{ h.id }}</div>
+                        <div style="color:#E8B84B;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ h.totalTxt }}</div>
+                      </div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:12.5px;line-height:1.45">{{ h.linesTxt }}</div>
+                      <div onClick="{{ h.reorder }}" style="align-self:flex-start;padding:8px 16px;border-radius:999px;background:rgba(120,120,128,0.26);color:#fff;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.94)">{{ t.reorder }}</div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ noHistory }}" hint-placeholder-val="{{ true }}">
+                    <div style="padding:30px 0;text-align:center;color:rgba(235,235,245,0.5);font-size:14px">{{ t.noHistory }}</div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- modal cupón -->
+          <sc-if value="{{ couponOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:52;display:flex;align-items:center;justify-content:center;padding:24px">
+              <div onClick="{{ closeCoupon }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.55);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;width:100%;display:flex;flex-direction:column;align-items:center;gap:18px;animation:rise 0.3s ease">
+                <div style="position:relative;width:100%;border-radius:28px;background:#1C1C1E;overflow:hidden">
+                  <div style="padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px;align-items:center">
+                    <div style="display:flex;align-items:center;gap:8px;align-self:stretch">
+                      <div style="width:30px;height:30px;border-radius:9px;background:rgba(232,184,75,0.16);color:#E8B84B;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ couponLv }}</div>
+                      <div style="flex:1;color:rgba(235,235,245,0.6);font-size:10px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.lvl }} {{ couponLv }} · {{ t.couponQr }}</div>
+                    </div>
+                    <div style="color:#fff;font-size:20px;font-family:'Bungee',-apple-system,system-ui;text-align:center;letter-spacing:0.2px;line-height:1.25;text-wrap:pretty">{{ couponName }}</div>
+                    <div style="background:#fff;border-radius:20px;padding:14px"><img src="{{ couponQrUrl }}" style="width:176px;height:176px;display:block" alt="QR"></img></div>
+                  </div>
+                  <div style="position:relative;height:22px;display:flex;align-items:center">
+                    <div style="position:absolute;left:-11px;width:22px;height:22px;border-radius:50%;background:#0A0A0C"></div>
+                    <div style="position:absolute;right:-11px;width:22px;height:22px;border-radius:50%;background:#0A0A0C"></div>
+                    <div style="flex:1;margin:0 18px;border-top:1.5px dashed rgba(235,235,245,0.18)"></div>
+                  </div>
+                  <div style="padding:14px 22px 20px;display:flex;flex-direction:column;gap:4px;align-items:center">
+                    <div style="color:rgba(235,235,245,0.4);font-size:10px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.showAtTruck }}</div>
+                    <div style="color:rgba(235,235,245,0.75);font-size:12.5px;text-align:center;font-family:ui-monospace,monospace;letter-spacing:0.3px">{{ couponCode }}</div>
+                  </div>
+                </div>
+                <div onClick="{{ closeCoupon }}" style="padding:13px 38px;border-radius:999px;background:rgba(120,120,128,0.26);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:12px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.15), inset -1px -1px 1px rgba(255,255,255,0.08);transition:transform 0.15s ease" style-active="transform:scale(0.95)">{{ t.close }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- onboarding -->
+          <sc-if value="{{ obOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:70;background:#0A0A0C;display:flex;flex-direction:column;padding:76px 26px 34px;box-sizing:border-box;animation:fadein 0.3s ease">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+                <div style="width:104px;height:104px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 10px 40px rgba(232,56,60,0.25)"><img src="assets/hibachi-logo.png" style="width:92px;height:auto;display:block" alt="Hibachi Truck"></img></div>
+                <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+                  <div style="color:#fff;font-size:26px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.5px;text-align:center">{{ obTitle }}</div>
+                  <div style="color:rgba(235,235,245,0.6);font-size:14.5px;text-align:center;line-height:1.45;max-width:280px;text-wrap:pretty">{{ obSub }}</div>
+                </div>
+                <sc-if value="{{ obIsPhone }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:100%;display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:20px;background:#1C1C1E;box-sizing:border-box">
+                    <div style="color:rgba(235,235,245,0.5);font-size:17px;font-weight:600">+1</div>
+                    <input value="{{ obPhone }}" onChange="{{ obPhoneType }}" placeholder="650 555 0123" style="flex:1;background:transparent;border:none;color:#fff;font-size:17px;outline:none;min-width:0;font-family:-apple-system,system-ui"></input>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ obIsCode }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:10px">
+                    <sc-for list="{{ obBoxes }}" as="bx" hint-placeholder-count="4">
+                      <div style="width:54px;height:64px;border-radius:18px;background:#1C1C1E;border:1.5px solid {{ bx.border }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:700;transition:border-color 0.2s ease">{{ bx.ch }}</div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+              <sc-if value="{{ obIsCode }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+                  <sc-for list="{{ obKeys }}" as="k" hint-placeholder-count="12">
+                    <div onClick="{{ k.press }}" style="height:52px;border-radius:18px;background:{{ k.bg }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:21px;font-weight:600;cursor:pointer;transition:transform 0.12s ease" style-active="transform:scale(0.93)">{{ k.label }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="display:flex;flex-direction:column;gap:12px;align-items:center">
+                <div onClick="{{ obNext }}" style="width:100%;padding:16px 0;border-radius:999px;background:{{ obBtnBg }};color:{{ obBtnColor }};font-size:13.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-sizing:border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,0.25);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ obBtnTxt }}</div>
+                <div onClick="{{ obSkip }}" style="color:rgba(235,235,245,0.6);font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;padding:4px 10px">{{ t.skip }}</div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- ══════════ APP ADMIN ══════════ -->
+    <div data-screen-label="App Admin" style="display:flex;flex-direction:column;align-items:center;gap:14px">
+      <div style="padding:6px 16px;border-radius:999px;background:rgba(232,56,60,0.14);border:0.5px solid rgba(232,56,60,0.35);color:#ff8285;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:1.5px">ADMIN APP</div>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+        <div style="position:relative;height:100%;overflow:hidden;background:#0A0A0C">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:64px 0 130px;box-sizing:border-box">
+            <div style="padding:10px 20px 14px;display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:42px;height:42px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0"><img src="assets/hibachi-logo.png" style="width:38px;height:auto;display:block" alt="Hibachi Truck"></img></div>
+                <div style="display:flex;flex-direction:column">
+                  <div style="color:#fff;font-size:15px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.8px">HIBACHI ADMIN</div>
+                  <div style="display:flex;align-items:center;gap:5px">
+                    <div style="width:7px;height:7px;border-radius:50%;background:{{ statusDot }};animation:pulse 2s infinite"></div>
+                    <div style="color:rgba(235,235,245,0.72);font-size:11.5px">{{ t.live }}</div>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:6px 12px;border-radius:999px;background:rgba(120,120,128,0.2);color:rgba(235,235,245,0.7);font-size:12px;font-weight:600">{{ todayTxt }}</div>
+            </div>
+
+            <!-- ─── ADMIN PEDIDOS ─── -->
+            <sc-if value="{{ aIsOrders }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:12px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="border-radius:24px;background:#1C1C1E;padding:15px 16px;display:flex;flex-direction:column;gap:12px">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="display:flex;flex-direction:column;gap:2px">
+                      <div style="color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;">{{ t.truckStatus }}</div>
+                      <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ truckStateTxt }}</div>
+                    </div>
+                    <div style="width:11px;height:11px;border-radius:50%;background:{{ truckDot }};flex-shrink:0"></div>
+                  </div>
+                  <div style="display:flex;gap:6px">
+                    <sc-for list="{{ truckStates }}" as="ts" hint-placeholder-count="3">
+                      <div onClick="{{ ts.sel }}" style="flex:1;padding:11px 0;border-radius:999px;text-align:center;font-size:10px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;background:{{ ts.bg }};color:{{ ts.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ ts.label }}</div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:7px">
+                    <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.waitL }}</div>
+                    <div style="display:flex;gap:7px">
+                      <sc-for list="{{ waitOpts }}" as="w" hint-placeholder-count="4">
+                        <div onClick="{{ w.sel }}" style="flex:1;padding:11px 0;border-radius:999px;text-align:center;font-size:11px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ w.bg }};color:{{ w.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ w.label }}</div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:7px">
+                    <div style="color:rgba(235,235,245,0.72);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.dayNoteL }}</div>
+                    <input value="{{ dayNoteDraft }}" onChange="{{ dayNoteType }}" placeholder="{{ t.dayNotePh }}" style="padding:12px 14px;border-radius:16px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.12);color:#fff;font-size:14px;outline:none;font-family:-apple-system,system-ui"></input>
+                  </div>
+                  <div onClick="{{ openPlace }}" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:16px;background:#0A0A0C;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.98)">
+                    <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                      <div style="color:rgba(235,235,245,0.72);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.placeL }}</div>
+                      <div style="color:#fff;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ address }}</div>
+                    </div>
+                    <svg width="8" height="14" viewBox="0 0 8 14" style="flex-shrink:0"><path d="M1 1l6 6-6 6" stroke="rgba(235,235,245,0.45)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </div>
+                <div style="color:#fff;font-size:22px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;padding-top:2px">{{ t.aOrders }}</div>
+                <div style="display:flex;gap:6px">
+                  <sc-for list="{{ kanban }}" as="kb" hint-placeholder-count="4">
+                    <div onClick="{{ kb.sel }}" style="flex:1;padding:10px 0;border-radius:999px;text-align:center;font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;background:{{ kb.bg }};color:{{ kb.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ kb.label }}</div>
+                  </sc-for>
+                </div>
+                <sc-for list="{{ orders }}" as="o" hint-placeholder-count="2">
+                  <div style="border-radius:24px;background:#1C1C1E;padding:14px 16px;display:flex;flex-direction:column;gap:9px">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <div style="color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px">{{ o.id }} · {{ o.phone }}</div>
+                      <div style="padding:4px 11px;border-radius:999px;background:{{ o.chipBg }};color:{{ o.chipColor }};font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;white-space:nowrap">{{ o.statusTxt }}</div>
+                    </div>
+                    <div style="color:rgba(235,235,245,0.72);font-size:13.5px;line-height:1.5">{{ o.linesTxt }}</div>
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div style="padding:6px 12px;border-radius:999px;background:{{ o.ageBg }};color:{{ o.ageColor }};font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;white-space:nowrap">{{ o.ageTxt }}</div>
+                      <div onClick="{{ o.comanda }}" style="padding:8px 14px;border-radius:999px;background:rgba(120,120,128,0.24);color:#fff;font-size:10px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.94)">{{ t.ticketB }}</div>
+                      <sc-if value="{{ o.hasReview }}" hint-placeholder-val="{{ false }}">
+                        <div style="padding:6px 12px;border-radius:999px;background:rgba(232,184,75,0.16);color:#E8B84B;font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;white-space:nowrap">{{ o.reviewTxt }}</div>
+                      </sc-if>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ t.pickupL }}: {{ o.wants }}</div>
+                      <div style="color:#fff;font-size:15px;font-family:'Bungee',-apple-system,system-ui;">{{ o.totalTxt }}</div>
+                    </div>
+                    <sc-if value="{{ o.isNew }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;gap:8px">
+                        <div onClick="{{ o.confirm }}" style="flex:1;padding:10px 0;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.25);transition:transform 0.15s ease" style-active="transform:scale(0.96)">{{ t.confirmB }}</div>
+                        <div onClick="{{ o.counter }}" style="flex:1;padding:10px 0;border-radius:999px;background:rgba(120,120,128,0.24);color:#fff;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);transition:transform 0.15s ease" style-active="transform:scale(0.96)">{{ t.counterB }}</div>
+                        <div onClick="{{ o.rejectOpen }}" style="width:46px;padding:10px 0;border-radius:999px;background:rgba(232,56,60,0.14);color:#ff8285;font-size:17px;font-weight:700;text-align:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.92)">×</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ o.counterOpen }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:16px;background:#0A0A0C">
+                        <div style="display:flex;flex-direction:column;gap:7px">
+                          <div style="color:rgba(235,235,245,0.72);font-size:12px;font-weight:600">{{ t.counterQ }}</div>
+                          <div style="display:flex;gap:6px">
+                            <sc-for list="{{ o.counterOpts }}" as="ct" hint-placeholder-count="3">
+                              <div onClick="{{ ct.sel }}" style="flex:1;padding:8px 0;border-radius:999px;text-align:center;font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ ct.bg }};color:{{ ct.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ ct.label }}</div>
+                            </sc-for>
+                          </div>
+                        </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between">
+                          <div style="color:rgba(235,235,245,0.72);font-size:12px;font-weight:600">{{ t.counterPrice }}</div>
+                          <div style="display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:rgba(120,120,128,0.22)">
+                            <div onClick="{{ o.priceDown }}" style="width:34px;height:34px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer" style-active="transform:scale(0.88)">−</div>
+                            <div style="color:#fff;font-size:14px;font-weight:800;min-width:52px;text-align:center">{{ counterPriceTxt }}</div>
+                            <div onClick="{{ o.priceUp }}" style="width:34px;height:34px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer" style-active="transform:scale(0.88)">+</div>
+                          </div>
+                        </div>
+                        <div onClick="{{ o.sendCounter }}" style="padding:10px 0;border-radius:999px;background:#E8B84B;color:#1a1206;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.96)">{{ t.sendCounter }}</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ o.rejectOpenNow }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:9px;padding:12px;border-radius:16px;background:#0A0A0C">
+                        <div style="color:rgba(235,235,245,0.72);font-size:12px;font-weight:600">{{ t.rejectQ }}</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:6px">
+                          <sc-for list="{{ o.rejectOpts }}" as="rj" hint-placeholder-count="3">
+                            <div onClick="{{ rj.sel }}" style="padding:8px 13px;border-radius:999px;font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ rj.bg }};color:{{ rj.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ rj.label }}</div>
+                          </sc-for>
+                        </div>
+                        <div onClick="{{ o.sendReject }}" style="padding:10px 0;border-radius:999px;background:rgba(232,56,60,0.9);color:#fff;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.96)">{{ t.sendReject }}</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ o.isConfirmed }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ o.ready }}" style="padding:10px 0;border-radius:999px;background:rgba(74,222,128,0.14);color:#4ade80;font-size:11.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.96)">{{ t.readyB }}</div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ noOrders }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:40px 0;text-align:center;color:rgba(235,235,245,0.5);font-size:14px">{{ t.noOrders }}</div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <!-- ─── ADMIN MENÚ ─── -->
+            <sc-if value="{{ aIsMenu }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <div style="color:#fff;font-size:22px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.aMenu }}</div>
+                  <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ t.aMenuSub }}</div>
+                </div>
+                <div onClick="{{ openAddItem }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 0;border-radius:999px;background:rgba(120,120,128,0.24);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);transition:transform 0.15s ease" style-active="transform:scale(0.97)">
+                  <svg width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M10 3.5v13M3.5 10h13" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>{{ t.addItem }}
+                </div>
+                <sc-for list="{{ adminMenu }}" as="g" hint-placeholder-count="2">
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase;padding:0 4px">{{ g.name }}</div>
+                    <div style="border-radius:24px;background:#1C1C1E;overflow:hidden">
+                      <sc-for list="{{ g.items }}" as="mi" hint-placeholder-count="4">
+                        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;opacity:{{ mi.op }};border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                          <div style="flex:1;min-width:0;color:#fff;font-size:14px;font-weight:500">{{ mi.n }}</div>
+                          <div style="display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:rgba(120,120,128,0.2)">
+                            <div onClick="{{ mi.down }}" style="width:32px;height:32px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer" style-active="transform:scale(0.88)">−</div>
+                            <div style="color:#fff;font-size:13px;font-weight:700;min-width:48px;text-align:center">{{ mi.priceTxt }}</div>
+                            <div onClick="{{ mi.up }}" style="width:32px;height:32px;border-radius:999px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer" style-active="transform:scale(0.88)">+</div>
+                          </div>
+                          <div onClick="{{ mi.toggle }}" style="min-width:74px;padding:7px 10px;border-radius:999px;background:{{ mi.stateBg }};color:{{ mi.stateColor }};font-size:10px;font-family:'Bungee',-apple-system,system-ui;text-align:center;cursor:pointer;flex-shrink:0;transition:background 0.2s ease" style-active="transform:scale(0.94)">{{ mi.stateLabel }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <!-- ─── ADMIN ESCÁNER ─── -->
+            <sc-if value="{{ aIsScan }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <div style="color:#fff;font-size:22px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.aScan }}</div>
+                  <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ t.aScanSub }}</div>
+                </div>
+                <div style="position:relative;border-radius:26px;overflow:hidden;height:250px;background:#111113;display:flex;align-items:center;justify-content:center">
+                  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);background-size:22px 22px"></div>
+                  <div style="position:relative;width:150px;height:150px;border-radius:22px;border:2.5px solid rgba(232,56,60,0.75);box-shadow:0 0 0 9999px rgba(0,0,0,0.35)"></div>
+                  <sc-if value="{{ scanning }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;left:50%;transform:translateX(-50%);width:150px;height:2px;background:#E8383C;box-shadow:0 0 12px rgba(232,56,60,0.9);animation:scanline 1.1s ease-in-out infinite alternate"></div>
+                  </sc-if>
+                  <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;font-family:ui-monospace,monospace;color:rgba(255,255,255,0.4);font-size:10.5px;letter-spacing:1px">{{ scanHint }}</div>
+                </div>
+                <div onClick="{{ doScan }}" style="padding:15px 0;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ scanBtnTxt }}</div>
+                <sc-if value="{{ scanned }}" hint-placeholder-val="{{ false }}">
+                  <div style="border-radius:24px;background:#1C1C1E;padding:16px;display:flex;flex-direction:column;gap:12px;animation:rise 0.35s ease">
+                    <div style="display:flex;align-items:center;gap:12px">
+                      <div style="width:44px;height:44px;border-radius:50%;background:#2C2C2E;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px">C</div>
+                      <div style="flex:1;display:flex;flex-direction:column">
+                        <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ t.demoClient }}</div>
+                        <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ phone }} · {{ points }} {{ t.pts }}</div>
+                      </div>
+                      <div style="padding:5px 12px;border-radius:999px;background:rgba(232,184,75,0.16);color:#E8B84B;font-size:10px;font-family:'Bungee',-apple-system,system-ui;white-space:nowrap">{{ t.lvl }} {{ level }}</div>
+                    </div>
+                    <div style="height:0.5px;background:rgba(84,84,88,0.4)"></div>
+                    <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.activeCoupons }}</div>
+                    <sc-for list="{{ scanCoupons }}" as="sc" hint-placeholder-count="2">
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <div style="width:32px;height:32px;border-radius:10px;background:rgba(232,184,75,0.16);color:#E8B84B;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ sc.lv }}</div>
+                        <div style="flex:1;min-width:0;color:#fff;font-size:12px;font-family:'Bungee',-apple-system,system-ui;">{{ sc.name }}</div>
+                        <div onClick="{{ sc.redeem }}" style="padding:8px 14px;border-radius:999px;background:#E8B84B;color:#1a1206;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.94)">{{ t.redeemB }}</div>
+                      </div>
+                    </sc-for>
+                    <sc-if value="{{ noScanCoupons }}" hint-placeholder-val="{{ false }}">
+                      <div style="color:rgba(235,235,245,0.4);font-size:13px;padding:4px 0">{{ t.noActive }}</div>
+                    </sc-if>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <!-- ─── ADMIN CLIENTES ─── -->
+            <sc-if value="{{ aIsClients }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 20px;display:flex;flex-direction:column;gap:12px;animation:tabin 0.32s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="display:flex;align-items:baseline;justify-content:space-between">
+                  <div style="color:#fff;font-size:22px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.aClients }}</div>
+                  <div style="color:rgba(235,235,245,0.72);font-size:12.5px">{{ clientsCountTxt }}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:16px;background:#1C1C1E">
+                  <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="rgba(235,235,245,0.45)" stroke-width="2"></circle><path d="M11.8 11.8L16 16" stroke="rgba(235,235,245,0.45)" stroke-width="2" stroke-linecap="round"></path></svg>
+                  <input value="{{ clSearch }}" onChange="{{ clSearchType }}" placeholder="{{ t.searchPh }}" style="flex:1;background:transparent;border:none;color:#fff;font-size:14.5px;outline:none;min-width:0;font-family:-apple-system,system-ui"></input>
+                </div>
+                <div style="border-radius:24px;background:#1C1C1E;overflow:hidden">
+                  <sc-for list="{{ clientsList }}" as="cl" hint-placeholder-count="6">
+                    <div onClick="{{ cl.open }}" style="display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                      <div style="width:40px;height:40px;border-radius:50%;background:#2C2C2E;display:flex;align-items:center;justify-content:center;color:{{ cl.initColor }};font-weight:700;font-size:14px;flex-shrink:0">{{ cl.initials }}</div>
+                      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                        <div style="color:#fff;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px">{{ cl.name }}</div>
+                        <div style="color:rgba(235,235,245,0.72);font-size:12px">{{ cl.phone }} · {{ cl.visitsTxt }}</div>
+                      </div>
+                      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0">
+                        <div style="color:#E8B84B;font-size:12.5px;font-family:'Bungee',-apple-system,system-ui;">{{ cl.pointsTxt }}</div>
+                        <div style="color:rgba(235,235,245,0.5);font-size:11.5px">{{ t.lvl }} {{ cl.lv }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ noClients }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:30px 0;text-align:center;color:rgba(235,235,245,0.5);font-size:14px">{{ t.noClients }}</div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- tab bar admin -->
+          <div style="position:absolute;left:24px;right:24px;bottom:22px;z-index:25;border-radius:999px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.35), 0 10px 30px rgba(0,0,0,0.4)">
+            <div style="position:absolute;inset:0;backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);background:rgba(120,120,128,0.22)"></div>
+            <div style="position:absolute;inset:0;border-radius:999px;box-shadow:inset 1.5px 1.5px 1px rgba(255,255,255,0.15), inset -1px -1px 1px rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);pointer-events:none"></div>
+            <div style="position:relative;display:flex;padding:7px">
+              <div onClick="{{ aTabs.0.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ aTabs.0.bg }};position:relative;transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22" fill="none"><rect x="4.5" y="2.5" width="13" height="17" rx="2.5" stroke="{{ aTabs.0.color }}" stroke-width="2"></rect><path d="M8 7.5h6M8 11h6M8 14.5h3.5" stroke="{{ aTabs.0.color }}" stroke-width="2" stroke-linecap="round"></path></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ aTabs.0.color }}">{{ aTabs.0.label }}</div>
+                <sc-if value="{{ aTabs.0.badge }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;top:2px;right:10px;min-width:17px;height:17px;border-radius:999px;background:#E8383C;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ aTabs.0.badge }}</div>
+                </sc-if>
+              </div>
+              <div onClick="{{ aTabs.1.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ aTabs.1.bg }};transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22" fill="none"><circle cx="4" cy="5.5" r="1.6" fill="{{ aTabs.1.color }}"></circle><circle cx="4" cy="11" r="1.6" fill="{{ aTabs.1.color }}"></circle><circle cx="4" cy="16.5" r="1.6" fill="{{ aTabs.1.color }}"></circle><path d="M9 5.5h9M9 11h9M9 16.5h9" stroke="{{ aTabs.1.color }}" stroke-width="2" stroke-linecap="round"></path></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ aTabs.1.color }}">{{ aTabs.1.label }}</div>
+              </div>
+              <div onClick="{{ aTabs.2.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ aTabs.2.bg }};transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22" fill="none"><path d="M3 7.5V4.5a1.5 1.5 0 011.5-1.5h3M14.5 3h3A1.5 1.5 0 0119 4.5v3M19 14.5v3a1.5 1.5 0 01-1.5 1.5h-3M7.5 19h-3A1.5 1.5 0 013 17.5v-3" stroke="{{ aTabs.2.color }}" stroke-width="2" stroke-linecap="round"></path><path d="M3 11h16" stroke="{{ aTabs.2.color }}" stroke-width="2" stroke-linecap="round"></path></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ aTabs.2.color }}">{{ aTabs.2.label }}</div>
+              </div>
+              <div onClick="{{ aTabs.3.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;cursor:pointer;border-radius:999px;background:{{ aTabs.3.bg }};transition:background 0.2s ease" style-active="transform:scale(0.95)">
+                <svg width="21" height="21" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="4" stroke="{{ aTabs.3.color }}" stroke-width="2"></circle><path d="M3.5 19c1.6-3.8 4.6-5.5 7.5-5.5s5.9 1.7 7.5 5.5" stroke="{{ aTabs.3.color }}" stroke-width="2" stroke-linecap="round"></path></svg>
+                <div style="font-size:9.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;color:{{ aTabs.3.color }}">{{ aTabs.3.label }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ubicación y horario -->
+          <sc-if value="{{ placeOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:54;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closePlace }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:13px;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.placeTitle }}</div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <div style="color:rgba(235,235,245,0.72);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.addressL }}</div>
+                  <input value="{{ addrDraft }}" onChange="{{ addrType }}" style="padding:13px 15px;border-radius:16px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:15px;outline:none;font-family:-apple-system,system-ui"></input>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <div style="color:rgba(235,235,245,0.72);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.hoursEdL }}</div>
+                  <input value="{{ hoursDraft }}" onChange="{{ hoursType }}" style="padding:13px 15px;border-radius:16px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:15px;outline:none;font-family:-apple-system,system-ui"></input>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <div style="color:rgba(235,235,245,0.72);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.daysL }}</div>
+                  <input value="{{ daysDraft }}" onChange="{{ daysType }}" style="padding:13px 15px;border-radius:16px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:15px;outline:none;font-family:-apple-system,system-ui"></input>
+                </div>
+                <div onClick="{{ savePlace }}" style="padding:15px 0;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ t.savePlace }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- comanda -->
+          <sc-if value="{{ ticketOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:54;display:flex;align-items:center;justify-content:center;padding:22px">
+              <div onClick="{{ closeTicket }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.6);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;width:100%;display:flex;flex-direction:column;gap:14px;animation:ticket 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="background:#FAFAF7;border-radius:6px;padding:20px 18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 50px rgba(0,0,0,0.55);font-family:ui-monospace,'SF Mono',monospace">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:10px;border-bottom:1.5px dashed rgba(0,0,0,0.25)">
+                    <div style="color:#111;font-size:15px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.5px">HIBACHI TRUCK</div>
+                    <div style="color:#555;font-size:10.5px;letter-spacing:0.5px">7499 MISSION ST · DALY CITY</div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="color:#111;font-size:18px;font-family:'Bungee',-apple-system,system-ui;">{{ ticket.id }}</div>
+                    <div style="color:#111;font-size:12px;font-weight:700">{{ ticket.time }}</div>
+                  </div>
+                  <div style="color:#333;font-size:11.5px;line-height:1.6">{{ ticket.phone }} · {{ ticket.wants }}</div>
+                  <div style="height:1.5px;border-top:1.5px dashed rgba(0,0,0,0.25)"></div>
+                  <div style="display:flex;flex-direction:column;gap:9px">
+                    <sc-for list="{{ ticket.lines }}" as="tl" hint-placeholder-count="2">
+                      <div style="display:flex;align-items:flex-start;gap:10px">
+                        <div style="color:#111;font-size:13px;font-weight:800;min-width:24px">{{ tl.q }}×</div>
+                        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                          <div style="color:#111;font-size:13px;font-weight:700;line-height:1.35">{{ tl.n }}</div>
+                          <sc-if value="{{ tl.hasNote }}" hint-placeholder-val="{{ false }}">
+                            <div style="color:#B0341A;font-size:11.5px;line-height:1.4">» {{ tl.note }}</div>
+                          </sc-if>
+                        </div>
+                        <div style="color:#111;font-size:12.5px;font-weight:700">{{ tl.priceTxt }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="height:1.5px;border-top:1.5px dashed rgba(0,0,0,0.25)"></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="color:#111;font-size:13px;font-weight:800;letter-spacing:0.5px">TOTAL</div>
+                    <div style="color:#111;font-size:17px;font-family:'Bungee',-apple-system,system-ui;">{{ ticket.totalTxt }}</div>
+                  </div>
+                  <div style="color:#555;font-size:11px;line-height:1.5">{{ ticket.payTxt }}</div>
+                </div>
+                <div style="display:flex;gap:9px">
+                  <div onClick="{{ printTicket }}" style="flex:1;padding:14px 0;border-radius:999px;background:linear-gradient(180deg,#E8383C,#C81E23);color:#fff;font-size:12px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ t.printB }}</div>
+                  <div onClick="{{ closeTicket }}" style="padding:14px 24px;border-radius:999px;background:rgba(120,120,128,0.3);color:#fff;font-size:12px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ t.close }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- nuevo platillo -->
+          <sc-if value="{{ addOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closeAddItem }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:13px;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="color:#fff;font-size:18px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ t.newItem }}</div>
+                <input value="{{ addName }}" onChange="{{ addNameType }}" placeholder="{{ t.itemName }}" style="padding:13px 15px;border-radius:16px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:15px;outline:none;font-family:-apple-system,system-ui"></input>
+                <input value="{{ addPrice }}" onChange="{{ addPriceType }}" placeholder="{{ t.itemPrice }}" style="padding:13px 15px;border-radius:16px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:15px;outline:none;font-family:-apple-system,system-ui"></input>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.itemCat }}</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <sc-for list="{{ addCats }}" as="ac" hint-placeholder-count="4">
+                      <div onClick="{{ ac.sel }}" style="padding:9px 14px;border-radius:999px;font-size:11px;font-family:'Bungee',-apple-system,system-ui;cursor:pointer;background:{{ ac.bg }};color:{{ ac.color }};transition:background 0.2s ease" style-active="transform:scale(0.95)">{{ ac.name }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div onClick="{{ saveItem }}" style="padding:15px 0;border-radius:999px;background:{{ saveBtnBg }};color:{{ saveBtnColor }};font-size:13px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.25);transition:transform 0.15s ease" style-active="transform:scale(0.97)">{{ t.saveItem }}</div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ficha de cliente -->
+          <sc-if value="{{ clOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;justify-content:flex-end">
+              <div onClick="{{ closeClient }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);animation:fadein 0.25s ease"></div>
+              <div style="position:relative;border-radius:36px 36px 0 0;background:#1C1C1E;padding:14px 20px 34px;display:flex;flex-direction:column;gap:14px;max-height:82%;animation:rise 0.35s cubic-bezier(0.2,0.9,0.3,1)">
+                <div style="width:36px;height:5px;border-radius:999px;background:rgba(235,235,245,0.25);align-self:center"></div>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:50px;height:50px;border-radius:50%;background:#2C2C2E;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:17px;flex-shrink:0">{{ clDetail.initials }}</div>
+                  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px">
+                    <div style="color:#fff;font-size:14px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.1px">{{ clDetail.name }}</div>
+                    <div style="color:rgba(235,235,245,0.72);font-size:13px">{{ clDetail.phone }} · {{ clDetail.visitsTxt }}</div>
+                  </div>
+                  <div style="padding:5px 12px;border-radius:999px;background:rgba(232,184,75,0.16);color:#E8B84B;font-size:12px;font-weight:700;flex-shrink:0">{{ t.lvl }} {{ clDetail.lv }}</div>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:8px">
+                  <div style="color:#E8B84B;font-size:25px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px">{{ clDetail.pointsTxt }}</div>
+                  <div style="color:rgba(235,235,245,0.72);font-size:13px">{{ t.pts }}</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.give }}</div>
+                  <div style="display:flex;gap:8px">
+                    <sc-for list="{{ grants }}" as="gr" hint-placeholder-count="3">
+                      <div onClick="{{ gr.give }}" style="flex:1;padding:11px 0;border-radius:999px;background:rgba(120,120,128,0.24);color:#E8B84B;font-size:12px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);transition:transform 0.15s ease" style-active="transform:scale(0.95)">{{ gr.label }}</div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <input value="{{ customPts }}" onChange="{{ customPtsType }}" placeholder="{{ t.customPts }}" style="flex:1;padding:11px 15px;border-radius:999px;background:#0A0A0C;border:0.5px solid rgba(255,255,255,0.14);color:#fff;font-size:14px;outline:none;min-width:0;font-family:-apple-system,system-ui"></input>
+                    <div onClick="{{ giveCustom }}" style="padding:11px 22px;border-radius:999px;background:{{ customBtnBg }};color:{{ customBtnColor }};font-size:12px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;display:flex;align-items:center;transition:transform 0.15s ease" style-active="transform:scale(0.95)">{{ t.giveB }}</div>
+                  </div>
+                </div>
+                <div style="overflow-y:auto;display:flex;flex-direction:column;gap:8px">
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase">{{ t.activeCoupons }}</div>
+                  <sc-for list="{{ clCoupons }}" as="cc" hint-placeholder-count="2">
+                    <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:16px;background:#0A0A0C">
+                      <div style="width:32px;height:32px;border-radius:10px;background:rgba(232,184,75,0.16);color:#E8B84B;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ cc.lv }}</div>
+                      <div style="flex:1;min-width:0;color:#fff;font-size:12px;font-family:'Bungee',-apple-system,system-ui;">{{ cc.name }}</div>
+                      <div onClick="{{ cc.redeem }}" style="padding:8px 14px;border-radius:999px;background:#E8B84B;color:#1a1206;font-size:11px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.2px;cursor:pointer;transition:transform 0.15s ease" style-active="transform:scale(0.94)">{{ t.redeemB }}</div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ noClCoupons }}" hint-placeholder-val="{{ false }}">
+                    <div style="color:rgba(235,235,245,0.4);font-size:13px;padding:2px 0 6px">{{ t.noActive }}</div>
+                  </sc-if>
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase;padding-top:4px">{{ t.usedCoupons }}</div>
+                  <sc-for list="{{ clUsed }}" as="cu" hint-placeholder-count="2">
+                    <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:16px;background:#0A0A0C">
+                      <div style="width:32px;height:32px;border-radius:10px;background:rgba(74,222,128,0.13);color:#4ade80;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ cu.lv }}</div>
+                      <div style="flex:1;min-width:0;color:rgba(235,235,245,0.7);font-size:14px;font-weight:500">{{ cu.name }}</div>
+                      <div style="color:rgba(74,222,128,0.85);font-size:12px;font-weight:700;flex-shrink:0">{{ t.stRedeemed }}</div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ noClUsed }}" hint-placeholder-val="{{ false }}">
+                    <div style="color:rgba(235,235,245,0.4);font-size:13px;padding:2px 0 6px">{{ t.noUsed }}</div>
+                  </sc-if>
+                  <div style="color:rgba(235,235,245,0.6);font-size:10.5px;font-family:'Bungee',-apple-system,system-ui;letter-spacing:0.3px;text-transform:uppercase;padding-top:4px">{{ t.activity }}</div>
+                  <sc-for list="{{ clActivity }}" as="av" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid rgba(84,84,88,0.4)">
+                      <div style="width:6px;height:6px;border-radius:50%;background:#E8B84B;flex-shrink:0"></div>
+                      <div style="color:rgba(235,235,245,0.75);font-size:13px">{{ av.txt }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- toast admin -->
+          <sc-if value="{{ toastA }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:100px;z-index:40;padding:10px 18px;border-radius:999px;background:rgba(44,44,46,0.75);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);box-shadow:inset 1px 1px 1px rgba(255,255,255,0.14), 0 4px 16px rgba(0,0,0,0.4);color:#fff;font-size:13px;font-weight:600;white-space:nowrap;animation:rise 0.3s ease">{{ toastA }}</div>
+          </sc-if>
+        </div>
+      </x-import>
+    </div>
+  </div>
+  <div style="color:rgba(255,255,255,0.4);font-size:12.5px;text-align:center;max-width:620px;line-height:1.6">Test mockup to show what's possible. Everything here is subject to changes and improvements.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;idioma&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;es&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;App&quot;},&quot;onboarding&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;App&quot;},&quot;puntos&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1450,&quot;min&quot;:0,&quot;max&quot;:3200,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cliente demo&quot;},&quot;pedidoDemo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Admin&quot;},&quot;simularError&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Admin&quot;}}">
+const IMG = {
+  chicken:'assets/platos/1604908176997-125f25cc6f3d-400.jpg',
+  steak:'assets/platos/1546964124-0cce460f38ef-400.jpg',
+  shrimp:'assets/platos/1565299624946-b28f40a0ae38-400.jpg',
+  salmon:'assets/platos/1467003909585-2f8a72700288-400.jpg',
+  lobster:'assets/platos/1504674900247-0877df9cc836-400.jpg',
+  scallops:'assets/platos/1546069901-ba9599a7e63c-400.jpg',
+  burrito:'assets/platos/1626700051175-6818013e1d4f-400.jpg',
+  rice:'assets/platos/1512058564366-18510be2db19-400.jpg',
+  noodles:'assets/platos/1585032226651-759b368d7246-400.jpg',
+  veggies:'assets/platos/1540420773420-3366772f4999-400.jpg',
+  soda:'assets/platos/1554866585-cd94860890b7-400.jpg',
+};
+const PUZZLE_IMG = 'assets/platos/1546964124-0cce460f38ef-800.jpg';
+const D = {es:'Arroz frito, verduras y salsa hibachi', en:'Fried rice, veggies & hibachi sauce'};
+const DB = {es:'Con arroz frito, verduras y salsa dentro', en:'Fried rice, veggies & hibachi sauce inside'};
+function P(n,p,img){ return {n, p, img}; }
+const MENU = [
+  {id:'entrees', name:'Hibachi Entrées', img:IMG.steak, subs:[{n:'Platos', items:[
+    P('Chicken Plate',22,IMG.chicken), P('Shrimp Plate',27,IMG.shrimp), P('Salmon Plate',27,IMG.salmon),
+    P('New York Steak Plate',27,IMG.steak), P('Filet Mignon Plate',30,IMG.steak), P('Scallops Plate',27,IMG.scallops),
+    P('Twin Lobster Tails Plate',40,IMG.lobster)]}]},
+  {id:'combos', name:'Hibachi Combos', img:IMG.chicken, subs:[
+    {n:'Trios', items:[P('Mignon, Shrimp & Chicken',40,IMG.steak), P('Shrimp, Chicken & Lobster',45,IMG.shrimp), P('NY Steak, Shrimp & Lobster',50,IMG.lobster), P('Salmon, Shrimp & Lobster',50,IMG.salmon)]},
+    {n:'Filet Mignon', items:[P('Filet Mignon & Chicken',33,IMG.steak), P('Filet Mignon & Shrimp',35,IMG.steak), P('Filet Mignon & Scallops',36,IMG.scallops), P('Filet Mignon & Salmon',40,IMG.salmon), P('Filet Mignon & Lobster',45,IMG.lobster)]},
+    {n:'NY Steak', items:[P('NY Steak & Shrimp',33,IMG.steak), P('NY Steak & Chicken',30,IMG.steak), P('NY Steak & Scallops',33,IMG.scallops), P('NY Steak & Salmon',37,IMG.salmon), P('NY Steak & Lobster',43,IMG.lobster)]},
+    {n:'Chicken', items:[P('Chicken & Shrimp',30,IMG.chicken), P('Chicken & Scallops',30,IMG.chicken), P('Chicken & Lobster',35,IMG.lobster)]},
+    {n:'Mar', items:[P('Shrimp & Lobster',40,IMG.lobster), P('Shrimp & Salmon',33,IMG.shrimp), P('Shrimp & Scallop',36,IMG.scallops), P('Salmon & Lobster',43,IMG.salmon), P('Salmon & Chicken',33,IMG.salmon), P('Salmon & Scallop',33,IMG.salmon)]}]},
+  {id:'burritos', name:'Hibachi Burritos', img:IMG.burrito, subs:[{n:'Burritos', items:[
+    P('Trio Burrito (steak, chicken, shrimp)',22,IMG.burrito), P('Chicken Burrito',13,IMG.burrito), P('Steak Burrito',15,IMG.burrito),
+    P('Shrimp Burrito',15,IMG.burrito), P('Chicken & Shrimp Burrito',18,IMG.burrito), P('Steak & Chicken Burrito',18,IMG.burrito), P('Steak & Shrimp Burrito',19,IMG.burrito)]}]},
+  {id:'sides', name:'Hibachi Sides', img:IMG.rice, subs:[
+    {n:'Proteínas', items:[P('Chicken',7,IMG.chicken), P('Scallops',10,IMG.scallops), P('Shrimp',10,IMG.shrimp), P('Salmon',14,IMG.salmon), P('New York Steak',15,IMG.steak), P('Filet Mignon',18,IMG.steak), P('Lobster',20,IMG.lobster)]},
+    {n:'Arroz & Más', items:[P('Fried Rice',6,IMG.rice), P('Veggies',5,IMG.veggies), P('Steamed Rice',3,IMG.rice), P('Noodles',6,IMG.noodles)]},
+    {n:'Bebidas & Salsas', items:[P('Glass Soda',3.5,IMG.soda), P('Soda',2,IMG.soda), P('Hibachi Sauce',1,IMG.rice), P('Garlic Butter',1,IMG.rice), P('Teriyaki',1,IMG.rice), P('Ginger Sauce',1,IMG.rice), P('Lemon Wedge',0.25,IMG.veggies)]}]},
+];
+const EXTRAS = [{n:'Hibachi Sauce',p:1},{n:'Garlic Butter',p:1},{n:'Teriyaki',p:1},{n:'Ginger Sauce',p:1},{n:'Fried Rice',p:6},{n:'Veggies',p:5},{n:'Noodles',p:6},{n:'Lemon Wedge',p:0.25}];
+const PROT = [
+  {k:'FM', n:'Filet Mignon', side:18}, {k:'NY', n:'New York Steak', side:15}, {k:'CH', n:'Chicken', side:7},
+  {k:'SH', n:'Shrimp', side:10}, {k:'SA', n:'Salmon', side:14}, {k:'SC', n:'Scallops', side:10}, {k:'LO', n:'Lobster', side:20}];
+const COMBO_P = {'CH+FM':33,'FM+SH':35,'FM+SC':36,'FM+SA':40,'FM+LO':45,'LO+SH':40,'NY+SH':33,'CH+NY':30,'NY+SC':33,'NY+SA':37,'LO+NY':43,'CH+SH':30,'CH+SC':30,'CH+LO':35,'LO+SA':43,'CH+SA':33,'SA+SC':33,'SA+SH':33,'SC+SH':36,
+  'CH+FM+SH':40,'CH+LO+SH':45,'LO+NY+SH':50,'LO+SA+SH':50};
+const BURR_P = {'CH':13,'NY':15,'SH':15,'CH+SH':18,'CH+NY':18,'NY+SH':19,'CH+NY+SH':22};
+const CLIENTS = [
+  {id:'me',  name:{es:'Tú · cliente demo', en:'You · demo client'}, phone:null, points:null, visits:12, redeemed:null},
+  {id:'c2', name:{es:'María López', en:'María López'}, phone:'415-555-0188', points:2870, visits:24, redeemed:{1:1,2:1,3:1,4:1,5:1,6:1,7:1,8:1,9:1,10:1,11:1,12:1}},
+  {id:'c3', name:{es:'Kevin Tran', en:'Kevin Tran'}, phone:'650-555-0142', points:1120, visits:9, redeemed:{1:1,2:1,3:1}},
+  {id:'c4', name:{es:'Jasmine Reyes', en:'Jasmine Reyes'}, phone:'415-555-0263', points:640, visits:6, redeemed:{1:1}},
+  {id:'c5', name:{es:'Andre Willis', en:'Andre Willis'}, phone:'650-555-0391', points:2210, visits:18, redeemed:{1:1,2:1,3:1,4:1,5:1,6:1,7:1,8:1,9:1,10:1}},
+  {id:'c6', name:{es:'Sofía Márquez', en:'Sofía Márquez'}, phone:'415-555-0477', points:310, visits:3, redeemed:{}},
+  {id:'c7', name:{es:'Danny Nguyen', en:'Danny Nguyen'}, phone:'650-555-0518', points:1780, visits:15, redeemed:{1:1,2:1,3:1,4:1,5:1,6:1,7:1}},
+  {id:'c8', name:{es:'Rachel Kim', en:'Rachel Kim'}, phone:'415-555-0620', points:920, visits:8, redeemed:{1:1,2:1}},
+];
+const REWARDS = {
+  es:['Soda gratis','5% de descuento','Salsa extra gratis','Fried Rice gratis','10% de descuento','Side de pollo gratis','$5 de descuento','Burrito 2×1','15% de descuento','Side gratis a elegir','$10 de descuento','Chicken Plate gratis','20% de descuento','Combo 2×1','Plato Trio gratis'],
+  en:['Free soda','5% off','Free extra sauce','Free fried rice','10% off','Free chicken side','$5 off','BOGO burrito','15% off','Free side of choice','$10 off','Free Chicken Plate','20% off','BOGO combo','Free Trio Plate'],
+};
+const REASONS = {
+  es:['Se agotó el platillo','Ya cerramos','No alcanza el tiempo','Otro motivo'],
+  en:['Dish sold out','We already closed','Not enough time','Other reason'],
+};
+const T = {
+  es:{openNow:'Abierto · 12–10 PM · Halal', closedNow:'Cerrado ahora · abre 12 PM', hello:'¿Qué se te antoja hoy?', myOrder:'Tu pedido para llevar', accept:'Aceptar', reject:'Rechazar',
+    visitTitle:'Visítanos', hoursL:'Horario', waitL:'Tiempo de espera', takeout:'Pedido para llevar', takeoutSub:'Ordena y recoge en el truck', ddBtn:'Pedir en DoorDash',
+    rewTitle:'Tus recompensas', pts:'puntos', lvl:'Nivel', puzzle:'Tu rompecabezas', puzzleSub:'Cada nivel revela una pieza', coupons:'Cupones por nivel', see:'Ver QR',
+    setTitle:'Ajustes', phoneL:'Número de teléfono', edit:'Editar', save:'Guardar', myQr:'Mi QR de cliente', qrSub:'Muéstralo al pagar para ganar puntos', myCoupons:'Mis cupones', langL:'Idioma',
+    history:'Historial de pedidos', noHistory:'Todavía no tienes pedidos', reorder:'Volver a pedir',
+    add:'Agregar', cart:'Ver pedido', cartTitle:'Tu pedido', pickupQ:'¿Cuándo pasas por él?', total:'Total', send:'Enviar pedido para llevar', close:'Cerrar', closedBtn:'El truck está cerrado',
+    applyCoupon:'Usar este cupón en el pedido', discount:'Descuento del cupón', extras:'Extras', notes:'Notas para la cocina', notesPh:'Sin cebolla, salsa aparte…',
+    buildTitle:'Arma el tuyo', buildSub:'Combo o burrito con las proteínas que quieras', comboMode:'Combo', burritoMode:'Burrito',
+    pickCombo:'Elige 2 o 3 proteínas', pickBurrito:'Elige 1 a 3 proteínas', estimated:'Precio estimado · el truck lo confirma', listed:'Precio de carta',
+    couponQr:'Cupón', showAtTruck:'Muéstralo en el truck para canjear', tabMenu:'Menú', tabVisit:'Visita', tabRew:'Premios', tabSet:'Ajustes', now:'ahora',
+    live:'En vivo · Daly City', aOrders:'Pedidos', aMenu:'Menú', aCoupons:'Cupones', aClients:'Clientes', aScan:'Escáner', aMenuSub:'Precios y disponibilidad', aCouponsSub:'Canjea los cupones del cliente',
+    aScanSub:'Lee el QR del cliente para validar cupones', scanIdle:'APUNTA AL QR DEL CLIENTE', scanBusy:'LEYENDO…', scanDone:'CLIENTE IDENTIFICADO',
+    usedCoupons:'Cupones canjeados', noUsed:'Todavía no ha canjeado ninguno', searchPh:'Buscar por nombre o teléfono', noClients:'Ningún cliente coincide',
+    favs:'Tus favoritos', payQ:'¿Cómo vas a pagar?', cash:'Efectivo', card:'Tarjeta al recoger', tipQ:'Propina', noTip:'Sin',
+    cartEmpty:'Tu pedido está vacío', addItem:'Agregar platillo', newItem:'Nuevo platillo', itemName:'Nombre del platillo',
+    itemPrice:'Precio en dólares', itemCat:'Categoría', saveItem:'Guardar en el menú',
+    avOk:'Disponible', avToday:'Hoy no', avOff:'Agotado', rejectQ:'Motivo del rechazo', sendReject:'Rechazar pedido',
+    stRej:'RECHAZADO', notifRejT:'Pedido rechazado', expiresOn:'Vence el 6 sep', expiredOn:'Venció el 12 jul',
+    customPts:'Otra cantidad', giveB:'Dar',
+    kbAll:'Todos', kbNew:'Nuevos', kbPrep:'Prep', kbDone:'Listos', justNow:'Recién', closedO:'Cerrado',
+    ticketB:'Comanda', printB:'Imprimir comanda', printed:'Comanda enviada a cocina',
+    rateQ:'¿Cómo estuvo tu pedido?', thanksReview:'¡Gracias por calificar!',
+    referTitle:'Invita a un amigo', referSub:'Ganen 100 puntos los dos', exactT:'Hora exacta',
+    referBody:'Comparte tu código. Cuando tu amigo haga su primer pedido, los dos ganan 100 puntos.',
+    yourCode:'Tu código', invited:'Amigos que ya se unieron', shareCode:'Compartir mi código',
+    referShared:'Código compartido', searchMenu:'Buscar en el menú', noResults:'Sin resultados',
+    dayNoteL:'Nota del día', dayNotePh:'Hoy sin lobster · estamos en Serramonte',
+    placeL:'Ubicación', placeTitle:'Ubicación y horario', addressL:'Dirección', hoursEdL:'Horario', daysL:'Días',
+    savePlace:'Guardar cambios', placeSaved:'Ubicación actualizada', placeMoved:'El truck se movió',
+    tsOpen:'Abierto', tsPause:'Pausado', tsClosed:'Cerrado',
+    tsOpenS:'Aceptando pedidos', tsPauseS:'Despachando, sin pedidos nuevos', tsClosedS:'No se reciben pedidos',
+    tsOpenC:'Abierto · pide ahora', tsPauseC:'Pausado · pide para más tarde', tsClosedC:'Cerrado por hoy',
+    sendingB:'Enviando…', retryB:'Reintentar', scheduleB:'Programar para después',
+    sendErr:'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.',
+    scheduledOk:'Guardado. Se enviará cuando el truck abra.', scheduledW:'Programado · se enviará al abrir',
+    stSched:'PROGRAMADO', repeatT:'Repetir lo de siempre',
+    scanBtn:'Simular escaneo', scanAgain:'Escanear otro', activeCoupons:'Cupones activos', noActive:'Sin cupones activos por ahora',
+    truckStatus:'Estado del truck', truckOpen:'Abierto · recibiendo pedidos', truckClosed:'Cerrado · no se reciben pedidos',
+    confirmB:'Confirmar', counterB:'Contraoferta', readyB:'Marcar como listo', counterQ:'Nuevo tiempo de entrega', counterPrice:'Precio', sendCounter:'Enviar contraoferta', redeemB:'Canjear',
+    pickupL:'Recoger', noOrders:'Sin pedidos por ahora', give:'Dar puntos', demoClient:'Cliente demo', activity:'Actividad reciente',
+    stNew:'NUEVO', stConf:'CONFIRMADO', stContra:'CONTRAOFERTA', stReady:'LISTO', stRedeemed:'Canjeado', stLocked:'Bloqueado',
+    waiting:'Esperando confirmación del truck…', readyO:'¡Tu pedido está listo! Pasa por él', asap:'Ya', unlocked:'Desbloqueado', popular:'Lo más pedido',
+    obT1:'Bienvenido', obS1:'Pon tu teléfono para guardar tus puntos y cupones en el truck.', obB1:'Enviar código',
+    obT2:'Verifica tu número', obS2:'Te mandamos un código de 4 dígitos por SMS. Para la demo es 1234.', obB2:'Entrar', skip:'Saltar por ahora',
+    notifConfT:'Pedido confirmado', notifReadyT:'Tu pedido está listo', notifContraT:'El truck propone un cambio', notifPtsT:'Ganaste puntos', notifCoupT:'Cupón canjeado'},
+  en:{openNow:'Open · 12–10 PM · Halal', closedNow:'Closed now · opens 12 PM', hello:'What are you craving today?', myOrder:'Your takeout order', accept:'Accept', reject:'Decline',
+    visitTitle:'Visit us', hoursL:'Hours', waitL:'Wait time', takeout:'Order takeout', takeoutSub:'Order & pick up at the truck', ddBtn:'Order on DoorDash',
+    rewTitle:'Your rewards', pts:'points', lvl:'Level', puzzle:'Your puzzle', puzzleSub:'Each level reveals a piece', coupons:'Coupons by level', see:'View QR',
+    setTitle:'Settings', phoneL:'Phone number', edit:'Edit', save:'Save', myQr:'My client QR', qrSub:'Show it when paying to earn points', myCoupons:'My coupons', langL:'Language',
+    history:'Order history', noHistory:'No past orders yet', reorder:'Order again',
+    add:'Add', cart:'View order', cartTitle:'Your order', pickupQ:'When will you pick it up?', total:'Total', send:'Send takeout order', close:'Close', closedBtn:'The truck is closed',
+    applyCoupon:'Use this coupon on the order', discount:'Coupon discount', extras:'Extras', notes:'Notes for the kitchen', notesPh:'No onion, sauce on the side…',
+    buildTitle:'Create your own', buildSub:'Combo or burrito with the proteins you want', comboMode:'Combo', burritoMode:'Burrito',
+    pickCombo:'Pick 2 or 3 proteins', pickBurrito:'Pick 1 to 3 proteins', estimated:'Estimated price · the truck confirms it', listed:'Menu price',
+    couponQr:'Coupon', showAtTruck:'Show it at the truck to redeem', tabMenu:'Menu', tabVisit:'Visit', tabRew:'Rewards', tabSet:'Settings', now:'now',
+    live:'Live · Daly City', aOrders:'Orders', aMenu:'Menu', aCoupons:'Coupons', aClients:'Clients', aScan:'Scanner', aMenuSub:'Prices & availability', aCouponsSub:'Redeem client coupons',
+    aScanSub:'Scan the client QR to validate coupons', scanIdle:'POINT AT THE CLIENT QR', scanBusy:'READING…', scanDone:'CLIENT IDENTIFIED',
+    usedCoupons:'Redeemed coupons', noUsed:'None redeemed yet', searchPh:'Search by name or phone', noClients:'No client matches',
+    favs:'Your favorites', payQ:'How will you pay?', cash:'Cash', card:'Card at pickup', tipQ:'Tip', noTip:'None',
+    cartEmpty:'Your order is empty', addItem:'Add a dish', newItem:'New dish', itemName:'Dish name',
+    itemPrice:'Price in dollars', itemCat:'Category', saveItem:'Save to the menu',
+    avOk:'Available', avToday:'Not today', avOff:'Sold out', rejectQ:'Reason for declining', sendReject:'Decline order',
+    stRej:'DECLINED', notifRejT:'Order declined', expiresOn:'Expires Sep 6', expiredOn:'Expired Jul 12',
+    customPts:'Other amount', giveB:'Grant',
+    kbAll:'All', kbNew:'New', kbPrep:'Prep', kbDone:'Ready', justNow:'Just now', closedO:'Closed',
+    ticketB:'Ticket', printB:'Print kitchen ticket', printed:'Ticket sent to the kitchen',
+    rateQ:'How was your order?', thanksReview:'Thanks for rating!',
+    referTitle:'Invite a friend', referSub:'You both earn 100 points', exactT:'Exact time',
+    referBody:'Share your code. When your friend places their first order, you both earn 100 points.',
+    yourCode:'Your code', invited:'Friends who joined', shareCode:'Share my code',
+    referShared:'Code shared', searchMenu:'Search the menu', noResults:'No results',
+    dayNoteL:'Note of the day', dayNotePh:'No lobster today · we are at Serramonte',
+    placeL:'Location', placeTitle:'Location & hours', addressL:'Address', hoursEdL:'Hours', daysL:'Days',
+    savePlace:'Save changes', placeSaved:'Location updated', placeMoved:'The truck moved',
+    tsOpen:'Open', tsPause:'Paused', tsClosed:'Closed',
+    tsOpenS:'Taking orders', tsPauseS:'Finishing orders, no new ones', tsClosedS:'Not taking orders',
+    tsOpenC:'Open · order now', tsPauseC:'Paused · order for later', tsClosedC:'Closed for today',
+    sendingB:'Sending…', retryB:'Try again', scheduleB:'Schedule for later',
+    sendErr:'Could not send. Check your connection and try again.',
+    scheduledOk:'Saved. It will be sent when the truck opens.', scheduledW:'Scheduled · sends when they open',
+    stSched:'SCHEDULED', repeatT:'Order my usual',
+    scanBtn:'Simulate scan', scanAgain:'Scan another', activeCoupons:'Active coupons', noActive:'No active coupons right now',
+    truckStatus:'Truck status', truckOpen:'Open · taking orders', truckClosed:'Closed · not taking orders',
+    confirmB:'Confirm', counterB:'Counteroffer', readyB:'Mark as ready', counterQ:'New pickup time', counterPrice:'Price', sendCounter:'Send counteroffer', redeemB:'Redeem',
+    pickupL:'Pickup', noOrders:'No orders yet', give:'Grant points', demoClient:'Demo client', activity:'Recent activity',
+    stNew:'NEW', stConf:'CONFIRMED', stContra:'COUNTEROFFER', stReady:'READY', stRedeemed:'Redeemed', stLocked:'Locked',
+    waiting:'Waiting for the truck to confirm…', readyO:'Your order is ready! Come pick it up', asap:'ASAP', unlocked:'Unlocked', popular:'Most ordered',
+    obT1:'Welcome', obS1:'Add your phone to keep your points and coupons at the truck.', obB1:'Send code',
+    obT2:'Verify your number', obS2:'We texted you a 4-digit code. For this demo it is 1234.', obB2:'Enter', skip:'Skip for now',
+    notifConfT:'Order confirmed', notifReadyT:'Your order is ready', notifContraT:'The truck proposes a change', notifPtsT:'You earned points', notifCoupT:'Coupon redeemed'},
+};
+const TSDEF={abierto:{dot:'#34C759', chip:'rgba(52,199,89,0.85)', chipC:'#0b2412'},
+  pausado:{dot:'#E8B84B', chip:'rgba(232,184,75,0.9)', chipC:'#1a1206'},
+  cerrado:{dot:'#ff8285', chip:'rgba(232,56,60,0.9)', chipC:'#fff'}};
+class Component extends DCLogic {
+  state = { lang:null, points:null, cTab:'menu', cat:null, sub:0, prod:null, opt:null, cartOpen:false, cart:[],
+    pickup:'20 min', aTab:'pedidos', orders:null, counterFor:null, counterTime:'30 min', counterPrice:null,
+    redeemed:{1:true,2:true}, couponOpen:null, phone:'650-555-0123', phoneEdit:false, phoneDraft:'',
+    avail:{}, prices:{}, toastC:null, toastA:null, activity:null, useCoupon:false,
+    ob:null, obStep:'phone', obPhone:'', obCode:'', notif:null, builder:null,
+    history:[], historyOpen:false, wait:'20 min', scan:'idle',
+    clOv:{}, clSearch:'', clOpen:null, favs:{}, tip:0, pay:'efectivo',
+    rejectFor:null, rejectReason:null, addOpen:false, addName:'', addPrice:'', addCat:'entrees',
+    newItems:[], customPts:'', now:Date.now(), kb:'todos', ticket:null, reviews:{}, refOpen:false, refCount:2, showSlots:false,
+    truckState:'abierto', q:'', dayNote:'', placeOpen:false,
+    address:'7499 Mission St, Daly City, CA', hours:'12–10 PM', days:'Mon–Wed · Fri–Sun',
+    addrDraft:null, hoursDraft:null, daysDraft:null, sending:false, sendError:false, tried:0 };
+  componentDidMount(){ this._clock=setInterval(()=>this.setState({now:Date.now()}), 20000); }
+  lang(){ return this.state.lang ?? this.props.idioma ?? 'en'; }
+  pts(){ return this.state.points ?? (this.props.puntos ?? 1450); }
+  obOn(){ return this.state.ob ?? (this.props.onboarding ?? true); }
+  ords(){ return this.state.orders ?? ((this.props.pedidoDemo ?? true) ? [
+    {id:'#1042', phone:'415-555-0188', lines:[{n:'Chicken & Shrimp',q:1,p:30},{n:'Fried Rice',q:2,p:6}], total:42, wants:'30 min', status:'confirmado', at:Date.now()-9*60000, pay:'efectivo'}] : []); }
+  toast(side,msg){ const k = side==='c'?'toastC':'toastA';
+    clearTimeout(this['_t'+side]); this.setState({[k]:msg});
+    this['_t'+side]=setTimeout(()=>this.setState({[k]:null}), 2600); }
+  push(title,body){ clearTimeout(this._tn); this.setState({notif:{title,body}});
+    this._tn=setTimeout(()=>this.setState({notif:null}), 5200); }
+  price(n,p){ const o=this.state.prices[n]; return o!=null?o:p; }
+  money(v){ return '$'+(v%1?v.toFixed(2):v.toFixed(0)); }
+  componentWillUnmount(){ clearTimeout(this._tc); clearTimeout(this._ta); clearTimeout(this._tn); clearTimeout(this._ts); clearTimeout(this._tsend); clearInterval(this._clock); }
+  renderVals(){
+    const s=this.state, lang=this.lang(), t=T[lang], points=this.pts(), orders=this.ords();
+    const level=Math.min(15, Math.floor(points/200));
+    const progressPct=level>=15?'100%':Math.round(((points-level*200)/200)*100)+'%';
+    const MENUX=MENU.map(c=>({...c, subs:c.subs.map((sb,i)=>({...sb,
+      items:i===0?[...sb.items, ...s.newItems.filter(x=>x.cat===c.id)]:sb.items}))}));
+    const availOf=(n)=>s.avail[n]||'ok';
+    const isOff=(n)=>availOf(n)!=='ok';
+    const TAGS=(n)=>{ const q=n.toLowerCase(); const out=[];
+      if(/shrimp|lobster|scallop|salmon/.test(q)) out.push('sea');
+      if(/burrito|noodle|teriyaki/.test(q)) out.push('gluten');
+      if(/butter/.test(q)) out.push('dairy');
+      return out; };
+    const TAGL={sea:{es:'Mariscos',en:'Shellfish'}, gluten:{es:'Gluten',en:'Gluten'}, dairy:{es:'Lácteos',en:'Dairy'}};
+    const cat=MENUX.find(c=>c.id===s.cat)||null;
+    const setS=(o)=>()=>this.setState(o);
+    const TS={abierto:{...TSDEF.abierto, label:t.tsOpen, sub:t.tsOpenS, client:t.tsOpenC},
+      pausado:{...TSDEF.pausado, label:t.tsPause, sub:t.tsPauseS, client:t.tsPauseC},
+      cerrado:{...TSDEF.cerrado, label:t.tsClosed, sub:t.tsClosedS, client:t.tsClosedC}};
+    const money=(v)=>this.money(v);
+
+    // ── carrito
+    const lineTotal=(x)=>(x.p+(x.extras||[]).reduce((a,e)=>a+e.p,0))*x.q;
+    const cartTotalN=s.cart.reduce((a,x)=>a+lineTotal(x),0);
+    const pushCart=(line)=>{ const cart=[...s.cart];
+      const sig=(y)=>y.n+'|'+(y.extras||[]).map(e=>e.n).join(',')+'|'+(y.notes||'');
+      const f=cart.find(x=>sig(x)===sig(line));
+      if(f) f.q+=line.q; else cart.push(line);
+      this.setState({cart, prod:null, opt:null, builder:null});
+      this.toast('c', (lang==='es'?'Agregado: ':'Added: ')+line.n); };
+
+    // ── menú
+    const cats=MENUX.map(c=>({name:c.name, img:c.img,
+      count:c.subs.reduce((a,x)=>a+x.items.length,0)+(lang==='es'?' platillos':' items'),
+      open:setS({cat:c.id, sub:0})}));
+    const subs=cat?cat.subs.map((sb,i)=>({name:sb.n,
+      bg:i===s.sub?'rgba(232,56,60,0.9)':'rgba(120,120,128,0.22)', color:i===s.sub?'#fff':'rgba(235,235,245,0.7)',
+      sel:setS({sub:i})})):[];
+    const openProd=(it,desc)=>()=>this.setState({prod:{...it,desc}, opt:{q:1, extras:[], notes:''}});
+    const toggleFav=(n)=>()=>{ const on=!!s.favs[n]; this.setState({favs:{...s.favs,[n]:!on}});
+      this.toast('c', on?(lang==='es'?'Quitado de favoritos':'Removed from favorites'):(lang==='es'?'Guardado en favoritos':'Saved to favorites')); };
+    const items=cat?(cat.subs[s.sub]||cat.subs[0]).items.map(it=>{ const st=availOf(it.n), off=st!=='ok';
+      const base=cat.id==='burritos'?DB[lang]:(cat.id==='sides'?(lang==='es'?'Side hibachi':'Hibachi side'):D[lang]);
+      const tg=TAGS(it.n).map(k=>TAGL[k][lang]);
+      const desc=off?(st==='today'?(lang==='es'?'Agotado hoy · vuelve mañana':'Sold out today · back tomorrow'):(lang==='es'?'No disponible':'Unavailable'))
+        :(tg.length?base+' · '+tg.join(', '):base);
+      return {n:it.n, sub:desc, img:it.img, priceTxt:money(this.price(it.n,it.p)), op:off?0.45:1,
+        btnBg:off?'rgba(120,120,128,0.3)':'linear-gradient(180deg,#E8383C,#C81E23)', btnTxt:off?'×':'+',
+        favColor:s.favs[it.n]?'#E8B84B':'rgba(235,235,245,0.3)', fav:toggleFav(it.n),
+        open:off?()=>{}:openProd(it,base),
+        add:off?()=>this.toast('c', st==='today'?(lang==='es'?'Agotado por hoy':'Sold out today'):(lang==='es'?'No disponible':'Unavailable'))
+              :()=>pushCart({n:it.n, p:this.price(it.n,it.p), q:1, extras:[], notes:''})};}):[];
+    const allItems=MENUX.flatMap(c=>c.subs.flatMap(sb=>sb.items));
+    const qq=(s.q||'').trim().toLowerCase();
+    const results=qq?MENUX.flatMap(c=>c.subs.flatMap(sb=>sb.items.map(it=>({it,c}))))
+      .filter(({it})=>it.n.toLowerCase().includes(qq)).slice(0,14)
+      .map(({it,c})=>{ const st=availOf(it.n), off=st!=='ok';
+        return {n:it.n, img:it.img, catName:c.name, priceTxt:money(this.price(it.n,it.p)), op:off?0.45:1,
+          btnBg:off?'rgba(120,120,128,0.3)':'linear-gradient(180deg,#E8383C,#C81E23)', btnTxt:off?'×':'+',
+          open:off?()=>{}:openProd(it, c.id==='burritos'?DB[lang]:D[lang]),
+          add:off?()=>this.toast('c', lang==='es'?'No disponible':'Unavailable')
+                :()=>pushCart({n:it.n, p:this.price(it.n,it.p), q:1, extras:[], notes:''})};}):[];
+    const favItems=Object.keys(s.favs).filter(k=>s.favs[k])
+      .map(n=>allItems.find(it=>it.n===n)).filter(Boolean)
+      .map(it=>({n:it.n, img:it.img, priceTxt:money(this.price(it.n,it.p)),
+        add:()=>pushCart({n:it.n, p:this.price(it.n,it.p), q:1, extras:[], notes:''})}));
+
+    // ── ficha de producto
+    const opt=s.opt||{q:1,extras:[],notes:''};
+    const extraSum=opt.extras.reduce((a,e)=>a+e.p,0);
+    const prodBase=s.prod?this.price(s.prod.n,s.prod.p):0;
+    const extras=EXTRAS.map(e=>{ const on=opt.extras.some(x=>x.n===e.n);
+      return {label:e.n+' +'+money(e.p), bg:on?'rgba(232,56,60,0.85)':'rgba(120,120,128,0.2)', color:on?'#fff':'rgba(235,235,245,0.7)',
+        toggle:()=>this.setState({opt:{...opt, extras:on?opt.extras.filter(x=>x.n!==e.n):[...opt.extras,e]}})};});
+
+    // ── create your own
+    const b=s.builder;
+    const picks=b?b.picks:[];
+    const keyOf=(arr)=>[...arr].sort().join('+');
+    const listed=b?(b.type==='combo'?COMBO_P[keyOf(picks)]:BURR_P[keyOf(picks)]):undefined;
+    const sideSum=picks.reduce((a,k)=>a+(PROT.find(p=>p.k===k)||{side:0}).side,0);
+    const estimate=b?(b.type==='combo'?sideSum+8:sideSum+4):0;
+    const bValid=b?(b.type==='combo'?(picks.length>=2&&picks.length<=3):(picks.length>=1&&picks.length<=3)):false;
+    const bPrice=listed!=null?listed:estimate;
+    const proteins=PROT.map(p=>{ const on=picks.includes(p.k);
+      return {n:p.n, hint:'+'+money(p.side), rowBg:on?'rgba(232,56,60,0.12)':'transparent',
+        border:on?'#E8383C':'rgba(235,235,245,0.3)', boxBg:on?'#E8383C':'transparent', mark:on?'#fff':'transparent',
+        toggle:()=>{ const nx=on?picks.filter(k=>k!==p.k):(picks.length>=3?picks:[...picks,p.k]);
+          this.setState({builder:{...b, picks:nx}}); }};});
+    const bNames=picks.map(k=>(PROT.find(p=>p.k===k)||{}).n).join(' & ');
+    const builderAdd=()=>{ if(!bValid) return;
+      const label=(b.type==='combo'?(lang==='es'?'Combo: ':'Combo: '):(lang==='es'?'Burrito: ':'Burrito: '))+bNames;
+      pushCart({n:label, p:bPrice, q:1, extras:[], notes:listed!=null?'':(lang==='es'?'precio estimado':'estimated price'), est:listed==null}); };
+
+    // ── pedido del cliente
+    const my=orders.filter(o=>o.mine); const last=my[my.length-1]||null;
+    const queue=orders.filter(o=>o.status==='nuevo'||o.status==='confirmado');
+    const qTotal=Math.max(1,queue.length);
+    const qPos=(o)=>Math.max(0, queue.findIndex(x=>x.id===o.id));
+    const stMap={nuevo:t.waiting, programado:t.scheduledW, confirmado:(lang==='es'?'Confirmado · listo en ':'Confirmed · ready in '),
+      contra:(lang==='es'?'El truck propone: ':'The truck proposes: '), listo:t.readyO,
+      rechazado:(lang==='es'?'Pedido rechazado · ':'Order declined · ')};
+    const orderStatusTxt=last?(last.status==='confirmado'?stMap.confirmado+last.wants
+      :last.status==='contra'?stMap.contra+last.counter+(last.counterPrice!=null?' · '+money(last.counterPrice):'')
+      :last.status==='rechazado'?stMap.rechazado+(last.why||'')
+      :stMap[last.status]):'';
+    const updOrder=(id,patch)=>{ this.setState({orders:this.ords().map(o=>o.id===id?{...o,...patch}:o)}); };
+
+    // ── rompecabezas y cupones
+    const pieces=Array.from({length:15},(_,i)=>{ const lv=i+1, un=level>=lv;
+      return {lv:String(lv), lock:!un, bgi:un?`url(${PUZZLE_IMG})`:'none', pos:`${(i%5)*25}% ${Math.floor(i/5)*50}%`};});
+    const mkBadge=(stt)=>stt==='ok'?{badgeBg:'rgba(232,184,75,0.16)',badgeColor:'#E8B84B'}
+      :stt==='used'?{badgeBg:'rgba(74,222,128,0.13)',badgeColor:'#4ade80'}
+      :{badgeBg:'rgba(120,120,128,0.16)',badgeColor:'rgba(235,235,245,0.35)'};
+    const EXPIRED={3:1,6:1};
+    const cStat=(lv)=>level>=lv?(s.redeemed[lv]?'used':(EXPIRED[lv]?'exp':'ok')):'locked';
+    const coupons=REWARDS[lang].map((name,i)=>{ const lv=i+1, stt=cStat(lv);
+      return {lv:String(lv), name, op:stt==='locked'?0.5:1, canOpen:stt==='ok', ...mkBadge(stt),
+        subTxt:stt==='used'?t.stRedeemed:stt==='locked'?(t.stLocked+' · '+(lv*200)+' pts'):stt==='exp'?t.expiredOn:t.expiresOn,
+        open:setS({couponOpen:lv})};});
+    const availCount=coupons.filter(c=>c.canOpen).length;
+    const SOON={5:4,7:9};
+    const expiring=REWARDS[lang].map((n,i)=>({lv:i+1,name:n})).filter(c=>cStat(c.lv)==='ok'&&SOON[c.lv]);
+    const soonest=expiring.length?expiring.reduce((a,c)=>SOON[c.lv]<SOON[a.lv]?c:a):null;
+
+    // ── cupón aplicable al pedido
+    const PCT={2:5,5:10,9:15,13:20}, FIX={7:5,11:10};
+    const usable=REWARDS[lang].map((n,i)=>({lv:i+1,name:n})).filter(c=>cStat(c.lv)==='ok'&&(PCT[c.lv]||FIX[c.lv]));
+    const best=usable.reduce((a,c)=>{ const v=PCT[c.lv]?cartTotalN*PCT[c.lv]/100:FIX[c.lv]; return (!a||v>a.v)?{...c,v}:a; }, null);
+    const applied=best&&s.useCoupon?best:null;
+    const discount=applied?Math.min(applied.v, cartTotalN):0;
+    const afterDisc=Math.max(0, cartTotalN-discount);
+    const tipAmount=Math.round(afterDisc*s.tip*100)/100;
+    const finalTotal=afterDisc+tipAmount;
+    const pays=[{k:'efectivo',label:t.cash},{k:'tarjeta',label:t.card}].map(p=>({label:p.label,
+      bg:s.pay===p.k?'rgba(232,56,60,0.9)':'rgba(120,120,128,0.2)', color:s.pay===p.k?'#fff':'rgba(235,235,245,0.65)',
+      sel:setS({pay:p.k})}));
+    const tips=[{v:0,label:t.noTip},{v:0.10,label:'10%'},{v:0.15,label:'15%'},{v:0.20,label:'20%'}].map(x=>({label:x.label,
+      bg:s.tip===x.v?'rgba(232,184,75,0.85)':'rgba(120,120,128,0.2)', color:s.tip===x.v?'#1a1206':'rgba(235,235,245,0.65)',
+      sel:setS({tip:x.v})}));
+
+    const hhmm=(d)=>{ let h=d.getHours(), m=d.getMinutes(); const ap=h>=12?'PM':'AM'; h=h%12||12;
+      return h+':'+String(m).padStart(2,'0')+' '+ap; };
+    const nowD=new Date(s.now);
+    const slots=Array.from({length:6},(_,i)=>{ const d=new Date(s.now+(30+i*15)*60000);
+      d.setMinutes(Math.ceil(d.getMinutes()/15)*15, 0, 0); return hhmm(d); })
+      .map(lb=>({label:lb, bg:s.pickup===lb?'rgba(232,56,60,0.9)':'rgba(120,120,128,0.2)',
+        color:s.pickup===lb?'#fff':'rgba(235,235,245,0.7)', sel:()=>this.setState({pickup:lb})}));
+    const isSlot=slots.some(x=>x.label===s.pickup);
+    const pickups=[...[t.asap,'20 min','40 min'].map(p=>({label:p,
+      bg:s.pickup===p?'rgba(232,56,60,0.9)':'rgba(120,120,128,0.2)', color:s.pickup===p?'#fff':'rgba(235,235,245,0.7)',
+      sel:()=>this.setState({pickup:p, showSlots:false})})),
+      {label:t.exactT, bg:(s.showSlots||isSlot)?'rgba(232,56,60,0.9)':'rgba(120,120,128,0.2)',
+        color:(s.showSlots||isSlot)?'#fff':'rgba(235,235,245,0.7)', sel:()=>this.setState({showSlots:!s.showSlots})}];
+    const accepting=s.truckState==='abierto';
+    const doSend=()=>{
+      const id='#'+(1043+orders.length);
+      const o={id, phone:s.phone, lines:s.cart.map(x=>({n:x.n,q:x.q,p:x.p,extras:x.extras,notes:x.notes})),
+        total:finalTotal, wants:s.pickup, status:'nuevo', mine:true, coupon:applied?applied.name:null,
+        est:s.cart.some(x=>x.est), tip:tipAmount, pay:s.pay, at:Date.now(),
+        status:accepting?'nuevo':'programado'};
+      const st={orders:[...orders,o], cart:[], cartOpen:false, cTab:'menu', cat:null, useCoupon:false,
+        sending:false, sendError:false};
+      if(applied) st.redeemed={...s.redeemed,[applied.lv]:true};
+      this.setState(st);
+      if(accepting) this.toast('a', (lang==='es'?'Nuevo pedido ':'New order ')+id);
+      else this.toast('c', t.scheduledOk); };
+    const sendOrder=()=>{ if(!s.cart.length||s.sending||s.truckState==='cerrado') return;
+      this.setState({sending:true, sendError:false, tried:s.tried+1});
+      clearTimeout(this._tsend);
+      this._tsend=setTimeout(()=>{
+        if((this.props.simularError??false) && s.tried===0){ this.setState({sending:false, sendError:true}); return; }
+        doSend(); }, 950); };
+
+    // ── admin: pedidos
+    const stChips={nuevo:{chipBg:'rgba(232,56,60,0.18)',chipColor:'#ff8285',statusTxt:t.stNew},
+      confirmado:{chipBg:'rgba(94,210,255,0.13)',chipColor:'#5ed2ff',statusTxt:t.stConf},
+      contra:{chipBg:'rgba(232,184,75,0.16)',chipColor:'#E8B84B',statusTxt:t.stContra},
+      listo:{chipBg:'rgba(74,222,128,0.13)',chipColor:'#4ade80',statusTxt:t.stReady},
+      rechazado:{chipBg:'rgba(232,56,60,0.18)',chipColor:'#ff8285',statusTxt:t.stRej},
+      programado:{chipBg:'rgba(232,184,75,0.16)',chipColor:'#E8B84B',statusTxt:t.stSched}};
+    const lineTxt=(l)=>l.q+'× '+l.n+((l.extras&&l.extras.length)?' (+'+l.extras.map(e=>e.n).join(', ')+')':'')+(l.notes?' — '+l.notes:'');
+    const cPrice=s.counterPrice;
+    const KB=[{k:'todos',l:t.kbAll},{k:'nuevo',l:t.kbNew},{k:'prep',l:t.kbPrep},{k:'listo',l:t.kbDone}];
+    const kbOf=(st)=>(st==='nuevo'||st==='programado')?'nuevo':(st==='confirmado'||st==='contra')?'prep':'listo';
+    const kbCount=(k)=>orders.filter(o=>k==='todos'||kbOf(o.status)===k).length;
+    const kanban=KB.map(x=>({label:x.l+' '+kbCount(x.k), bg:s.kb===x.k?'rgba(232,56,60,0.85)':'rgba(120,120,128,0.2)',
+      color:s.kb===x.k?'#fff':'rgba(235,235,245,0.7)', sel:setS({kb:x.k})}));
+    const ageOf=(o)=>Math.max(0, Math.round((s.now-(o.at||s.now))/60000));
+    const aOrders=[...orders].filter(o=>s.kb==='todos'||kbOf(o.status)===s.kb).reverse().map(o=>({...o, ...stChips[o.status],
+      ageTxt:(o.status==='listo'||o.status==='rechazado')?t.closedO:(ageOf(o)<1?t.justNow:ageOf(o)+' min'),
+      ageBg:(o.status==='listo'||o.status==='rechazado')?'rgba(120,120,128,0.2)':ageOf(o)>=20?'rgba(232,56,60,0.18)':ageOf(o)>=10?'rgba(232,184,75,0.16)':'rgba(52,199,89,0.16)',
+      ageColor:(o.status==='listo'||o.status==='rechazado')?'rgba(235,235,245,0.65)':ageOf(o)>=20?'#ff8285':ageOf(o)>=10?'#E8B84B':'#34C759',
+      comanda:()=>this.setState({ticket:o.id}),
+      hasReview:!!s.reviews[o.id], reviewTxt:'★ '+(s.reviews[o.id]||''),
+      linesTxt:o.lines.map(lineTxt).join(' · ')+(o.coupon?(lang==='es'?' · Cupón: ':' · Coupon: ')+o.coupon:'')+(o.est?(lang==='es'?' · precio a confirmar':' · price to confirm'):'')+(o.pay?' · '+(o.pay==='efectivo'?t.cash:t.card):'')+(o.tip?' · '+(lang==='es'?'propina ':'tip ')+money(o.tip):''),
+      totalTxt:money(o.total),
+      isNew:o.status==='nuevo'&&s.counterFor!==o.id&&s.rejectFor!==o.id, counterOpen:s.counterFor===o.id, isConfirmed:o.status==='confirmado',
+      rejectOpenNow:s.rejectFor===o.id,
+      rejectOpen:()=>this.setState({rejectFor:o.id, rejectReason:null}),
+      rejectOpts:REASONS[lang].map(r=>({label:r, bg:s.rejectReason===r?'rgba(232,56,60,0.9)':'rgba(120,120,128,0.2)',
+        color:s.rejectReason===r?'#fff':'rgba(235,235,245,0.65)', sel:()=>this.setState({rejectReason:r})})),
+      sendReject:()=>{ const why=s.rejectReason||REASONS[lang][0];
+        updOrder(o.id,{status:'rechazado', why}); this.setState({rejectFor:null, rejectReason:null});
+        if(o.mine) this.push(t.notifRejT, why); },
+      confirm:()=>{ updOrder(o.id,{status:'confirmado'});
+        if(o.mine) this.push(t.notifConfT,(lang==='es'?'Tu pedido '+o.id+' estará listo en ':'Your order '+o.id+' will be ready in ')+o.wants); },
+      counter:()=>this.setState({counterFor:o.id, counterPrice:o.total}),
+      counterOpts:['30 min','45 min','1 h'].map(ti=>({label:ti, bg:s.counterTime===ti?'#E8B84B':'rgba(120,120,128,0.2)',
+        color:s.counterTime===ti?'#1a1206':'rgba(235,235,245,0.65)', sel:setS({counterTime:ti})})),
+      priceUp:()=>this.setState({counterPrice:(cPrice==null?o.total:cPrice)+1}),
+      priceDown:()=>this.setState({counterPrice:Math.max(0,(cPrice==null?o.total:cPrice)-1)}),
+      sendCounter:()=>{ const np=cPrice==null?o.total:cPrice;
+        updOrder(o.id,{status:'contra', counter:s.counterTime, counterPrice:np});
+        this.setState({counterFor:null});
+        if(o.mine) this.push(t.notifContraT, s.counterTime+' · '+money(np)+(lang==='es'?' — acepta o rechaza en tu pedido':' — accept or decline in your order')); },
+      ready:()=>{ updOrder(o.id,{status:'listo'});
+        if(o.mine){ const gain=Math.round(o.total);
+          this.setState({points:this.pts()+gain, history:[{...o,status:'listo'},...s.history]});
+          this.push(t.notifReadyT,(lang==='es'?'Pasa por él al truck · ganaste +':'Come pick it up · you earned +')+gain+' '+t.pts); } },
+    }));
+
+    // ── admin: menú
+    const NEXTST={ok:'today', today:'off', off:'ok'};
+    const STLBL={ok:t.avOk, today:t.avToday, off:t.avOff};
+    const STBG={ok:'rgba(52,199,89,0.16)', today:'rgba(232,184,75,0.16)', off:'rgba(232,56,60,0.16)'};
+    const STCO={ok:'#34C759', today:'#E8B84B', off:'#ff8285'};
+    const adminMenu=MENUX.map(c=>({name:c.name, items:c.subs.flatMap(sb=>sb.items).map(it=>{ const st=availOf(it.n); const pr=this.price(it.n,it.p);
+      return {n:it.n, priceTxt:money(pr), op:st==='off'?0.55:1,
+        stateLabel:STLBL[st], stateBg:STBG[st], stateColor:STCO[st],
+        toggle:()=>this.setState({avail:{...s.avail,[it.n]:NEXTST[st]}}),
+        up:()=>this.setState({prices:{...s.prices,[it.n]:pr+1}}),
+        down:()=>this.setState({prices:{...s.prices,[it.n]:Math.max(0.25,pr-1)}})};})}));
+    const addCats=MENUX.map(c=>({name:c.name, bg:s.addCat===c.id?'rgba(232,56,60,0.9)':'rgba(120,120,128,0.2)',
+      color:s.addCat===c.id?'#fff':'rgba(235,235,245,0.65)', sel:setS({addCat:c.id})}));
+    const addValid=s.addName.trim().length>1&&parseFloat(s.addPrice)>0;
+    const saveItem=()=>{ if(!addValid) return;
+      const c=MENUX.find(x=>x.id===s.addCat)||MENUX[0];
+      this.setState({newItems:[...s.newItems,{n:s.addName.trim(), p:parseFloat(s.addPrice), img:c.img, cat:s.addCat}],
+        addOpen:false, addName:'', addPrice:''});
+      this.toast('a',(lang==='es'?'Agregado al menú: ':'Added to menu: ')+s.addName.trim()); };
+
+    // ── base de clientes (el cliente demo es el del teléfono de la izquierda)
+    const ov=s.clOv||{};
+    const cData=(c)=>{ const o=ov[c.id]||{};
+      const pts=c.id==='me'?points:(o.points!=null?o.points:c.points);
+      const red=c.id==='me'?s.redeemed:(o.redeemed||c.redeemed||{});
+      return {id:c.id, name:c.name[lang], phone:c.id==='me'?s.phone:c.phone, visits:c.visits,
+        points:pts, lv:Math.min(15,Math.floor(pts/200)), redeemed:red, isMe:c.id==='me'}; };
+    const allClients=CLIENTS.map(cData);
+    const initialsOf=(n)=>n.replace(/[^\p{L} ]/gu,'').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+    const grantTo=(id,g)=>{ if(id==='me'){ this.setState({points:this.pts()+g,
+        activity:[{txt:'+'+g+(lang==='es'?' puntos otorgados':' points granted')},...(s.activity||[])].slice(0,5)});
+        this.push(t.notifPtsT,'+'+g+' '+t.pts+(lang==='es'?' de parte del truck':' from the truck')); return; }
+      const cur=allClients.find(c=>c.id===id);
+      this.setState({clOv:{...ov,[id]:{...(ov[id]||{}), points:cur.points+g, redeemed:cur.redeemed}}});
+      this.toast('a','+'+g+' '+t.pts+' · '+cur.name); };
+    const redeemFor=(id,lv,name)=>()=>{ if(id==='me'){
+        this.setState({redeemed:{...s.redeemed,[lv]:true},
+          activity:[{txt:(lang==='es'?'Cupón nivel ':'Level ')+lv+(lang==='es'?' canjeado':' coupon redeemed')},...(s.activity||[])].slice(0,5)});
+        this.toast('a',(lang==='es'?'Cupón canjeado: ':'Coupon redeemed: ')+name);
+        this.push(t.notifCoupT, name); return; }
+      const cur=allClients.find(c=>c.id===id);
+      this.setState({clOv:{...ov,[id]:{points:cur.points, redeemed:{...cur.redeemed,[lv]:1}}}});
+      this.toast('a',(lang==='es'?'Canjeado: ':'Redeemed: ')+name+' · '+cur.name); };
+
+    // ── lista de clientes
+    const qs=(s.clSearch||'').toLowerCase();
+    const clientsList=allClients.filter(c=>!qs||c.name.toLowerCase().includes(qs)||c.phone.includes(qs))
+      .sort((a,b)=>b.points-a.points)
+      .map(c=>({name:c.name, phone:c.phone, initials:c.isMe?'★':initialsOf(c.name),
+        initColor:c.isMe?'#E8B84B':'#fff', pointsTxt:c.points.toLocaleString(), lv:String(c.lv),
+        visitsTxt:c.visits+(lang==='es'?' visitas':' visits'), open:setS({clOpen:c.id})}));
+    const cd=s.clOpen?allClients.find(c=>c.id===s.clOpen):null;
+    const clDetail=cd?{name:cd.name, phone:cd.phone, initials:cd.isMe?'★':initialsOf(cd.name),
+      pointsTxt:cd.points.toLocaleString(), lv:String(cd.lv), visitsTxt:cd.visits+(lang==='es'?' visitas':' visits')}:{};
+    const clCoupons=cd?REWARDS[lang].map((n,i)=>({lv:i+1,name:n}))
+      .filter(c=>c.lv<=cd.lv&&!cd.redeemed[c.lv])
+      .map(c=>({lv:String(c.lv), name:c.name, redeem:redeemFor(cd.id,c.lv,c.name)})):[];
+    const clUsed=cd?REWARDS[lang].map((n,i)=>({lv:i+1,name:n}))
+      .filter(c=>c.lv<=cd.lv&&!!cd.redeemed[c.lv]).reverse()
+      .map(c=>({lv:String(c.lv), name:c.name})):[];
+    const grants=[50,100,250].map(g=>({label:'+'+g, give:()=>grantTo(s.clOpen||'me', g)}));
+    const customVal=parseInt(s.customPts,10);
+    const customOk=!isNaN(customVal)&&customVal>0;
+    const clActivity=cd?(cd.isMe?(s.activity||[{txt:lang==='es'?'Cupón nivel 2 canjeado':'Level 2 coupon redeemed'},{txt:lang==='es'?'Pedido #1042 confirmado':'Order #1042 confirmed'},{txt:lang==='es'?'+42 puntos por compra':'+42 points from purchase'}])
+      :[{txt:(lang==='es'?'Última visita · hace 3 días':'Last visit · 3 days ago')},
+        {txt:cd.visits+(lang==='es'?' pedidos en total':' orders in total')},
+        {txt:(lang==='es'?'Nivel ':'Level ')+cd.lv+(lang==='es'?' alcanzado':' reached')}]):[];
+
+    // ── escáner
+    const scanned=s.scan==='done';
+    const doScan=()=>{ if(s.scan==='busy') return;
+      if(scanned){ this.setState({scan:'idle'}); return; }
+      this.setState({scan:'busy'});
+      clearTimeout(this._ts); this._ts=setTimeout(()=>this.setState({scan:'done'}), 1400); };
+    const scanCoupons=REWARDS[lang].map((n,i)=>({lv:i+1,name:n})).filter(c=>cStat(c.lv)==='ok')
+      .map(c=>({lv:String(c.lv), name:c.name, redeem:redeemFor('me',c.lv,c.name)}));
+
+    // ── onboarding
+    const obPhoneOk=s.obPhone.replace(/\D/g,'').length>=7;
+    const obCodeOk=s.obCode.length===4;
+    const obBoxes=[0,1,2,3].map(i=>({ch:s.obCode[i]||'', border:s.obCode.length===i?'#E8383C':'rgba(255,255,255,0.10)'}));
+    const obKeys=['1','2','3','4','5','6','7','8','9','','0','⌫'].map(k=>({label:k,
+      bg:k?'#1C1C1E':'transparent',
+      press:()=>{ if(!k) return;
+        if(k==='⌫') this.setState({obCode:s.obCode.slice(0,-1)});
+        else if(s.obCode.length<4) this.setState({obCode:s.obCode+k}); }}));
+    const obNext=()=>{ if(s.obStep==='phone'){ if(obPhoneOk) this.setState({obStep:'code'}); }
+      else if(obCodeOk){ const digits=s.obPhone.replace(/\D/g,'');
+        const fmt=digits.length===10?digits.slice(0,3)+'-'+digits.slice(3,6)+'-'+digits.slice(6):s.obPhone;
+        this.setState({ob:false, phone:fmt});
+        this.push(lang==='es'?'¡Listo!':'All set!', lang==='es'?'Tu cuenta quedó ligada a este teléfono.':'Your account is linked to this phone.'); } };
+
+    // ── tabs
+    const mkTab=(key,label,cur,go)=>({label, go, bg:cur===key?'rgba(232,56,60,0.85)':'transparent',
+      color:cur===key?'#fff':'rgba(235,235,245,0.55)'});
+    const cTabs=[mkTab('menu',t.tabMenu,s.cTab,setS({cTab:'menu'})), mkTab('visita',t.tabVisit,s.cTab,setS({cTab:'visita'})),
+      mkTab('premios',t.tabRew,s.cTab,setS({cTab:'premios'})), mkTab('ajustes',t.tabSet,s.cTab,setS({cTab:'ajustes'}))];
+    const newCount=orders.filter(o=>o.status==='nuevo').length;
+    const aTabs=[{...mkTab('pedidos',t.aOrders,s.aTab,setS({aTab:'pedidos'})), badge:newCount?String(newCount):null},
+      mkTab('menu',t.aMenu,s.aTab,setS({aTab:'menu'})), mkTab('escaner',t.aScan,s.aTab,setS({aTab:'escaner'})),
+      mkTab('clientes',t.aClients,s.aTab,setS({aTab:'clientes'}))];
+    const qr=(d)=>'https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=6&data='+encodeURIComponent(d);
+    const couponName=s.couponOpen?REWARDS[lang][s.couponOpen-1]:'';
+    const waitOpts=['15 min','20 min','30 min','45 min'].map(w=>({label:w,
+      bg:s.wait===w?'rgba(232,56,60,0.85)':'rgba(120,120,128,0.2)', color:s.wait===w?'#fff':'rgba(235,235,245,0.65)',
+      sel:setS({wait:w})}));
+
+    return { t,
+      points:points.toLocaleString(), level:String(level), progressPct,
+      nextTxt:level>=15?(lang==='es'?'¡Nivel máximo alcanzado!':'Max level reached!'):((level+1)*200-points)+(lang==='es'?' pts para el nivel ':' pts to level ')+(level+1),
+      isMenu:s.cTab==='menu', isVisit:s.cTab==='visita', isRew:s.cTab==='premios', isSet:s.cTab==='ajustes',
+      noCat:!cat&&!qq, inCat:!!cat&&!qq, catName:cat?cat.name:'', closeCat:setS({cat:null}),
+      q:s.q, qType:(e)=>this.setState({q:e.target.value}), qClear:setS({q:''}),
+      searching:!!qq, results, noResults:!!qq&&!results.length,
+      resultsTxt:results.length+(lang==='es'?' resultados':' results'),
+      cats, catFirst:cats[0], catsRest:cats.slice(1), subs, items, cTabs, aTabs,
+      statusDot:TS[s.truckState].dot, statusTxt:TS[s.truckState].client, waitTxt:s.wait,
+      catBuildable:!!cat&&(cat.id==='combos'||cat.id==='burritos'),
+      buildHereTxt:cat&&cat.id==='burritos'?(lang==='es'?'Arma tu burrito':'Create your own burrito'):(lang==='es'?'Arma tu combo':'Create your own combo'),
+      openBuilderCombo:()=>this.setState({builder:{type:'combo',picks:[]}}),
+      openBuilderHere:()=>this.setState({builder:{type:cat&&cat.id==='burritos'?'burrito':'combo',picks:[]}}),
+      builderOpen:!!b, closeBuilder:setS({builder:null}), proteins,
+      builderHint:b&&b.type==='burrito'?t.pickBurrito:t.pickCombo,
+      comboModeBg:b&&b.type==='combo'?'rgba(232,56,60,0.9)':'transparent', comboModeColor:b&&b.type==='combo'?'#fff':'rgba(235,235,245,0.6)',
+      burritoModeBg:b&&b.type==='burrito'?'rgba(232,56,60,0.9)':'transparent', burritoModeColor:b&&b.type==='burrito'?'#fff':'rgba(235,235,245,0.6)',
+      setComboMode:()=>this.setState({builder:{type:'combo',picks:[]}}), setBurritoMode:()=>this.setState({builder:{type:'burrito',picks:[]}}),
+      builderPickTxt:picks.length?bNames:(lang==='es'?'Nada elegido todavía':'Nothing picked yet'),
+      builderNote:!bValid?'':(listed!=null?t.listed:t.estimated),
+      builderPrice:bValid?money(bPrice):'—',
+      builderBtnBg:bValid?'linear-gradient(180deg,#E8383C,#C81E23)':'rgba(120,120,128,0.24)',
+      builderBtnColor:bValid?'#fff':'rgba(235,235,245,0.4)',
+      builderBtnTxt:bValid?(t.add+' · '+money(bPrice)):t.buildTitle, builderAdd,
+      activeOrders:my.filter(o=>o.status!=='rechazado'&&!(o.status==='listo'&&s.reviews[o.id])).reverse().map(o=>({
+        id:o.id, ...stChips[o.status],
+        lineTxt:o.lines.map(l=>l.q+'× '+l.n).join(' · ')+' — '+money(o.total),
+        statusLine:o.status==='confirmado'?stMap.confirmado+o.wants
+          :o.status==='contra'?stMap.contra+o.counter+(o.counterPrice!=null?' · '+money(o.counterPrice):'')
+          :stMap[o.status],
+        isContra:o.status==='contra',
+        inQueue:o.status==='nuevo'||o.status==='confirmado',
+        queueTxt:(lang==='es'?'Eres el pedido ':'You are order ')+(qPos(o)+1)+(lang==='es'?' de ':' of ')+qTotal,
+        queueDots:Array.from({length:Math.min(6,qTotal)},(_,i)=>({c:i===qPos(o)?'#E8B84B':'rgba(235,235,245,0.22)'})),
+        canReview:o.status==='listo'&&!s.reviews[o.id],
+        reviewed:!!s.reviews[o.id], reviewTxt:'★'.repeat(s.reviews[o.id]||0)+' '+t.thanksReview,
+        stars:[1,2,3,4,5].map(v=>({color:(s.reviews[o.id]||0)>=v?'#E8B84B':'rgba(235,235,245,0.28)',
+          set:()=>{ this.setState({reviews:{...s.reviews,[o.id]:v}, points:this.pts()+10});
+            this.toast('c', t.thanksReview+' +10 '+t.pts);
+            this.toast('a', (lang==='es'?'Nueva reseña ':'New review ')+o.id+': '+v+'★'); }})),
+        accept:()=>{ updOrder(o.id,{status:'confirmado', wants:o.counter, total:o.counterPrice!=null?o.counterPrice:o.total});
+          this.toast('a', lang==='es'?'Cliente aceptó la contraoferta':'Client accepted the counteroffer'); },
+        reject:()=>{ this.setState({orders:orders.filter(x=>x.id!==o.id)});
+          this.toast('a', lang==='es'?'Cliente canceló el pedido':'Client canceled the order'); },
+      })),
+      hasCart:s.cart.length>0&&!s.cartOpen, cartCount:String(s.cart.reduce((a,x)=>a+x.q,0)),
+      openCart:setS({cartOpen:true}), closeCart:setS({cartOpen:false}), cartOpen:s.cartOpen,
+      cartItems:s.cart.map((x,i)=>({n:x.n, q:String(x.q), detail:money(lineTotal(x))+((x.extras&&x.extras.length)?' · '+x.extras.map(e=>e.n).join(', '):'')+(x.notes?' · '+x.notes:''),
+        inc:()=>{ const c=[...s.cart]; c[i]={...c[i],q:c[i].q+1}; this.setState({cart:c}); },
+        dec:()=>{ let c=[...s.cart]; if(c[i].q>1) c[i]={...c[i],q:c[i].q-1}; else c=c.filter((_,j)=>j!==i); this.setState({cart:c}); }})),
+      cartTotal:money(finalTotal), pickups, sendOrder, slots, showSlots:s.showSlots||isSlot,
+      refOpen:s.refOpen, openRef:setS({refOpen:true}), closeRef:setS({refOpen:false}),
+      refCode:'HIBACHI-'+s.phone.replace(/\D/g,'').slice(-4),
+      refCountTxt:s.refCount+(lang==='es'?' amigos':' friends'),
+      shareRef:()=>{ this.setState({refCount:s.refCount+1, points:this.pts()+100, refOpen:false});
+        this.toast('c','+100 '+t.pts+' · '+t.referShared); },
+      sendBtnBg:s.truckState==='cerrado'?'rgba(120,120,128,0.24)':accepting?'linear-gradient(180deg,#E8383C,#C81E23)':'rgba(232,184,75,0.9)',
+      sendBtnColor:s.truckState==='cerrado'?'rgba(235,235,245,0.45)':accepting?'#fff':'#1a1206',
+      sendBtnTxt:s.sending?t.sendingB:s.truckState==='cerrado'?t.closedBtn:accepting?(s.sendError?t.retryB:t.send):t.scheduleB,
+      sending:s.sending, sendError:s.sendError,
+      canApplyCoupon:!!best, bestCouponName:best?best.name:'', couponApplied:!!applied,
+      toggleCoupon:()=>this.setState({useCoupon:!s.useCoupon}),
+      couponRowBg:applied?'rgba(232,184,75,0.12)':'rgba(120,120,128,0.16)',
+      couponCheckBorder:applied?'#E8B84B':'rgba(235,235,245,0.35)', couponCheckBg:applied?'#E8B84B':'transparent',
+      couponCheckMark:applied?'#1a1206':'transparent',
+      couponSaveTxt:best?('−'+money(Math.min(best.v,cartTotalN))):'',
+      discountTxt:money(discount), earnTxt:'+'+Math.round(afterDisc)+' '+t.pts,
+      pays, tips, tipAmountTxt:money(tipAmount), cartEmpty:!s.cart.length,
+      prodTags:s.prod?[{label:'Halal', bg:'rgba(52,199,89,0.14)', color:'#34C759'},
+        ...TAGS(s.prod.n).map(k=>({label:TAGL[k][lang], bg:'rgba(232,184,75,0.14)', color:'#E8B84B'}))]:[],
+      hasFavs:favItems.length>0, favItems,
+      hasLast:!!s.history.length,
+      lastOrderTxt:s.history.length?s.history[0].lines.map(l=>l.q+'× '+l.n).join(' · '):'',
+      repeatLast:()=>{ const h=s.history[0]; if(!h) return;
+        this.setState({cart:h.lines.map(l=>({n:l.n,p:l.p,q:l.q,extras:l.extras||[],notes:l.notes||''})), cartOpen:true}); },
+      goTakeout:setS({cTab:'menu', cat:null}), goRewards:setS({cTab:'premios'}),
+      prodOpen:!!s.prod, prodName:s.prod?s.prod.n:'', prodDesc:s.prod?s.prod.desc:'', prodImg:s.prod?s.prod.img:'',
+      prodPrice:s.prod?money(prodBase):'', prodQty:String(opt.q), prodNotes:opt.notes, extras,
+      prodTotal:money((prodBase+extraSum)*opt.q),
+      qtyInc:()=>this.setState({opt:{...opt,q:opt.q+1}}),
+      qtyDec:()=>this.setState({opt:{...opt,q:Math.max(1,opt.q-1)}}),
+      notesType:(e)=>this.setState({opt:{...opt,notes:e.target.value}}),
+      prodAdd:()=>s.prod&&pushCart({n:s.prod.n, p:prodBase, q:opt.q, extras:opt.extras, notes:opt.notes}),
+      closeProd:()=>this.setState({prod:null, opt:null}),
+      pieces, coupons, couponsCountTxt:availCount+(lang==='es'?' cupones disponibles':' coupons available'),
+      hasExpiring:!!soonest,
+      expiringTxt:soonest?(lang==='es'?'«'+soonest.name+'» vence en '+SOON[soonest.lv]+' días. Úsalo en tu próxima visita.'
+        :'"'+soonest.name+'" expires in '+SOON[soonest.lv]+' days. Use it on your next visit.'):'',
+      couponOpen:!!s.couponOpen, couponLv:String(s.couponOpen||''), couponName,
+      couponQrUrl:qr('HIBACHI-CUPON-L'+(s.couponOpen||0)+'-'+s.phone), couponCode:'HIBACHI-CUPON-L'+(s.couponOpen||0)+'-'+s.phone,
+      clientQrUrl:qr('HIBACHI-CLIENTE-'+s.phone), closeCoupon:setS({couponOpen:null}),
+      historyOpen:s.historyOpen, openHistory:setS({historyOpen:true}), closeHistory:setS({historyOpen:false}),
+      historyCountTxt:s.history.length+(lang==='es'?' pedidos':' orders'), noHistory:!s.history.length,
+      history:s.history.map(h=>({id:h.id, totalTxt:money(h.total), linesTxt:h.lines.map(lineTxt).join(' · '),
+        reorder:()=>{ this.setState({cart:h.lines.map(l=>({n:l.n,p:l.p,q:l.q,extras:l.extras||[],notes:l.notes||''})),
+          historyOpen:false, cartOpen:true}); }})),
+      phone:s.phone, phoneEditing:s.phoneEdit, phoneNotEditing:!s.phoneEdit, phoneDraft:s.phoneDraft,
+      phoneEditStart:setS({phoneEdit:true, phoneDraft:s.phone}),
+      phoneType:(e)=>this.setState({phoneDraft:e.target.value}),
+      phoneSave:()=>{ this.setState({phone:s.phoneDraft||s.phone, phoneEdit:false}); this.toast('c', lang==='es'?'Teléfono actualizado':'Phone updated'); },
+      langEs:setS({lang:'es'}), langEn:setS({lang:'en'}),
+      esBg:lang==='es'?'rgba(232,56,60,0.9)':'transparent', esColor:lang==='es'?'#fff':'rgba(235,235,245,0.6)',
+      enBg:lang==='en'?'rgba(232,56,60,0.9)':'transparent', enColor:lang==='en'?'#fff':'rgba(235,235,245,0.6)',
+      toastC:s.toastC, toastA:s.toastA,
+      notifOpen:!!s.notif, notifTitle:s.notif?s.notif.title:'', notifBody:s.notif?s.notif.body:'',
+      dismissNotif:setS({notif:null}),
+      obOpen:this.obOn(), obIsPhone:s.obStep==='phone', obIsCode:s.obStep==='code',
+      obTitle:s.obStep==='phone'?t.obT1:t.obT2, obSub:s.obStep==='phone'?t.obS1:t.obS2,
+      obPhone:s.obPhone, obPhoneType:(e)=>this.setState({obPhone:e.target.value}), obBoxes, obKeys, obNext,
+      obBtnTxt:s.obStep==='phone'?t.obB1:t.obB2,
+      obBtnBg:(s.obStep==='phone'?obPhoneOk:obCodeOk)?'linear-gradient(180deg,#E8383C,#C81E23)':'rgba(120,120,128,0.24)',
+      obBtnColor:(s.obStep==='phone'?obPhoneOk:obCodeOk)?'#fff':'rgba(235,235,245,0.4)',
+      obSkip:()=>this.setState({ob:false}),
+      aIsOrders:s.aTab==='pedidos', aIsMenu:s.aTab==='menu',
+      aIsClients:s.aTab==='clientes', aIsScan:s.aTab==='escaner',
+      orders:aOrders, noOrders:!aOrders.length, adminMenu, grants, kanban,
+      ticketOpen:!!s.ticket, closeTicket:setS({ticket:null}),
+      ticket:(()=>{ const o=orders.find(x=>x.id===s.ticket); if(!o) return {lines:[]};
+        return {id:o.id, phone:o.phone, wants:(lang==='es'?'Recoger: ':'Pickup: ')+o.wants,
+          time:hhmm(new Date(o.at||s.now)), totalTxt:money(o.total),
+          payTxt:(o.pay==='efectivo'?t.cash:t.card)+(o.tip?' · '+(lang==='es'?'propina ':'tip ')+money(o.tip):'')+(o.coupon?' · '+o.coupon:''),
+          lines:o.lines.map(l=>({q:String(l.q), n:l.n, priceTxt:money(l.p*l.q),
+            hasNote:!!((l.extras&&l.extras.length)||l.notes),
+            note:[...(l.extras||[]).map(e=>e.n), l.notes].filter(Boolean).join(' · ')}))}; })(),
+      printTicket:()=>{ this.setState({ticket:null}); this.toast('a', t.printed); },
+      addOpen:s.addOpen, openAddItem:setS({addOpen:true}), closeAddItem:setS({addOpen:false}),
+      addName:s.addName, addNameType:(e)=>this.setState({addName:e.target.value}),
+      addPrice:s.addPrice, addPriceType:(e)=>this.setState({addPrice:e.target.value}),
+      addCats, saveItem, saveBtnBg:addValid?'linear-gradient(180deg,#E8383C,#C81E23)':'rgba(120,120,128,0.24)',
+      saveBtnColor:addValid?'#fff':'rgba(235,235,245,0.4)',
+      customPts:s.customPts, customPtsType:(e)=>this.setState({customPts:e.target.value}),
+      giveCustom:()=>{ if(!customOk) return; grantTo(s.clOpen||'me', customVal); this.setState({customPts:''}); },
+      customBtnBg:customOk?'rgba(232,184,75,0.9)':'rgba(120,120,128,0.24)',
+      customBtnColor:customOk?'#1a1206':'rgba(235,235,245,0.4)',
+      clUsed, noClUsed:!clUsed.length,
+      clientsList, noClients:!clientsList.length, clientsCountTxt:allClients.length+(lang==='es'?' clientes':' clients'),
+      clSearch:s.clSearch, clSearchType:(e)=>this.setState({clSearch:e.target.value}),
+      clOpen:!!cd, closeClient:setS({clOpen:null}), clDetail, clCoupons, noClCoupons:!clCoupons.length, clActivity,
+      counterPriceTxt:money(cPrice==null?0:cPrice),
+      truckStateTxt:TS[s.truckState].sub, truckDot:TS[s.truckState].dot,
+      truckStates:['abierto','pausado','cerrado'].map(k=>({label:TS[k].label,
+        bg:s.truckState===k?TS[k].chip:'rgba(120,120,128,0.2)', color:s.truckState===k?TS[k].chipC:'rgba(235,235,245,0.7)',
+        sel:()=>{ const patch={truckState:k};
+          if(k==='abierto'){ const q=orders.filter(o=>o.status==='programado');
+            if(q.length){ patch.orders=orders.map(o=>o.status==='programado'?{...o,status:'nuevo',at:Date.now()}:o);
+              this.toast('a',q.length+(lang==='es'?' pedidos programados entraron':' scheduled orders came in')); } }
+          this.setState(patch); }})),
+      waitOpts,
+      address:s.address, hours:s.hours, days:s.days,
+      mapLabel:s.address.split(',')[0].toUpperCase(),
+      wazeUrl:'https://waze.com/ul?q='+encodeURIComponent(s.address)+'&navigate=yes',
+      gmapsUrl:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.address),
+      amapsUrl:'https://maps.apple.com/?q='+encodeURIComponent(s.address),
+      placeOpen:s.placeOpen, openPlace:()=>this.setState({placeOpen:true, addrDraft:s.address, hoursDraft:s.hours, daysDraft:s.days}),
+      closePlace:setS({placeOpen:false}),
+      addrDraft:s.addrDraft??s.address, hoursDraft:s.hoursDraft??s.hours, daysDraft:s.daysDraft??s.days,
+      addrType:(e)=>this.setState({addrDraft:e.target.value}),
+      hoursType:(e)=>this.setState({hoursDraft:e.target.value}),
+      daysType:(e)=>this.setState({daysDraft:e.target.value}),
+      savePlace:()=>{ this.setState({address:(s.addrDraft??s.address)||s.address, hours:(s.hoursDraft??s.hours)||s.hours,
+        days:(s.daysDraft??s.days)||s.days, placeOpen:false});
+        this.toast('a', t.placeSaved); this.push(t.placeMoved, (s.addrDraft??s.address)); },
+      dayNoteDraft:s.dayNote, dayNoteType:(e)=>this.setState({dayNote:e.target.value}),
+      hasDayNote:!!s.dayNote.trim(), dayNote:s.dayNote,
+      scanning:s.scan==='busy', scanned,
+      scanHint:s.scan==='busy'?t.scanBusy:scanned?t.scanDone:t.scanIdle,
+      scanBtnTxt:scanned?t.scanAgain:t.scanBtn, doScan, scanCoupons, noScanCoupons:!scanCoupons.length,
+      todayTxt:lang==='es'?'Hoy · 12–10 PM':'Today · 12–10 PM' };
+  }
+}
+</script>
+</body>
+</html>

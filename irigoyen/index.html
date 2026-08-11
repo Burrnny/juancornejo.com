@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Propuesta privada: accesible con el enlace, fuera de buscadores. -->
+<meta name="robots" content="noindex, nofollow">
+<!-- CSP propia de esta ruta: el prototipo compila JSX en el navegador con Babel
+     ('unsafe-eval') y el mapa carga teselas de OpenStreetMap. El resto del sitio
+     sigue con default-src 'none'. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://tile.openstreetmap.org; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Team Irigoyen &middot; Prototipo de apps</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="vendor/fonts/set1.css" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>body{margin:0;background:#060504}a{color:#C6A15B;text-decoration:none}a:hover{color:#D4B06A}*{scrollbar-width:none}*::-webkit-scrollbar{display:none}
+@keyframes tiRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tiFade{from{opacity:0}to{opacity:1}}
+@keyframes tiPulse{0%,100%{opacity:.45}50%{opacity:1}}</style>
+</helmet>
+<div style="min-height:100vh;box-sizing:border-box;background:radial-gradient(1100px 520px at 50% -8%,rgba(198,161,91,.08),transparent 60%),#060504;display:flex;flex-wrap:wrap;gap:64px;justify-content:center;align-items:flex-start;padding:56px 40px 80px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;color:#F5EFE3">
+  <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px">
+    <img src="assets/logo.jpeg" alt="Team Irigoyen" style="width:150px;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.5)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:44px;height:1px;background:linear-gradient(90deg,transparent,#C6A15B)"></div>
+      <div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:5px;color:#EAD9B0">TWO-APP EXPERIENCE</div>
+      <div style="width:44px;height:1px;background:linear-gradient(270deg,transparent,#C6A15B)"></div>
+    </div>
+    <div style="font-size:12px;color:rgba(245,239,227,.5);letter-spacing:.4px">Client &amp; Admin · Los Angeles · EN / ES · Actions sync live between the two phones</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;align-items:center;animation:tiRise .5s ease both">
+    <div style="display:flex;align-items:baseline;gap:9px">
+      <span style="font-size:10px;letter-spacing:3.5px;color:#C6A15B;font-weight:700">CLIENT APP</span>
+      <span style="font-family:'Cinzel',serif;font-size:15px;font-style:italic;color:rgba(245,239,227,.6)">{{ clientName }}</span>
+    </div>
+    <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+      <div style="height:100%;position:relative;background:#0A0908;color:#F5EFE3;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif">
+
+        <sc-if value="{{ cvWelcome }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;overflow-y:auto">
+            <div style="position:relative;height:352px;flex:none;background:repeating-linear-gradient(45deg,rgba(198,161,91,.12) 0 12px,rgba(198,161,91,.04) 12px 24px)"><image-slot id="hero-welcome" src="assets/fotos/1509600110300-21b9d5fedeb7.jpg" credit="Photo by Jesse Gardner on Unsplash" credit-href="https://unsplash.com/@plasticmind" placeholder="Cover photo — drag &amp; drop" style="position:absolute;inset:0"></image-slot>
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,8,.62) 0%,rgba(10,9,8,.12) 38%,rgba(10,9,8,.99) 97%);pointer-events:none"></div>
+              
+              <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:40px"><img src="assets/mark-gold.png" alt="" style="height:64px">
+                <div style="font-family:'Cinzel',serif;font-size:22px;letter-spacing:5px;color:#FFFFFF;text-shadow:0 2px 14px rgba(0,0,0,.7)">TEAM IRIGOYEN</div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:1px;background:#C6A15B"></div>
+                  <div style="font-size:9.5px;letter-spacing:3.5px;color:#D4B06A;font-weight:600">REALTY ONE GROUP ELITE</div>
+                  <div style="width:34px;height:1px;background:#C6A15B"></div>
+                </div>
+              </div>
+              <div onClick="{{ toggleLang }}" style="position:absolute;top:66px;right:16px;padding:6px 12px;border-radius:999px;background:rgba(10,9,8,.5);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:11px;font-weight:700;color:#D4B06A;letter-spacing:1px;cursor:pointer">{{ langPill }}</div>
+            </div>
+            <div style="position:relative;margin-top:-64px;text-align:center;padding:0 30px">
+              <h1 style="margin:0;font-family:'Cinzel',serif;font-weight:500;font-size:18px;line-height:1.3;letter-spacing:.5px;text-wrap:pretty">{{ t.welH1a }}<br><em style="color:#D4B06A">{{ t.welH1b }}</em></h1>
+              <p style="margin:14px auto 0;font-size:14px;line-height:1.6;color:rgba(245,239,227,.55);max-width:300px">{{ welSub }}</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin:26px 36px 0">
+              <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(198,161,91,.6))"></div>
+              <span style="font-size:10px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ t.welAccess }}</span>
+              <div style="flex:1;height:1px;background:linear-gradient(270deg,transparent,rgba(198,161,91,.6))"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;padding:20px 26px 0">
+              <div onClick="{{ goCode }}" style-active="transform:scale(.98)" style="height:54px;border-radius:999px;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;letter-spacing:1.5px;background:rgba(198,161,91,.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer">{{ t.welCode }}</div>
+              <div onClick="{{ scanQr }}" style-active="transform:scale(.98)" style="height:54px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;color:rgba(245,239,227,.65);background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);cursor:pointer">
+                <span style="position:relative;width:16px;height:16px;display:inline-block;color:rgba(245,239,227,.7)"><span style="position:absolute;top:0;left:0;width:6px;height:6px;border:1.5px solid currentColor;box-sizing:border-box"></span><span style="position:absolute;top:0;right:0;width:6px;height:6px;border:1.5px solid currentColor;box-sizing:border-box"></span><span style="position:absolute;bottom:0;left:0;width:6px;height:6px;border:1.5px solid currentColor;box-sizing:border-box"></span><span style="position:absolute;bottom:0;right:0;width:3px;height:3px;background:currentColor"></span><span style="position:absolute;bottom:4.5px;right:4.5px;width:3px;height:3px;background:currentColor"></span><span style="position:absolute;bottom:0;right:6px;width:3px;height:3px;background:currentColor"></span></span>
+                {{ t.welQr }}
+              </div>
+            </div>
+            <div style="margin-top:auto;display:flex;justify-content:center;padding:24px 28px 46px">
+              <span style="font-size:10px;letter-spacing:2px;color:rgba(245,239,227,.35)">REALTY ONE GROUP ELITE · LOS ANGELES</span>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ cvCode }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:70px 24px 40px;animation:tiFade .25s ease both">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div onClick="{{ goWelcome }}" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:19px;color:rgba(245,239,227,.7);cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)">‹</div>
+              <div style="font-family:'Cinzel',serif;font-size:12px;letter-spacing:4px;color:#EAD9B0">TEAM IRIGOYEN</div>
+              <div style="width:40px"></div>
+            </div>
+            <div style="text-align:center;margin-top:36px">
+              <h2 style="margin:0;font-family:'Cinzel',serif;font-weight:500;font-size:21px">{{ t.codeTitle }}</h2>
+              <p style="margin:8px auto 0;font-size:13px;color:rgba(245,239,227,.5);max-width:250px;line-height:1.55">{{ codeSub }}</p>
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;align-items:flex-end;margin-top:34px">
+              <div style="font-family:'Cinzel',serif;font-size:22px;color:#C6A15B;padding-bottom:4px">TI –</div>
+              <sc-for list="{{ codeSlots }}" as="slot" hint-placeholder-count="4">
+                <div style="width:38px;height:46px;border-bottom:2px solid {{ slot.bd }};display:flex;align-items:flex-end;justify-content:center;font-family:'Cinzel',serif;font-size:24px;color:#EAD9B0;padding-bottom:2px">{{ slot.ch }}</div>
+              </sc-for>
+            </div>
+            <div style="height:22px;text-align:center;margin-top:16px;font-size:12px;color:#9DBF8E;letter-spacing:1px">{{ codeState }}</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:10px 18px 0;margin-top:auto">
+              <sc-for list="{{ keypad }}" as="k" hint-placeholder-count="12">
+                <div onClick="{{ k.tap }}" style-active="background:rgba(198,161,91,.18)" style="height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:500;color:#F5EFE3;background:{{ k.bg }};border:{{ k.bd }};cursor:pointer;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)">{{ k.label }}</div>
+              </sc-for>
+            </div>
+            <div style="text-align:center;padding:22px 0 6px;font-size:11px;color:rgba(245,239,227,.35)">{{ t.codeHint }}</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ cvMeet }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:76px 22px 46px;animation:tiFade .3s ease both;box-sizing:border-box">
+            <div style="display:flex;justify-content:center"><span style="padding:6px 14px;border-radius:999px;background:rgba(157,191,142,.13);border:1px solid rgba(157,191,142,.35);color:#9DBF8E;font-size:11px;font-weight:600;letter-spacing:1.5px">{{ t.meetChip }}</span></div>
+            <h1 style="margin:18px 0 0;text-align:center;font-family:'Cinzel',serif;font-weight:500;font-size:18px;line-height:1.3">{{ meetHi }}</h1>
+            <p style="margin:10px auto 0;text-align:center;font-size:13.5px;line-height:1.6;color:rgba(245,239,227,.55);max-width:290px">{{ meetSub }}</p>
+            <div style="margin-top:26px;padding:20px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)">
+              <div style="font-size:10px;letter-spacing:3px;color:#C6A15B;font-weight:600;margin-bottom:14px">{{ regTitle }}</div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ meetRows }}" as="r" hint-placeholder-count="5">
+                  <div style="display:flex;justify-content:space-between;gap:14px;font-size:13px">
+                    <span style="color:rgba(245,239,227,.5)">{{ r.k }}</span>
+                    <span style="text-align:right;color:#F5EFE3;font-weight:500">{{ r.v }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:rgba(245,239,227,.7);line-height:1.5">“{{ notes }}”</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin:26px 6px 0">
+              <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(198,161,91,.6))"></div>
+              <span style="font-size:10px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ t.meetHow }}</span>
+              <div style="flex:1;height:1px;background:linear-gradient(270deg,transparent,rgba(198,161,91,.6))"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px">
+              <sc-for list="{{ howSteps }}" as="s" hint-placeholder-count="3">
+                <div style="display:flex;gap:14px;align-items:flex-start">
+                  <div style="width:30px;height:30px;flex:none;border-radius:50%;border:1px solid rgba(198,161,91,.5);color:#D4B06A;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:16px">{{ s.n }}</div>
+                  <div>
+                    <div style="font-size:14px;font-weight:600">{{ s.t }}</div>
+                    <div style="font-size:12.5px;color:rgba(245,239,227,.5);line-height:1.5;margin-top:2px">{{ s.d }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ startApp }}" style-active="transform:scale(.98)" style="margin-top:28px;height:54px;border-radius:999px;background:linear-gradient(180deg,#E3C078,#A8853F);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 26px rgba(198,161,91,.3);color:#171106;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;letter-spacing:.5px;cursor:pointer">{{ t.meetCta }}</div>
+            <div style="text-align:center;margin-top:14px;font-size:11px;color:rgba(245,239,227,.35)">{{ meetPriv }}</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ cvApp }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+            <div style="flex:none;padding:64px 20px 10px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px"><img src="assets/mark-gold.png" alt="" style="height:26px"><div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:3.5px;color:#EAD9B0">TEAM IRIGOYEN</div></div>
+                <div style="display:flex;align-items:center;gap:7px;margin-top:3px">
+                  <div style="width:16px;height:1px;background:#C6A15B"></div>
+                  <div style="font-size:7.5px;letter-spacing:2.5px;color:#D4B06A;font-weight:600">REALTY ONE GROUP ELITE</div>
+                  <div style="width:16px;height:1px;background:#C6A15B"></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:9px;align-items:center">
+                <div onClick="{{ toggleLang }}" style="padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:10.5px;font-weight:700;color:#D4B06A;letter-spacing:1px;cursor:pointer">{{ langPill }}</div>
+              </div>
+            </div>
+
+            <div style="flex:1;position:relative;overflow:hidden;z-index:0">
+              <sc-if value="{{ ctabOffers }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;inset:0;overflow-y:auto;padding:8px 18px 130px;box-sizing:border-box">
+                  <h2 style="margin:6px 2px 2px;font-family:'Cinzel',serif;font-weight:500;font-size:20px;line-height:1.3">{{ forYouTitle }}</h2>
+                  <div style="font-size:12.5px;color:rgba(245,239,227,.5);margin:4px 2px 16px">{{ forYouSub }}</div>
+                  <sc-if value="{{ hasFavs }}" hint-placeholder-val="{{ false }}">
+                    <div onClick="{{ openCmp }}" style-active="transform:scale(.98)" style="display:flex;align-items:center;justify-content:space-between;margin:0 0 14px;padding:12px 16px;border-radius:16px;background:rgba(198,161,91,.08);border:1px solid rgba(198,161,91,.35);cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)">
+                      <span style="font-size:12.5px;color:#EAD9B0;font-weight:600">◆ {{ favCount }} {{ t.favLbl }}</span>
+                      <span style="font-size:12px;color:#D4B06A;font-weight:600">{{ t.cmpOpen }} ›</span>
+                    </div>
+                  </sc-if>
+                  <div style="display:flex;flex-direction:column;gap:16px">
+                    <sc-for list="{{ offers }}" as="o" hint-placeholder-count="3">
+                      <div onClick="{{ o.open }}" style-active="transform:scale(.985)" style="border-radius:24px;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;opacity:{{ o.op }}">
+                        <div style="position:relative;height:168px;background:repeating-linear-gradient(45deg,rgba(198,161,91,.13) 0 11px,rgba(198,161,91,.045) 11px 22px)"><image-slot id="{{ o.slotId }}" src="{{ o.img }}" credit="{{ o.imgCredit }}" credit-href="{{ o.imgHref }}" placeholder="{{ o.slotPh }}" style="position:absolute;inset:0"></image-slot>
+                          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,8,.15),rgba(10,9,8,.55));pointer-events:none"></div>
+                          
+                          <span style="position:absolute;top:12px;right:12px;padding:5px 11px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:1px;background:{{ o.stBg }};color:{{ o.stCol }};border:1px solid {{ o.stBd }}">{{ o.stL }}</span>
+                          <div onClick="{{ o.toggleFav }}" style="position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:50%;background:rgba(10,9,8,.55);border:1px solid rgba(198,161,91,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-size:14px;color:{{ o.favCol }};cursor:pointer">{{ o.favGlyph }}</div>
+                        </div>
+                        <div style="padding:16px 18px 17px">
+                          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+                            <span style="font-family:'Cinzel',serif;font-size:20px;color:#EAD9B0">{{ o.priceF }}</span>
+                            <span style="font-size:11px;letter-spacing:1.5px;color:#C6A15B;font-weight:600;text-transform:uppercase">{{ o.hood }}</span>
+                          </div>
+                          <div style="font-size:14px;margin-top:3px">{{ o.addr }}</div>
+                          <div style="display:flex;gap:14px;margin-top:9px;font-size:12px;color:rgba(245,239,227,.55)">
+                            <span>{{ o.beds }} bd</span><span>·</span><span>{{ o.baths }} ba</span><span>·</span><span>{{ o.sqftF }} sqft</span><span>·</span><span>{{ o.park }} pkg</span>
+                          </div>
+                          <sc-if value="{{ o.isVisit }}" hint-placeholder-val="{{ false }}">
+                            <div style="margin-top:12px;padding:9px 13px;border-radius:13px;background:rgba(157,191,142,.1);border:1px solid rgba(157,191,142,.3);font-size:12px;color:#9DBF8E;font-weight:600">✓ {{ t.visitOn }} {{ o.visit }}</div>
+                          </sc-if>
+                          <sc-if value="{{ o.hasQuote }}" hint-placeholder-val="{{ false }}">
+                            <div style="margin-top:12px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(245,239,227,.5);line-height:1.4">“{{ o.quote }}”</div>
+                          </sc-if>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="text-align:center;margin-top:22px;font-size:11.5px;color:rgba(245,239,227,.35);line-height:1.6">{{ moreSoon }}</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ctabMap }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0">
+                  <x-import component-from-global-scope="HouseMap" from="./leaflet-map.jsx" houses="{{ mapHouses }}" selected-id="{{ mapFocus }}" on-select="{{ mapSelect }}" interactive="{{ true }}" hint-size="100%,100%" style="position:absolute;inset:0"></x-import>
+                  <div style="position:absolute;top:8px;left:0;right:0;display:flex;justify-content:center;pointer-events:none">
+                    <span style="padding:8px 16px;border-radius:999px;background:rgba(10,9,8,.72);border:1px solid rgba(198,161,91,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:11.5px;color:#EAD9B0;letter-spacing:.5px;box-shadow:0 10px 26px rgba(0,0,0,.45)">{{ mapChip }}</span>
+                  </div>
+                  <sc-if value="{{ mapFocusHouse }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;left:14px;right:14px;bottom:118px;animation:tiRise .3s ease both">
+                      <div onClick="{{ mapOpenFocus }}" style="display:flex;gap:13px;align-items:center;padding:13px;border-radius:20px;background:rgba(13,12,10,.82);border:1px solid rgba(198,161,91,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);cursor:pointer;box-shadow:0 18px 40px rgba(0,0,0,.55)">
+                        <div style="width:88px;height:70px;flex:none;border-radius:13px;background-image:{{ mapFocusHouse.imgCss }};background-size:cover;background-position:center"></div>
+                        <div style="flex:1;min-width:0">
+                          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+                            <span style="font-family:'Cinzel',serif;font-size:19px;color:#EAD9B0">{{ mapFocusHouse.priceF }}</span>
+                            <span style="font-size:9.5px;letter-spacing:1px;color:#C6A15B;font-weight:600">{{ mapFocusHouse.stL }}</span>
+                          </div>
+                          <div style="font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ mapFocusHouse.addr }} · {{ mapFocusHouse.hood }}</div>
+                          <div style="font-size:11px;color:rgba(245,239,227,.55);margin-top:2px">{{ mapFocusHouse.beds }} bd · {{ mapFocusHouse.baths }} ba · {{ mapFocusHouse.sqftF }} sqft</div>
+                          <div style="display:inline-block;margin-top:6px;padding:5px 12px;border-radius:999px;background:rgba(198,161,91,.15);border:1px solid rgba(198,161,91,.45);font-size:11px;color:#EAD9B0;font-weight:600">{{ t.mapOpen }} ›</div>
+                        </div>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ctabChat }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+                  <div style="flex:none;display:flex;align-items:center;gap:11px;padding:6px 20px 12px;border-bottom:1px solid rgba(255,255,255,.07)">
+                    <div style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(198,161,91,.55);background:rgba(198,161,91,.12);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#EAD9B0">{{ agentInitials }}</div>
+                    <div>
+                      <div style="font-size:14.5px;font-weight:600">{{ agentName }}</div>
+                      <div style="font-size:11px;color:#9DBF8E">● {{ t.chatOnline }}</div>
+                    </div>
+                  </div>
+                  <div ref="{{ refGenC }}" style="flex:1;overflow-y:auto;padding:16px 16px 132px;display:flex;flex-direction:column;gap:10px;box-sizing:border-box">
+                    <sc-for list="{{ genMsgs }}" as="m" hint-placeholder-count="4">
+                      <sc-if value="{{ m.isSys }}" hint-placeholder-val="{{ false }}"><div style="align-self:center;font-size:10.5px;letter-spacing:1px;color:rgba(245,239,227,.4);padding:2px 0">{{ m.text }}</div></sc-if>
+                      <sc-if value="{{ m.isText }}" hint-placeholder-val="{{ true }}">
+                        <div style="align-self:{{ m.alignC }};max-width:78%;padding:11px 15px;border-radius:19px;background:{{ m.bgC }};border:1px solid {{ m.bdC }};font-size:13.5px;line-height:1.45">{{ m.text }}</div>
+                      </sc-if>
+                      <sc-if value="{{ m.isHouse }}" hint-placeholder-val="{{ false }}">
+                        <div onClick="{{ m.openC }}" style="align-self:{{ m.alignC }};width:82%;border-radius:19px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(198,161,91,.35);cursor:pointer">
+                          <div style="height:86px;background-image:{{ m.hImgCss }};background-size:cover;background-position:center;position:relative">
+                            <span style="position:absolute;top:9px;left:11px;font-size:9px;letter-spacing:1.5px;color:#D4B06A;font-weight:700">{{ t.msgListing }}</span>
+                          </div>
+                          <div style="padding:11px 14px 12px">
+                            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Cinzel',serif;font-size:19px;color:#EAD9B0">{{ m.hPriceF }}</span><span style="font-size:10px;color:#C6A15B;font-weight:600">{{ m.hHood }}</span></div>
+                            <div style="font-size:12.5px;margin-top:2px">{{ m.hAddr }}</div>
+                            <div style="font-size:11px;color:#D4B06A;font-weight:600;margin-top:5px">{{ t.msgView }} ›</div>
+                          </div>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ m.isPhotos }}" hint-placeholder-val="{{ false }}">
+                        <div style="align-self:{{ m.alignC }};width:82%;display:flex;flex-direction:column;gap:7px">
+                          <div style="display:flex;gap:6px">
+                            <sc-for list="{{ m.thumbs }}" as="th" hint-placeholder-count="3">
+                              <div style="flex:1;height:66px;border-radius:13px;background:repeating-linear-gradient(45deg,rgba(198,161,91,.15) 0 8px,rgba(198,161,91,.05) 8px 16px);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:8px;color:rgba(245,239,227,.4)">photo</div>
+                            </sc-for>
+                          </div>
+                          <div onClick="{{ m.openC }}" style="align-self:flex-start;padding:4px 11px;border-radius:999px;background:rgba(198,161,91,.12);border:1px solid rgba(198,161,91,.3);font-size:10.5px;color:#D4B06A;font-weight:600;cursor:pointer">⌂ {{ m.hAddr }}</div>
+                        </div>
+                      </sc-if>
+                      <sc-if value="{{ m.isVideo }}" hint-placeholder-val="{{ false }}">
+                        <div style="align-self:{{ m.alignC }};width:82%;display:flex;flex-direction:column;gap:7px">
+                          <div style="position:relative;height:132px;border-radius:17px;background:repeating-linear-gradient(45deg,rgba(198,161,91,.13) 0 10px,rgba(198,161,91,.05) 10px 20px);border:1px solid rgba(255,255,255,.08);overflow:hidden">
+                            <div style="position:absolute;inset:0;background:rgba(10,9,8,.35)"></div>
+                            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:rgba(13,12,10,.75);border:1px solid rgba(198,161,91,.6);display:flex;align-items:center;justify-content:center">
+                              <div style="width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:13px solid #EAD9B0;margin-left:3px"></div>
+                            </div>
+                            <span style="position:absolute;bottom:9px;right:11px;font-size:10px;color:rgba(245,239,227,.75);background:rgba(10,9,8,.6);padding:3px 8px;border-radius:999px">{{ m.dur }}</span>
+                          </div>
+                          <div onClick="{{ m.openC }}" style="align-self:flex-start;padding:4px 11px;border-radius:999px;background:rgba(198,161,91,.12);border:1px solid rgba(198,161,91,.3);font-size:10.5px;color:#D4B06A;font-weight:600;cursor:pointer">⌂ {{ m.hAddr }}</div>
+                        </div>
+                      </sc-if>
+                    </sc-for>
+                  </div>
+                  <div style="position:absolute;left:14px;right:14px;bottom:104px;display:flex;gap:9px">
+                    <input value="{{ draftG }}" onChange="{{ onDraftG }}" placeholder="{{ composerPh }}" style="flex:1;height:46px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(20,18,15,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#F5EFE3;font-size:13.5px;padding:0 18px;outline:none;font-family:inherit">
+                    <div onClick="{{ sendG }}" style-active="transform:scale(.94)" style="width:46px;height:46px;flex:none;border-radius:50%;background:linear-gradient(180deg,#E3C078,#A8853F);display:flex;align-items:center;justify-content:center;color:#171106;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(198,161,91,.3)">↑</div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ ctabProfile }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;inset:0;overflow-y:auto;padding:8px 18px 130px;box-sizing:border-box">
+                  <h2 style="margin:6px 2px 14px;font-family:'Cinzel',serif;font-weight:500;font-size:20px">{{ t.profTitle }}</h2>
+                  <div style="padding:18px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <span style="font-size:10px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ t.budgetLbl }}</span>
+                      <span style="font-size:10px;color:rgba(245,239,227,.4)">{{ t.budgetLive }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+                      <span style="font-family:'Cinzel',serif;font-size:21px;color:#EAD9B0">{{ budgetLabel }}</span>
+                      <div style="display:flex;gap:8px">
+                        <div onClick="{{ budgetDown }}" style-active="background:rgba(198,161,91,.2)" style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(198,161,91,.45);color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer">−</div>
+                        <div onClick="{{ budgetUp }}" style-active="background:rgba(198,161,91,.2)" style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(198,161,91,.45);color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer">+</div>
+                      </div>
+                    </div>
+                    <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;font-size:12px">
+                      <span style="color:rgba(245,239,227,.5)">{{ t.preapLbl }}</span><span style="color:#9DBF8E;font-weight:600">✓ Chase · $900k</span>
+                    </div>
+                  </div>
+                  <div style="margin-top:14px;padding:18px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)">
+                    <span style="font-size:10px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ t.zonesLbl }}</span>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:13px">
+                      <sc-for list="{{ zoneChips }}" as="z" hint-placeholder-count="3">
+                        <span onClick="{{ z.remove }}" style="display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;background:rgba(198,161,91,.13);border:1px solid rgba(198,161,91,.4);font-size:12.5px;color:#EAD9B0;cursor:pointer">{{ z.name }} <span style="color:rgba(234,217,176,.55);font-size:13px">×</span></span>
+                      </sc-for>
+                    </div>
+                    <div style="font-size:10px;letter-spacing:2px;color:rgba(245,239,227,.4);font-weight:600;margin-top:16px">{{ t.zonesSug }}</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:9px">
+                      <sc-for list="{{ zoneSugg }}" as="z" hint-placeholder-count="3">
+                        <span onClick="{{ z.add }}" style="padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.04);border:1px dashed rgba(245,239,227,.25);font-size:12.5px;color:rgba(245,239,227,.6);cursor:pointer">+ {{ z.name }}</span>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="margin-top:14px;padding:18px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)">
+                    <span style="font-size:10px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ t.prefsLbl }}</span>
+                    <div style="display:flex;flex-direction:column;gap:11px;margin-top:13px">
+                      <sc-for list="{{ prefRows }}" as="r" hint-placeholder-count="6">
+                        <div style="display:flex;justify-content:space-between;gap:14px;font-size:13px">
+                          <span style="color:rgba(245,239,227,.5)">{{ r.k }}</span>
+                          <span style="text-align:right;font-weight:500">{{ r.v }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="margin-top:14px;padding:18px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)">
+                    <span style="font-size:10px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ t.notesLbl }}</span>
+                    <textarea value="{{ notesDraft }}" onChange="{{ onNotesInput }}" rows="{{ 3 }}" style="width:100%;box-sizing:border-box;margin-top:12px;background:rgba(10,9,8,.4);border:1px solid rgba(255,255,255,.1);border-radius:14px;color:#F5EFE3;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;line-height:1.5;padding:12px 14px;outline:none;resize:none"></textarea>
+                    <sc-if value="{{ notesDirty }}" hint-placeholder-val="{{ false }}">
+                      <div onClick="{{ saveNotes }}" style="margin-top:10px;height:40px;border-radius:999px;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;letter-spacing:1px;cursor:pointer">{{ t.notesSave }}</div>
+                    </sc-if>
+                  </div>
+                  <div style="text-align:center;margin-top:18px;font-size:10.5px;letter-spacing:1.5px;color:rgba(245,239,227,.35)">{{ profFoot }}</div>
+                </div>
+              </sc-if>
+            </div>
+
+            <div style="position:absolute;left:16px;right:16px;bottom:16px;display:flex;border-radius:32px;background:rgba(18,16,13,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 16px 36px rgba(0,0,0,.5);z-index:20">
+              <div onClick="{{ tabOffers }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colOffers }}">
+                <div style="display:flex;flex-direction:column;align-items:center"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:7px solid currentColor"></div><div style="width:11px;height:7px;background:currentColor;border-radius:0 0 2px 2px"></div></div>
+                <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ t.navHome }}</span>
+              </div>
+              <div onClick="{{ tabMap }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colMap }}">
+                <div style="display:flex;flex-direction:column;align-items:center"><div style="width:10px;height:10px;border:2px solid currentColor;border-radius:50%"></div><div style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid currentColor"></div></div>
+                <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ t.navMap }}</span>
+              </div>
+              <div onClick="{{ tabChat }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colChat }}">
+                <div style="width:15px;height:12px;border:1.8px solid currentColor;border-radius:5px;position:relative;margin-top:2px"><div style="position:absolute;left:2px;bottom:-5px;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:5px solid currentColor"></div></div>
+                <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ t.navChat }}</span>
+              </div>
+              <div onClick="{{ tabProfile }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colProfile }}">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:7px;height:7px;border:1.8px solid currentColor;border-radius:50%"></div><div style="width:13px;height:6px;border:1.8px solid currentColor;border-bottom:none;border-radius:99px 99px 0 0"></div></div>
+                <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ t.navProfile }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ detail }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#0A0908;z-index:30;animation:tiFade .25s ease both;display:flex;flex-direction:column">
+            <div style="flex:1;overflow-y:auto;padding-bottom:40px">
+              <div style="position:relative;height:246px;background:repeating-linear-gradient(45deg,rgba(198,161,91,.13) 0 12px,rgba(198,161,91,.045) 12px 24px)"><image-slot id="{{ detail.slotId }}" src="{{ detail.img }}" credit="{{ detail.imgCredit }}" credit-href="{{ detail.imgHref }}" placeholder="Gallery — drag &amp; drop" style="position:absolute;inset:0"></image-slot>
+                <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,8,.5),rgba(10,9,8,.1) 40%,rgba(10,9,8,.9));pointer-events:none"></div>
+                
+                <div onClick="{{ closeHouse }}" style="position:absolute;top:58px;left:16px;width:40px;height:40px;border-radius:50%;background:rgba(10,9,8,.55);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;font-size:19px;color:#F5EFE3;cursor:pointer">‹</div>
+                <span style="position:absolute;top:64px;right:16px;padding:5px 11px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:1px;background:{{ detail.stBg }};color:{{ detail.stCol }};border:1px solid {{ detail.stBd }}">{{ detail.stL }}</span>
+                <div style="position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:5px">
+                  <sc-for list="{{ detail.dots }}" as="d" hint-placeholder-count="4"><div style="width:5px;height:5px;border-radius:50%;background:rgba(245,239,227,{{ d.op }})"></div></sc-for>
+                </div>
+              </div>
+              <div style="padding:16px 20px 0">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+                  <span style="font-family:'Cinzel',serif;font-size:24px;color:#EAD9B0">{{ detail.priceF }}</span>
+                  <span style="font-size:11px;letter-spacing:1.5px;color:#C6A15B;font-weight:600;text-transform:uppercase">{{ detail.hood }}</span>
+                </div>
+                <div style="font-size:14.5px;color:rgba(245,239,227,.8);margin-top:2px">{{ detail.addr }}, Los Angeles, CA</div>
+                <sc-if value="{{ detail.isVisit }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:13px;padding:11px 15px;border-radius:15px;background:rgba(157,191,142,.1);border:1px solid rgba(157,191,142,.3);font-size:12.5px;color:#9DBF8E;font-weight:600">✓ {{ t.visitOn }} {{ detail.visit }}</div>
+                </sc-if>
+                <div style="display:flex;gap:6px;margin-top:16px;padding:4px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">
+                  <div onClick="{{ hviewInfo }}" style="flex:1;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;cursor:pointer;background:{{ hInfoBg }};color:{{ hInfoCol }}">{{ t.detInfo }}</div>
+                  <div onClick="{{ hviewChat }}" style="flex:1;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;cursor:pointer;background:{{ hChatBg }};color:{{ hChatCol }}">{{ t.detChat }} ({{ hMsgCount }})</div>
+                </div>
+              </div>
+              <sc-if value="{{ hInfo }}" hint-placeholder-val="{{ true }}">
+                <div style="padding:18px 20px 0">
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
+                    <sc-for list="{{ detail.stats }}" as="s" hint-placeholder-count="6">
+                      <div style="padding:12px 8px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);text-align:center">
+                        <div style="font-family:'Cinzel',serif;font-size:19px;color:#EAD9B0">{{ s.v }}</div>
+                        <div style="font-size:9.5px;letter-spacing:1px;color:rgba(245,239,227,.45);margin-top:2px;text-transform:uppercase">{{ s.k }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+                    <sc-for list="{{ detail.feats }}" as="f" hint-placeholder-count="3">
+                      <span style="padding:7px 13px;border-radius:999px;background:rgba(198,161,91,.1);border:1px solid rgba(198,161,91,.3);font-size:11.5px;color:#EAD9B0">{{ f.x }}</span>
+                    </sc-for>
+                  </div>
+                  <p style="margin:16px 0 0;font-size:13.5px;line-height:1.65;color:rgba(245,239,227,.65)">{{ detail.desc }}</p>
+                  <div style="margin-top:18px;height:150px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.1);position:relative">
+                    <x-import component-from-global-scope="HouseMap" from="./leaflet-map.jsx" houses="{{ detailMapHouses }}" interactive="{{ false }}" zoom="{{ 14 }}" hint-size="100%,150px" style="position:absolute;inset:0"></x-import>
+                  </div>
+                  <div onClick="{{ seeArea }}" style="margin-top:10px;text-align:center;font-size:12px;color:#D4B06A;font-weight:600;cursor:pointer">{{ t.areaLink }} ›</div>
+                  <div style="margin-top:20px">
+                    <sc-if value="{{ detail.isNew }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;gap:11px">
+                        <div onClick="{{ openDecline }}" style-active="transform:scale(.97)" style="flex:1;height:52px;border-radius:999px;border:1px solid rgba(245,239,227,.28);color:rgba(245,239,227,.75);display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;cursor:pointer">{{ t.actPass }}</div>
+                        <div onClick="{{ openAccept }}" style-active="transform:scale(.97)" style="flex:1.4;height:52px;border-radius:999px;background:linear-gradient(180deg,#E3C078,#A8853F);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 24px rgba(198,161,91,.3);color:#171106;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700;cursor:pointer">{{ t.actVisit }}</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ detail.isAcc }}" hint-placeholder-val="{{ false }}">
+                      <div style="padding:15px 17px;border-radius:17px;background:rgba(198,161,91,.1);border:1px solid rgba(198,161,91,.4)">
+                        <div style="font-size:13px;font-weight:700;color:#D4B06A">✓ {{ t.accBanner }}</div>
+                        <div style="font-size:12px;color:rgba(245,239,227,.55);margin-top:4px;line-height:1.5">{{ accSub }}</div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ detail.isDecl }}" hint-placeholder-val="{{ false }}">
+                      <div style="padding:15px 17px;border-radius:17px;background:rgba(192,130,104,.08);border:1px solid rgba(192,130,104,.3)">
+                        <div style="font-size:12.5px;font-weight:700;color:#C08268">{{ t.declBanner }}</div>
+                        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14.5px;color:rgba(245,239,227,.6);margin-top:5px;line-height:1.45">“{{ detail.quote }}”</div>
+                        <div onClick="{{ reconsider }}" style="margin-top:10px;font-size:12px;color:#D4B06A;font-weight:600;cursor:pointer">{{ t.declRec }} ›</div>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ hChat }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:16px 16px 0;display:flex;flex-direction:column;gap:10px;min-height:220px">
+                  <div style="align-self:center;font-size:10.5px;color:rgba(245,239,227,.4);letter-spacing:.5px">{{ hThreadCap }}</div>
+                  <sc-for list="{{ hMsgs }}" as="m" hint-placeholder-count="2">
+                    <sc-if value="{{ m.isSys }}" hint-placeholder-val="{{ false }}"><div style="align-self:center;font-size:10.5px;letter-spacing:1px;color:rgba(245,239,227,.4)">{{ m.text }}</div></sc-if>
+                    <sc-if value="{{ m.isText }}" hint-placeholder-val="{{ true }}">
+                      <div style="align-self:{{ m.alignC }};max-width:80%;padding:11px 15px;border-radius:19px;background:{{ m.bgC }};border:1px solid {{ m.bdC }};font-size:13.5px;line-height:1.45">{{ m.text }}</div>
+                    </sc-if>
+                    <sc-if value="{{ m.isPhotos }}" hint-placeholder-val="{{ false }}">
+                      <div style="align-self:{{ m.alignC }};width:82%;display:flex;gap:6px">
+                        <sc-for list="{{ m.thumbs }}" as="th" hint-placeholder-count="3">
+                          <div style="flex:1;height:64px;border-radius:12px;background:repeating-linear-gradient(45deg,rgba(198,161,91,.15) 0 8px,rgba(198,161,91,.05) 8px 16px);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:8px;color:rgba(245,239,227,.4)">photo</div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </sc-for>
+                  <div style="display:flex;gap:9px;padding:8px 0 18px;margin-top:auto">
+                    <input value="{{ draftH }}" onChange="{{ onDraftH }}" placeholder="{{ hComposerPh }}" style="flex:1;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(20,18,15,.72);color:#F5EFE3;font-size:13px;padding:0 16px;outline:none;font-family:inherit">
+                    <div onClick="{{ sendH }}" style-active="transform:scale(.94)" style="width:44px;height:44px;flex:none;border-radius:50%;background:linear-gradient(180deg,#E3C078,#A8853F);display:flex;align-items:center;justify-content:center;color:#171106;font-size:17px;font-weight:700;cursor:pointer">↑</div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ cmpOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#0A0908;z-index:34;animation:tiFade .25s ease both;display:flex;flex-direction:column">
+            <div style="flex:none;display:flex;align-items:center;gap:12px;padding:60px 18px 14px">
+              <div onClick="{{ closeCmp }}" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:19px;color:rgba(245,239,227,.7);cursor:pointer">‹</div>
+              <h2 style="margin:0;font-family:'Cinzel',serif;font-weight:500;font-size:18px">{{ t.cmpTitle }}</h2>
+            </div>
+            <div style="flex:1;overflow:auto;padding:4px 14px 40px;box-sizing:border-box">
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <sc-for list="{{ cmpCols }}" as="h" hint-placeholder-count="2">
+                  <div style="flex:1;min-width:150px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);overflow:hidden">
+                    <div style="height:86px;background-image:{{ h.imgCss }};background-size:cover;background-position:center"></div>
+                    <div style="padding:12px 12px 14px">
+                      <div style="font-family:'Cinzel',serif;font-size:16px;color:#EAD9B0">{{ h.priceF }}</div>
+                      <div style="font-size:11px;margin-top:3px;color:rgba(245,239,227,.85);line-height:1.3">{{ h.addr }}</div>
+                      <div style="font-size:9px;color:#C6A15B;font-weight:700;margin-top:3px;text-transform:uppercase;letter-spacing:1.2px">{{ h.hood }}</div>
+                      <div style="display:flex;flex-direction:column;margin-top:10px">
+                        <sc-for list="{{ h.cmpRows }}" as="r" hint-placeholder-count="6">
+                          <div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px solid rgba(255,255,255,.07);font-size:11px">
+                            <span style="color:rgba(245,239,227,.45)">{{ r.k }}</span>
+                            <span style="text-align:right;font-weight:600">{{ r.v }}</span>
+                          </div>
+                        </sc-for>
+                      </div>
+                      <div onClick="{{ h.open }}" style-active="transform:scale(.97)" style="margin-top:10px;height:36px;border-radius:999px;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;cursor:pointer">{{ t.msgView }} ›</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;z-index:40">
+            <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(4,3,2,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:tiFade .2s ease both"></div>
+            <div style="position:absolute;left:10px;right:10px;bottom:10px;border-radius:30px;background:rgba(22,19,15,.9);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(30px) saturate(160%);-webkit-backdrop-filter:blur(30px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 -20px 50px rgba(0,0,0,.5);padding:24px 22px 22px;animation:tiRise .3s ease both">
+              <div style="width:38px;height:4px;border-radius:99px;background:rgba(245,239,227,.2);margin:0 auto 18px"></div>
+              <h3 style="margin:0;font-family:'Cinzel',serif;font-weight:500;font-size:18px;text-align:center">{{ sheetTitle }}</h3>
+              <p style="margin:7px auto 0;text-align:center;font-size:12.5px;color:rgba(245,239,227,.55);max-width:260px;line-height:1.5">{{ sheetSub }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px">
+                <sc-for list="{{ sheetChipList }}" as="c" hint-placeholder-count="6">
+                  <span onClick="{{ c.tap }}" style="padding:9px 15px;border-radius:999px;font-size:12.5px;cursor:pointer;background:{{ c.bg }};border:1px solid {{ c.bd }};color:{{ c.col }};font-weight:500">{{ c.label }}</span>
+                </sc-for>
+              </div>
+              <textarea value="{{ sheetText }}" onChange="{{ onSheetText }}" rows="{{ 2 }}" placeholder="{{ t.shPh }}" style="width:100%;box-sizing:border-box;margin-top:16px;background:rgba(10,9,8,.5);border:1px solid rgba(255,255,255,.1);border-radius:16px;color:#F5EFE3;font-size:13px;line-height:1.5;padding:12px 15px;outline:none;resize:none;font-family:inherit"></textarea>
+              <div onClick="{{ confirmSheet }}" style-active="transform:scale(.98)" style="margin-top:14px;height:50px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;cursor:pointer;background:{{ sheetBtnBg }};color:{{ sheetBtnCol }};border:{{ sheetBtnBd }};box-shadow:{{ sheetBtnSh }}">{{ sheetBtn }}</div>
+              <sc-if value="{{ sheetSkippable }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ skipSheet }}" style="text-align:center;margin-top:12px;font-size:12px;color:rgba(245,239,227,.45);cursor:pointer">{{ t.shSkip }}</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ toastC }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:64px;left:20px;right:20px;display:flex;justify-content:center;z-index:60;animation:tiRise .3s ease both;pointer-events:none">
+            <span style="padding:11px 18px;border-radius:999px;background:rgba(13,12,10,.9);border:1px solid rgba(198,161,91,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);font-size:12px;color:#EAD9B0;box-shadow:0 14px 34px rgba(0,0,0,.5);text-align:center">{{ toastC }}</span>
+          </div>
+        </sc-if>
+      </div>
+    </x-import>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px;align-items:center;animation:tiRise .6s ease both">
+    <div style="display:flex;align-items:baseline;gap:9px">
+      <span style="font-size:10px;letter-spacing:3.5px;color:#C6A15B;font-weight:700">ADMIN APP</span>
+      <span style="font-family:'Cinzel',serif;font-size:15px;font-style:italic;color:rgba(245,239,227,.6)">{{ agentName }}</span>
+    </div>
+    <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+      <div style="height:100%;position:relative;background:#0A0908;color:#F5EFE3;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif">
+        <div style="flex:none;padding:64px 20px 8px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px"><img src="assets/mark-gold.png" alt="" style="height:26px"><div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:3.5px;color:#EAD9B0">TEAM IRIGOYEN</div></div>
+            <div style="display:flex;align-items:center;gap:7px;margin-top:3px">
+              <div style="width:16px;height:1px;background:#C6A15B"></div>
+              <div style="font-size:7.5px;letter-spacing:2.5px;color:#D4B06A;font-weight:600">AGENT CONSOLE</div>
+              <div style="width:16px;height:1px;background:#C6A15B"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:9px;align-items:center">
+            <div onClick="{{ toggleLang }}" style="padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:10.5px;font-weight:700;color:#D4B06A;letter-spacing:1px;cursor:pointer">{{ langPill }}</div>
+          </div>
+        </div>
+
+        <div style="flex:1;position:relative;overflow:hidden;z-index:0">
+          <sc-if value="{{ atabClients }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;overflow-y:auto;padding:8px 18px 130px;box-sizing:border-box">
+              <h2 style="margin:6px 2px 2px;font-family:'Cinzel',serif;font-weight:500;font-size:20px">{{ admGreet }}</h2>
+              <div style="font-size:12px;color:rgba(245,239,227,.5);margin:4px 2px 14px">{{ admStats }}</div>
+              <div onClick="{{ startAddClient }}" style-active="transform:scale(.98)" style="height:48px;border-radius:999px;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;letter-spacing:1px;background:rgba(198,161,91,.07);cursor:pointer;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)">{{ aT.addClient }}</div>
+              <input value="{{ clientQ }}" onChange="{{ onClientQ }}" placeholder="{{ aT.searchPh }}" style="width:100%;box-sizing:border-box;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#F5EFE3;font-size:13px;padding:0 18px;outline:none;font-family:inherit;margin-top:10px">
+              <div style="display:flex;align-items:center;gap:12px;margin:20px 4px 12px">
+                <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(198,161,91,.5))"></div>
+                <span style="font-size:9.5px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ aT.activeLbl }}</span>
+                <div style="flex:1;height:1px;background:linear-gradient(270deg,transparent,rgba(198,161,91,.5))"></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ aClients }}" as="c" hint-placeholder-count="4">
+                  <div onClick="{{ c.open }}" style-active="transform:scale(.985)" style="display:flex;gap:13px;align-items:center;padding:14px 15px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid {{ c.rowBd }};backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);cursor:pointer">
+                    <div style="width:44px;height:44px;flex:none;border-radius:50%;border:1px solid rgba(198,161,91,.5);background:rgba(198,161,91,.1);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#EAD9B0">{{ c.initials }}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;align-items:center;gap:7px">
+                        <span style="font-size:14.5px;font-weight:600">{{ c.name }}</span>
+                        <sc-if value="{{ c.edited }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:50%;background:#D4B06A;animation:tiPulse 1.6s infinite"></span></sc-if>
+                      </div>
+                      <div style="font-size:11.5px;color:rgba(245,239,227,.55);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.budget }} · {{ c.zones }}</div>
+                      <div style="font-size:11px;color:rgba(245,239,227,.4);margin-top:2px">{{ c.pipe }}</div>
+                    </div>
+                    <span style="flex:none;padding:4px 9px;border-radius:999px;font-size:8.5px;font-weight:700;letter-spacing:1px;background:{{ c.stBg }};color:{{ c.stCol }};border:1px solid {{ c.stBd }}">{{ c.stL }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ atabHomes }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;overflow-y:auto;padding:8px 18px 130px;box-sizing:border-box">
+              <h2 style="margin:6px 2px 2px;font-family:'Cinzel',serif;font-weight:500;font-size:20px">{{ aT.homesTitle }}</h2>
+              <div style="font-size:12px;color:rgba(245,239,227,.5);margin:4px 2px 12px">{{ homesSub }}</div>
+              <div style="display:flex;gap:7px;flex-wrap:wrap;margin:0 0 12px">
+                <sc-for list="{{ homeFilters }}" as="ft" hint-placeholder-count="6">
+                  <span onClick="{{ ft.tap }}" style="padding:7px 13px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;background:{{ ft.bg }};border:1px solid {{ ft.bd }};color:{{ ft.col }}">{{ ft.label }}</span>
+                </sc-for>
+              </div>
+              <div onClick="{{ startAddHome }}" style-active="transform:scale(.98)" style="height:48px;border-radius:999px;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;letter-spacing:1px;background:rgba(198,161,91,.07);cursor:pointer;margin-bottom:16px">{{ aT.regHome }}</div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <sc-for list="{{ aHomes }}" as="h" hint-placeholder-count="4">
+                  <div style="display:flex;gap:13px;padding:12px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)">
+                    <div style="width:86px;height:72px;flex:none;border-radius:14px;background-image:{{ h.imgCss }};background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:8px;color:rgba(245,239,227,.4)">{{ h.phLbl }}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+                        <span style="font-family:'Cinzel',serif;font-size:20px;color:#EAD9B0">{{ h.priceF }}</span>
+                        <sc-if value="{{ h.sent }}" hint-placeholder-val="{{ false }}"><span style="font-size:8.5px;letter-spacing:1px;font-weight:700;color:#9DBF8E">● {{ aT.sentTo }}</span></sc-if>
+                      </div>
+                      <div style="font-size:12.5px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.addr }}</div>
+                      <div style="font-size:11px;color:rgba(245,239,227,.5);margin-top:3px">{{ h.hood }} · {{ h.beds }} bd · {{ h.baths }} ba · {{ h.sqftF }} sqft</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ atabLeads }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;overflow-y:auto;padding:8px 18px 130px;box-sizing:border-box">
+              <h2 style="margin:6px 2px 2px;font-family:'Cinzel',serif;font-weight:500;font-size:20px">{{ aT.leadsTitle }}</h2>
+              <div style="font-size:12px;color:rgba(245,239,227,.5);margin:4px 2px 14px">{{ leadsSub }}</div>
+              <div onClick="{{ startAddLead }}" style-active="transform:scale(.98)" style="height:48px;border-radius:999px;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;letter-spacing:1px;background:rgba(198,161,91,.07);cursor:pointer;margin-bottom:16px">{{ aT.addLead }}</div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ aLeads }}" as="l" hint-placeholder-count="5">
+                  <div onClick="{{ l.open }}" style-active="transform:scale(.985)" style="padding:14px 15px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);cursor:pointer">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+                      <span style="font-size:14.5px;font-weight:600">{{ l.name }}</span>
+                      <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:rgba(245,239,227,.55)">{{ l.phone }}</span>
+                    </div>
+                    <div style="font-size:11.5px;color:rgba(245,239,227,.5);margin-top:3px">{{ l.zone }} · {{ l.callLine }}</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:9px">
+                      <sc-for list="{{ l.flagChips }}" as="f" hint-placeholder-count="2">
+                        <span style="padding:4px 10px;border-radius:999px;font-size:9.5px;font-weight:600;letter-spacing:.5px;background:{{ f.bg }};color:{{ f.col }};border:1px solid {{ f.bd }}">{{ f.label }}</span>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ atabChats }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;overflow-y:auto;padding:8px 18px 130px;box-sizing:border-box">
+              <h2 style="margin:6px 2px 2px;font-family:'Cinzel',serif;font-weight:500;font-size:20px">{{ aT.chatsTitle }}</h2>
+              <div style="font-size:12px;color:rgba(245,239,227,.5);margin:4px 2px 16px">{{ chatsSub }}</div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ chatRows }}" as="r" hint-placeholder-count="5">
+                  <div onClick="{{ r.open }}" style-active="transform:scale(.985)" style="display:flex;gap:13px;align-items:center;padding:14px 15px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);cursor:pointer">
+                    <div style="width:40px;height:40px;flex:none;border-radius:{{ r.rad }};border:1px solid rgba(198,161,91,.45);background:rgba(198,161,91,.09);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#EAD9B0">{{ r.badge }}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div>
+                      <div style="font-size:11.5px;color:rgba(245,239,227,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.sub }}</div>
+                    </div>
+                    <span style="color:rgba(245,239,227,.35);font-size:16px">›</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="position:absolute;left:16px;right:16px;bottom:16px;display:flex;border-radius:32px;background:rgba(18,16,13,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 16px 36px rgba(0,0,0,.5);z-index:20">
+          <div onClick="{{ tabAC }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colAC }}">
+            <div style="display:flex;align-items:flex-end"><div style="width:9px;height:9px;border:1.8px solid currentColor;border-radius:50%"></div><div style="width:9px;height:9px;border:1.8px solid currentColor;border-radius:50%;margin-left:-3px;opacity:.55"></div></div>
+            <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ aT.navClients }}</span>
+          </div>
+          <div onClick="{{ tabAH }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colAH }}">
+            <div style="display:flex;flex-direction:column;align-items:center"><div style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:7px solid currentColor"></div><div style="width:11px;height:7px;background:currentColor;border-radius:0 0 2px 2px"></div></div>
+            <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ aT.navHomes }}</span>
+          </div>
+          <div onClick="{{ tabAL }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colAL }}">
+            <div style="width:10px;height:15px;border:1.8px solid currentColor;border-radius:3px;transform:rotate(-18deg);display:flex;align-items:flex-end;justify-content:center"><div style="width:4px;height:2px;background:currentColor;margin-bottom:1px"></div></div>
+            <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ aT.navLeads }}</span>
+          </div>
+          <div onClick="{{ tabACh }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 0 10px;cursor:pointer;color:{{ colACh }}">
+            <div style="width:15px;height:12px;border:1.8px solid currentColor;border-radius:5px;position:relative;margin-top:2px"><div style="position:absolute;left:2px;bottom:-5px;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:5px solid currentColor"></div></div>
+            <span style="font-size:9px;letter-spacing:.8px;font-weight:600">{{ aT.navChats }}</span>
+          </div>
+        </div>
+
+        <sc-if value="{{ aFicha }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#0A0908;z-index:30;animation:tiFade .25s ease both;display:flex;flex-direction:column">
+            <div style="flex:none;padding:60px 18px 0">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div onClick="{{ closeFicha }}" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:19px;color:rgba(245,239,227,.7);cursor:pointer">‹</div>
+                <div onClick="{{ openShare }}" style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid rgba(198,161,91,.45);background:rgba(198,161,91,.08);cursor:pointer">
+                  <span style="position:relative;width:13px;height:13px;display:inline-block;color:#D4B06A"><span style="position:absolute;top:0;left:0;width:5px;height:5px;border:1.5px solid currentColor;box-sizing:border-box"></span><span style="position:absolute;top:0;right:0;width:5px;height:5px;border:1.5px solid currentColor;box-sizing:border-box"></span><span style="position:absolute;bottom:0;left:0;width:5px;height:5px;border:1.5px solid currentColor;box-sizing:border-box"></span><span style="position:absolute;bottom:0;right:0;width:5px;height:5px;background:currentColor"></span></span>
+                  <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#EAD9B0;letter-spacing:1px">TI-4Q7M</span>
+                </div>
+              </div>
+              <h2 style="margin:14px 2px 2px;font-family:'Cinzel',serif;font-weight:500;font-size:21px">{{ clientName }}</h2>
+              <div style="font-size:11.5px;color:rgba(245,239,227,.5);margin:2px 2px 0">{{ fichaSub }}</div>
+              <div style="display:flex;gap:6px;margin-top:14px;padding:4px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)">
+                <div onClick="{{ subProfile }}" style="flex:1;height:34px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;background:{{ subPBg }};color:{{ subPCol }}">{{ aT.fichaProfile }}</div>
+                <div onClick="{{ subHomes }}" style="flex:1;height:34px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;background:{{ subHBg }};color:{{ subHCol }}">{{ aT.fichaHomes }}</div>
+                <div onClick="{{ subChats }}" style="flex:1;height:34px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;background:{{ subCBg }};color:{{ subCCol }}">{{ aT.fichaChats }}</div>
+              </div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:16px 18px 46px;box-sizing:border-box">
+              <sc-if value="{{ csubProfile }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:10px;color:#9DBF8E;letter-spacing:1px;margin-bottom:12px">● {{ aT.liveNote }}</div>
+                <div style="padding:17px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)">
+                  <div style="display:flex;flex-direction:column;gap:11px">
+                    <sc-for list="{{ fichaRows }}" as="r" hint-placeholder-count="7">
+                      <div style="display:flex;justify-content:space-between;gap:14px;font-size:12.5px">
+                        <span style="color:rgba(245,239,227,.5)">{{ r.k }}</span>
+                        <span style="text-align:right;font-weight:500;display:flex;align-items:center;gap:6px"><sc-if value="{{ r.hot }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;border-radius:50%;background:#D4B06A"></span></sc-if>{{ r.v }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="margin-top:12px;padding:17px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)">
+                  <span style="font-size:9.5px;letter-spacing:2.5px;color:#C6A15B;font-weight:600">{{ t.zonesLbl }}</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:11px">
+                    <sc-for list="{{ zonesFicha }}" as="z" hint-placeholder-count="3">
+                      <span style="padding:6px 12px;border-radius:999px;font-size:11.5px;background:rgba(198,161,91,.1);border:1px solid {{ z.bd }};color:#EAD9B0">{{ z.name }}<sc-if value="{{ z.added }}" hint-placeholder-val="{{ false }}"><span style="color:#D4B06A;font-size:9px"> · {{ aT.addedBy }}</span></sc-if></span>
+                    </sc-for>
+                  </div>
+                  <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)">
+                    <span style="font-size:9.5px;letter-spacing:2.5px;color:#C6A15B;font-weight:600">{{ t.notesLbl }}</span>
+                    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14.5px;color:rgba(245,239,227,.7);line-height:1.5;margin-top:8px">“{{ notes }}”</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;margin:20px 4px 12px">
+                  <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(198,161,91,.5))"></div>
+                  <span style="font-size:9.5px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ aT.activity }}</span>
+                  <div style="flex:1;height:1px;background:linear-gradient(270deg,transparent,rgba(198,161,91,.5))"></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <sc-for list="{{ tlList }}" as="e" hint-placeholder-count="5">
+                    <div style="display:flex;gap:11px;align-items:flex-start">
+                      <div style="width:7px;height:7px;flex:none;border-radius:50%;background:rgba(198,161,91,.7);margin-top:5px"></div>
+                      <div style="flex:1;font-size:12.5px;line-height:1.45;color:rgba(245,239,227,.75)">{{ e.text }}</div>
+                      <div style="flex:none;font-size:10px;color:rgba(245,239,227,.4)">{{ e.time }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ csubHomes }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:9.5px;letter-spacing:2.5px;color:#C6A15B;font-weight:600;margin:2px 0 12px">{{ aT.pipeline }} — {{ pipeCount }}</div>
+                <div style="display:flex;flex-direction:column;gap:11px">
+                  <sc-for list="{{ offers }}" as="o" hint-placeholder-count="4">
+                    <div style="padding:13px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)">
+                      <div style="display:flex;gap:12px;align-items:center">
+                        <div style="width:56px;height:46px;flex:none;border-radius:11px;background-image:{{ o.imgCss }};background-size:cover;background-position:center"></div>
+                        <div style="flex:1;min-width:0">
+                          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+                            <span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.addr }}</span>
+                            <span style="font-family:'Cinzel',serif;font-size:16px;color:#EAD9B0;flex:none">{{ o.priceF }}</span>
+                          </div>
+                          <span style="display:inline-block;margin-top:5px;padding:3px 9px;border-radius:999px;font-size:8.5px;font-weight:700;letter-spacing:1px;background:{{ o.stBg }};color:{{ o.stCol }};border:1px solid {{ o.stBd }}">{{ o.stL }}</span>
+                          <div onClick="{{ o.toggleFav }}" style="position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:50%;background:rgba(10,9,8,.55);border:1px solid rgba(198,161,91,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;font-size:14px;color:{{ o.favCol }};cursor:pointer">{{ o.favGlyph }}</div>
+                        </div>
+                      </div>
+                      <sc-if value="{{ o.hasFeedback }}" hint-placeholder-val="{{ false }}">
+                        <div style="margin-top:10px;padding:9px 12px;border-radius:12px;background:rgba(10,9,8,.5);border:1px solid rgba(255,255,255,.07)">
+                          <div style="font-size:8.5px;letter-spacing:1.5px;color:rgba(245,239,227,.45);font-weight:700">{{ aT.feedback }}</div>
+                          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13.5px;color:rgba(245,239,227,.7);margin-top:4px;line-height:1.4">“{{ o.quote }}”</div>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;margin:20px 4px 12px">
+                  <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(198,161,91,.5))"></div>
+                  <span style="font-size:9.5px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ aT.sendMore }}</span>
+                  <div style="flex:1;height:1px;background:linear-gradient(270deg,transparent,rgba(198,161,91,.5))"></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <sc-for list="{{ catalogAvail }}" as="h" hint-placeholder-count="2">
+                    <div style="display:flex;gap:12px;align-items:center;padding:12px 13px;border-radius:18px;background:rgba(255,255,255,.045);border:1px dashed rgba(198,161,91,.35)">
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.addr }}</div>
+                        <div style="font-size:11px;color:rgba(245,239,227,.5);margin-top:2px">{{ h.hood }} · {{ h.priceF }} · {{ h.beds }} bd</div>
+                      </div>
+                      <div onClick="{{ h.send }}" style-active="transform:scale(.94)" style="flex:none;padding:9px 16px;border-radius:999px;background:linear-gradient(180deg,#E3C078,#A8853F);color:#171106;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(198,161,91,.25)">{{ aT.sendBtn }}</div>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{ noCatalog }}" hint-placeholder-val="{{ false }}"><div style="text-align:center;font-size:11.5px;color:rgba(245,239,227,.4);padding:6px 0">{{ aT.catalogEmpty }}</div></sc-if>
+                  <div onClick="{{ startAddHome }}" style="height:44px;border-radius:999px;border:1px solid rgba(245,239,227,.25);color:rgba(245,239,227,.7);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;cursor:pointer">{{ aT.regHome }}</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ csubChats }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:11px">
+                  <sc-for list="{{ fichaChatRows }}" as="r" hint-placeholder-count="4">
+                    <div onClick="{{ r.open }}" style-active="transform:scale(.985)" style="display:flex;gap:13px;align-items:center;padding:14px 15px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);cursor:pointer">
+                      <div style="width:40px;height:40px;flex:none;border-radius:{{ r.rad }};border:1px solid rgba(198,161,91,.45);background:rgba(198,161,91,.09);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#EAD9B0">{{ r.badge }}</div>
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div>
+                        <div style="font-size:11.5px;color:rgba(245,239,227,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.sub }}</div>
+                      </div>
+                      <span style="color:rgba(245,239,227,.35);font-size:16px">›</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ aThreadOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#0A0908;z-index:35;animation:tiFade .25s ease both;display:flex;flex-direction:column">
+            <div style="flex:none;display:flex;align-items:center;gap:11px;padding:60px 18px 12px;border-bottom:1px solid rgba(255,255,255,.07)">
+              <div onClick="{{ closeThread }}" style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:18px;color:rgba(245,239,227,.7);cursor:pointer">‹</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ threadTitle }}</div>
+                <div style="font-size:10.5px;color:rgba(245,239,227,.5)">{{ threadSub }}</div>
+              </div>
+            </div>
+            <div ref="{{ refGenA }}" style="flex:1;overflow-y:auto;padding:16px 16px 90px;display:flex;flex-direction:column;gap:10px;box-sizing:border-box">
+              <sc-for list="{{ aMsgs }}" as="m" hint-placeholder-count="4">
+                <sc-if value="{{ m.isSys }}" hint-placeholder-val="{{ false }}"><div style="align-self:center;font-size:10.5px;letter-spacing:1px;color:rgba(245,239,227,.4)">{{ m.text }}</div></sc-if>
+                <sc-if value="{{ m.isText }}" hint-placeholder-val="{{ true }}">
+                  <div style="align-self:{{ m.alignA }};max-width:78%;padding:11px 15px;border-radius:19px;background:{{ m.bgA }};border:1px solid {{ m.bdA }};font-size:13.5px;line-height:1.45">{{ m.text }}</div>
+                </sc-if>
+                <sc-if value="{{ m.isHouse }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:{{ m.alignA }};width:78%;border-radius:17px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(198,161,91,.35)">
+                    <div style="height:64px;background-image:{{ m.hImgCss }};background-size:cover;background-position:center;position:relative"><span style="position:absolute;top:8px;left:11px;font-size:8.5px;letter-spacing:1.5px;color:#D4B06A;font-weight:700">{{ t.msgListing }}</span></div>
+                    <div style="padding:10px 13px 11px">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Cinzel',serif;font-size:17px;color:#EAD9B0">{{ m.hPriceF }}</span><span style="font-size:9.5px;color:#C6A15B;font-weight:600">{{ m.hHood }}</span></div>
+                      <div style="font-size:12px;margin-top:2px">{{ m.hAddr }}</div>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isPhotos }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:{{ m.alignA }};width:78%;display:flex;flex-direction:column;gap:6px">
+                    <div style="display:flex;gap:6px">
+                      <sc-for list="{{ m.thumbs }}" as="th" hint-placeholder-count="3"><div style="flex:1;height:58px;border-radius:11px;background:repeating-linear-gradient(45deg,rgba(198,161,91,.15) 0 8px,rgba(198,161,91,.05) 8px 16px);border:1px solid rgba(255,255,255,.08)"></div></sc-for>
+                    </div>
+                    <span style="align-self:flex-start;padding:3px 10px;border-radius:999px;background:rgba(198,161,91,.12);border:1px solid rgba(198,161,91,.3);font-size:9.5px;color:#D4B06A;font-weight:600">⌂ {{ m.hAddr }}</span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isVideo }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:{{ m.alignA }};width:78%;display:flex;flex-direction:column;gap:6px">
+                    <div style="position:relative;height:110px;border-radius:15px;background:repeating-linear-gradient(45deg,rgba(198,161,91,.13) 0 10px,rgba(198,161,91,.05) 10px 20px);border:1px solid rgba(255,255,255,.08)">
+                      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:rgba(13,12,10,.75);border:1px solid rgba(198,161,91,.6);display:flex;align-items:center;justify-content:center"><div style="width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:11px solid #EAD9B0;margin-left:2px"></div></div>
+                      <span style="position:absolute;bottom:8px;right:10px;font-size:9.5px;color:rgba(245,239,227,.75);background:rgba(10,9,8,.6);padding:2px 7px;border-radius:999px">{{ m.dur }}</span>
+                    </div>
+                    <span style="align-self:flex-start;padding:3px 10px;border-radius:999px;background:rgba(198,161,91,.12);border:1px solid rgba(198,161,91,.3);font-size:9.5px;color:#D4B06A;font-weight:600">⌂ {{ m.hAddr }}</span>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+            <div style="position:absolute;left:14px;right:14px;bottom:22px;display:flex;gap:9px;align-items:center">
+              <div onClick="{{ openAttach }}" style-active="transform:scale(.92)" style="width:44px;height:44px;flex:none;border-radius:50%;border:1.5px solid rgba(198,161,91,.55);color:#D4B06A;background:rgba(20,18,15,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer">+</div>
+              <input value="{{ draftA }}" onChange="{{ onDraftA }}" placeholder="{{ aComposerPh }}" style="flex:1;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(20,18,15,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#F5EFE3;font-size:13px;padding:0 16px;outline:none;font-family:inherit">
+              <div onClick="{{ sendA }}" style-active="transform:scale(.94)" style="width:44px;height:44px;flex:none;border-radius:50%;background:linear-gradient(180deg,#E3C078,#A8853F);display:flex;align-items:center;justify-content:center;color:#171106;font-size:17px;font-weight:700;cursor:pointer">↑</div>
+            </div>
+            <sc-if value="{{ attachOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0;z-index:40">
+                <div onClick="{{ closeAttach }}" style="position:absolute;inset:0;background:rgba(4,3,2,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)"></div>
+                <div style="position:absolute;left:10px;right:10px;bottom:10px;border-radius:28px;background:rgba(22,19,15,.92);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);padding:20px 18px;animation:tiRise .25s ease both">
+                  <div style="width:38px;height:4px;border-radius:99px;background:rgba(245,239,227,.2);margin:0 auto 16px"></div>
+                  <sc-if value="{{ attachMenu }}" hint-placeholder-val="{{ true }}">
+                    <div style="font-size:9.5px;letter-spacing:2.5px;color:#C6A15B;font-weight:600;text-align:center;margin-bottom:14px">{{ aT.attachTitle }}</div>
+                    <div style="display:flex;flex-direction:column;gap:9px">
+                      <sc-for list="{{ attachRows }}" as="r" hint-placeholder-count="3">
+                        <div onClick="{{ r.pick }}" style-active="background:rgba(198,161,91,.15)" style="display:flex;align-items:center;gap:12px;padding:14px 15px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);cursor:pointer">
+                          <span style="width:10px;height:10px;border:2px solid #D4B06A;border-radius:{{ r.rad }};display:inline-block"></span>
+                          <span style="font-size:13.5px;font-weight:500">{{ r.label }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ attachPick }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:9.5px;letter-spacing:2.5px;color:#C6A15B;font-weight:600;text-align:center;margin-bottom:14px">{{ aT.pickHome }}</div>
+                    <div style="display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto">
+                      <sc-for list="{{ attachHouses }}" as="h" hint-placeholder-count="4">
+                        <div onClick="{{ h.pick }}" style-active="background:rgba(198,161,91,.15)" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);cursor:pointer">
+                          <span style="font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.addr }}</span>
+                          <span style="font-size:11px;color:#EAD9B0;flex:none">{{ h.priceF }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ aLeadOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#0A0908;z-index:35;animation:tiFade .25s ease both;display:flex;flex-direction:column">
+            <div style="flex:none;padding:60px 18px 0">
+              <div onClick="{{ closeLead }}" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:19px;color:rgba(245,239,227,.7);cursor:pointer">‹</div>
+              <h2 style="margin:14px 2px 2px;font-family:'Cinzel',serif;font-weight:500;font-size:20px">{{ leadD.name }}</h2>
+              <div style="display:flex;justify-content:space-between;align-items:baseline">
+                <span style="font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:rgba(245,239,227,.6)">{{ leadD.phone }}</span>
+                <span style="font-size:11.5px;color:rgba(245,239,227,.5)">{{ leadD.zone }}</span>
+              </div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:16px 18px 46px;box-sizing:border-box">
+              <div style="display:flex;gap:10px">
+                <div style="flex:1;padding:13px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);text-align:center">
+                  <div style="font-family:'Cinzel',serif;font-size:22px;color:#EAD9B0">{{ leadD.calls }}</div>
+                  <div style="font-size:9px;letter-spacing:1.5px;color:rgba(245,239,227,.45);margin-top:2px">{{ aT.callsLbl }}</div>
+                </div>
+                <div style="flex:1;padding:13px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);text-align:center">
+                  <div style="font-family:'Cinzel',serif;font-size:22px;color:#EAD9B0">{{ leadD.last }}</div>
+                  <div style="font-size:9px;letter-spacing:1.5px;color:rgba(245,239,227,.45);margin-top:2px">{{ aT.lastCall }}</div>
+                </div>
+              </div>
+              <div onClick="{{ logCall }}" style-active="transform:scale(.98)" style="margin-top:12px;height:50px;border-radius:999px;background:linear-gradient(180deg,#E3C078,#A8853F);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 24px rgba(198,161,91,.3);color:#171106;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:700;cursor:pointer">{{ aT.logCall }}</div>
+              <div style="display:flex;align-items:center;gap:12px;margin:20px 4px 12px">
+                <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(198,161,91,.5))"></div>
+                <span style="font-size:9.5px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ aT.flagsLbl }}</span>
+                <div style="flex:1;height:1px;background:linear-gradient(270deg,transparent,rgba(198,161,91,.5))"></div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ leadFlagsAll }}" as="f" hint-placeholder-count="8">
+                  <span onClick="{{ f.tap }}" style="padding:8px 13px;border-radius:999px;font-size:11px;font-weight:600;cursor:pointer;background:{{ f.bg }};color:{{ f.col }};border:1px solid {{ f.bd }}">{{ f.label }}</span>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;margin:20px 4px 12px">
+                <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(198,161,91,.5))"></div>
+                <span style="font-size:9.5px;letter-spacing:3px;color:#C6A15B;font-weight:600">{{ aT.notesLbl2 }}</span>
+                <div style="flex:1;height:1px;background:linear-gradient(270deg,transparent,rgba(198,161,91,.5))"></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ leadNotes }}" as="n" hint-placeholder-count="2">
+                  <div style="padding:11px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:12.5px;line-height:1.5;color:rgba(245,239,227,.75)">{{ n.x }}</div>
+                </sc-for>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <input value="{{ leadNote }}" onChange="{{ onLeadNote }}" placeholder="{{ aT.addNotePh }}" style="flex:1;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(20,18,15,.6);color:#F5EFE3;font-size:12.5px;padding:0 15px;outline:none;font-family:inherit">
+                <div onClick="{{ addLeadNote }}" style-active="transform:scale(.94)" style="width:42px;height:42px;flex:none;border-radius:50%;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer">+</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#0A0908;z-index:45;animation:tiFade .25s ease both;display:flex;flex-direction:column">
+            <div style="flex:none;display:flex;align-items:center;gap:12px;padding:60px 18px 14px">
+              <div onClick="{{ closeForm }}" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px;color:rgba(245,239,227,.7);cursor:pointer">×</div>
+              <h2 style="margin:0;font-family:'Cinzel',serif;font-weight:500;font-size:18px">{{ formTitle }}</h2>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:4px 20px 40px;box-sizing:border-box">
+              <div style="display:flex;flex-direction:column;gap:13px">
+                <sc-for list="{{ formFields }}" as="f" hint-placeholder-count="6">
+                  <div>
+                    <div style="font-size:9.5px;letter-spacing:2px;color:rgba(245,239,227,.5);font-weight:600;margin-bottom:6px">{{ f.label }}</div>
+                    <input value="{{ f.val }}" onChange="{{ f.on }}" placeholder="{{ f.ph }}" style="width:100%;box-sizing:border-box;height:46px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#F5EFE3;font-size:13.5px;padding:0 15px;outline:none;font-family:inherit">
+                  </div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ formIsHome }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:14px;padding:16px;border-radius:16px;border:1px dashed rgba(198,161,91,.4);background:rgba(198,161,91,.05);text-align:center">
+                  <div style="font-size:11px;color:#D4B06A;font-weight:600">{{ aT.photosDrop }}</div>
+                  <div style="font-family:ui-monospace,Menlo,monospace;font-size:9px;color:rgba(245,239,227,.4);margin-top:4px">[ photos + video · {{ aT.pinNote }} ]</div>
+                </div>
+              </sc-if>
+              <div onClick="{{ formSave }}" style-active="transform:scale(.98)" style="margin-top:18px;height:52px;border-radius:999px;background:linear-gradient(180deg,#E3C078,#A8853F);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 24px rgba(198,161,91,.3);color:#171106;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;cursor:pointer">{{ formSaveLbl }}</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ codeShareOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#0A0908;z-index:46;animation:tiFade .25s ease both;display:flex;flex-direction:column;overflow-y:auto">
+            <div style="padding:76px 26px 40px;display:flex;flex-direction:column;align-items:center;text-align:center">
+              <span style="padding:6px 14px;border-radius:999px;background:rgba(157,191,142,.13);border:1px solid rgba(157,191,142,.35);color:#9DBF8E;font-size:11px;font-weight:600;letter-spacing:1.5px">{{ codeShareChip }}</span>
+              <h2 style="margin:16px 0 0;font-family:'Cinzel',serif;font-weight:500;font-size:21px;line-height:1.35">{{ codeShareTitle }}</h2>
+              <p style="margin:10px 0 0;font-size:12.5px;color:rgba(245,239,227,.55);line-height:1.55;max-width:280px">{{ aT.codeReadySub }}</p>
+              <div style="margin-top:22px;padding:20px 22px;border-radius:24px;background:#F5EFE3;box-shadow:0 24px 50px rgba(0,0,0,.5)">
+                <div style="position:relative;width:150px;height:150px;border-radius:8px;overflow:hidden">
+                  <img src="assets/qr-demo.png" alt="" style="width:100%;height:100%;image-rendering:pixelated">
+                  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#F5EFE3;padding:3px 6px;border-radius:4px;font-family:'Cinzel',serif;font-size:10px;color:#100D09;letter-spacing:1px;box-shadow:0 0 0 3px #F5EFE3">TI</div>
+                </div>
+                <div style="margin-top:14px;font-family:ui-monospace,Menlo,monospace;font-size:20px;letter-spacing:4px;color:#100D09;font-weight:700">{{ shareCodeVal }}</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px;width:100%;max-width:300px">
+                <div onClick="{{ shareCopy }}" style-active="transform:scale(.98)" style="height:48px;border-radius:999px;border:1.5px solid #C6A15B;color:#D4B06A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;letter-spacing:.5px;cursor:pointer">{{ aT.copyRow }}</div>
+                <div onClick="{{ shareSms }}" style-active="transform:scale(.98)" style="height:48px;border-radius:999px;border:1px solid rgba(245,239,227,.25);color:rgba(245,239,227,.75);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;cursor:pointer">{{ aT.smsRow }}</div>
+                <div onClick="{{ codeShareDone }}" style-active="transform:scale(.98)" style="height:52px;border-radius:999px;background:linear-gradient(180deg,#E3C078,#A8853F);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 24px rgba(198,161,91,.3);color:#171106;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;cursor:pointer">{{ aT.doneBtn }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ toastA }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:64px;left:20px;right:20px;display:flex;justify-content:center;z-index:60;animation:tiRise .3s ease both;pointer-events:none">
+            <span style="padding:11px 18px;border-radius:999px;background:rgba(13,12,10,.9);border:1px solid rgba(198,161,91,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);font-size:12px;color:#EAD9B0;box-shadow:0 14px 34px rgba(0,0,0,.5);text-align:center">{{ toastA }}</span>
+          </div>
+        </sc-if>
+      </div>
+    </x-import>
+  </div>
+  <div style="width:100%;text-align:center;font-size:11.5px;color:rgba(245,239,227,.4);line-height:1.7;max-width:640px;margin:0 auto">Visual mockup — every screen, flow and color can be adjusted to taste, and dozens of features can be added to grow its utility.</div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;clientName&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Carlos Mendoza&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Demo&quot;}, &quot;agentName&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;John Smith&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Demo&quot;}, &quot;defaultLang&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;en&quot;, &quot;es&quot;], &quot;default&quot;: &quot;en&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Demo&quot;}, &quot;reasonRequired&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Demo&quot;}}">
+class Component extends DCLogic {
+  L = {
+    en: {
+      welH1a: 'The keys to your', welH1b: 'next chapter', welAccess: 'PRIVATE ACCESS', welCode: 'ENTER WITH CODE', welQr: 'Scan QR code',
+      codeTitle: 'Enter your access code', codeHint: 'Any 4 digits work in this demo', codeOk: 'Code verified ✓',
+      meetChip: 'CODE VERIFIED', meetHow: 'HOW IT WORKS', meetCta: 'Start exploring',
+      navHome: 'HOMES', navMap: 'MAP', navChat: 'CHAT', navProfile: 'PROFILE',
+      stNew: 'NEW FOR YOU', stAcc: 'VISIT REQUESTED', stVisit: 'VISIT SET', stDecl: 'PASSED',
+      visitOn: 'Visit', mapOpen: 'Open home', chatOnline: 'Usually replies in minutes', msgListing: 'LISTING', msgView: 'View home',
+      profTitle: 'My search', budgetLbl: 'BUDGET', budgetLive: 'John sees updates instantly', preapLbl: 'Pre-approval', zonesLbl: 'AREAS OF INTEREST', zonesSug: 'SUGGESTED', prefsLbl: 'PREFERENCES', notesLbl: 'MY NOTES', notesSave: 'SHARE UPDATE WITH JOHN',
+      detInfo: 'Details', detChat: 'Ask about it', areaLink: 'See the area in the map tab',
+      actPass: 'Pass', actVisit: 'Request a visit', accBanner: 'Visit requested', declBanner: 'You passed on this home', declRec: 'Changed my mind — reconsider',
+      shAccTitle: 'Great choice.', shAccSub: 'What stood out? Optional — it helps John aim better.', shDecTitle: 'Good to know.', shDecSub: 'What didn’t work? Optional — John will adjust.', shPh: 'Add a note (optional)…', shAccBtn: 'Send & request visit', shDecBtn: 'Send & pass', shSkip: 'Skip — send without details',
+      rowBudget: 'Budget', rowZones: 'Areas', rowType: 'Type', rowBeds: 'Bedrooms', rowBaths: 'Bathrooms', rowPark: 'Parking', rowFamily: 'Family', rowTarget: 'Timeline', rowPreap: 'Pre-approval', rowPhone: 'Phone',
+      how1t: 'John sends homes', how1s: 'Hand-picked listings land in Homes with photos, map and full details.',
+      how2t: 'You react honestly', how2s: 'Request a visit or pass — tell him what worked and what didn’t.',
+      how3t: 'Chat and visit', how3s: 'Ask anything per home or in the general chat. John books the visits.',
+      accSub2: 'John is proposing times — you’ll see the visit here.',
+      moreSoon: 'John adds homes as he finds them.\nYou’ll get them right here.',
+      composerPh: 'Message John…', hComposerPh: 'Ask about this home…',
+      favLbl: 'favorites', cmpOpen: 'Compare', cmpTitle: 'Compare favorites',
+    },
+    es: {
+      welH1a: 'Las llaves de tu', welH1b: 'siguiente capítulo', welAccess: 'ACCESO PRIVADO', welCode: 'ENTRAR CON CÓDIGO', welQr: 'Escanear código QR',
+      codeTitle: 'Ingresa tu código de acceso', codeHint: 'En este demo funciona cualquier código de 4 dígitos', codeOk: 'Código verificado ✓',
+      meetChip: 'CÓDIGO VERIFICADO', meetHow: 'CÓMO FUNCIONA', meetCta: 'Empezar a explorar',
+      navHome: 'CASAS', navMap: 'MAPA', navChat: 'CHAT', navProfile: 'PERFIL',
+      stNew: 'NUEVA PARA TI', stAcc: 'VISITA SOLICITADA', stVisit: 'VISITA AGENDADA', stDecl: 'DESCARTADA',
+      visitOn: 'Visita', mapOpen: 'Abrir ficha', chatOnline: 'Suele responder en minutos', msgListing: 'FICHA', msgView: 'Ver casa',
+      profTitle: 'Mi búsqueda', budgetLbl: 'PRESUPUESTO', budgetLive: 'John ve los cambios al instante', preapLbl: 'Preaprobación', zonesLbl: 'ZONAS DE INTERÉS', zonesSug: 'SUGERIDAS', prefsLbl: 'PREFERENCIAS', notesLbl: 'MIS NOTAS', notesSave: 'COMPARTIR CAMBIO CON JOHN',
+      detInfo: 'Detalles', detChat: 'Preguntar', areaLink: 'Ver la zona en el mapa',
+      actPass: 'Descartar', actVisit: 'Solicitar visita', accBanner: 'Visita solicitada', declBanner: 'Descartaste esta casa', declRec: 'Cambié de opinión — reconsiderar',
+      shAccTitle: 'Buena elección.', shAccSub: '¿Qué te gustó más? Opcional — ayuda a John a afinar.', shDecTitle: 'Bueno saberlo.', shDecSub: '¿Qué no funcionó? Opcional — John ajustará.', shPh: 'Agrega una nota (opcional)…', shAccBtn: 'Enviar y solicitar visita', shDecBtn: 'Enviar y descartar', shSkip: 'Omitir — enviar sin detalles',
+      rowBudget: 'Presupuesto', rowZones: 'Zonas', rowType: 'Tipo', rowBeds: 'Recámaras', rowBaths: 'Baños', rowPark: 'Estacionamiento', rowFamily: 'Familia', rowTarget: 'Plazo', rowPreap: 'Preaprobación', rowPhone: 'Teléfono',
+      how1t: 'John te envía casas', how1s: 'Fichas seleccionadas llegan a Casas con fotos, mapa y todos los detalles.',
+      how2t: 'Tú reaccionas con honestidad', how2s: 'Solicita visita o descarta — cuéntale qué funcionó y qué no.',
+      how3t: 'Conversan y visitan', how3s: 'Pregunta lo que sea por casa o en el chat general. John agenda las visitas.',
+      accSub2: 'John está proponiendo horarios — aquí verás la visita.',
+      moreSoon: 'John agrega casas conforme las encuentra.\nTe llegarán justo aquí.',
+      composerPh: 'Mensaje a John…', hComposerPh: 'Pregunta sobre esta casa…',
+      favLbl: 'favoritas', cmpOpen: 'Comparar', cmpTitle: 'Comparar favoritas',
+    },
+  };
+  state = {
+    lang: null, view: 'welcome', code: [], checking: false,
+    favs: [], cmpOpen: false, clientQ: '', fZone: 'all', fPrice: 'all', fBeds: 'all',
+    ctab: 'offers', openHouse: null, hview: 'info', mapFocus: null,
+    sheet: null, sheetChips: [], sheetText: '',
+    draftG: '', draftH: '', toastC: null, toastA: null,
+    budgetMax: 950, zones: ['Silver Lake', 'Pasadena', 'Highland Park'], zonesAdded: [],
+    notes: 'Needs a yard for the dog; prefers quiet streets; home office is a must.', notesDraft: 'Needs a yard for the dog; prefers quiet streets; home office is a must.', notesEdited: false, budgetEdited: false,
+    atab: 'clients', openClient: null, csub: 'profile', aThread: null, draftA: '', attach: null,
+    openLead: null, leadNote: '', addLead: false, nl: { name: '', phone: '', zone: '', note: '' },
+    addClient: false, ncDone: false, newCode: '', nc: { name: '', phone: '', bmin: '', bmax: '', zones: '', type: '', beds: '', target: '', notes: '' },
+    addHome: false, nh: { addr: '', hood: '', price: '', beds: '', baths: '', sqft: '', park: '', notes: '' },
+    shareOpen: false,
+    houses: [
+      { id: 'h1', img: 'assets/fotos/1510627489930-0c1b0bfb6785.jpg', imgCredit: 'Photo by Gustavo Zambelli on Unsplash', imgHref: 'https://unsplash.com/@zamax', addr: '1428 Micheltorena St', hood: 'Silver Lake', price: 875000, beds: 3, baths: 2, sqft: 1680, park: 2, year: 1938, type: 'Single family', lat: 34.0902, lng: -118.2712, sent: true, status: 'new', photos: 4, descEn: 'A 1938 character home on a quiet walk street: chef’s kitchen, original oak floors, and a terraced yard with canyon views. Detached studio works as a home office.', descEs: 'Casa con carácter de 1938 en una calle tranquila: cocina de chef, pisos de roble originales y patio en terrazas con vista al cañón. Estudio independiente ideal como oficina.', featEn: ['Chef’s kitchen', 'Canyon view', 'Detached office', 'Terraced yard'], featEs: ['Cocina de chef', 'Vista al cañón', 'Oficina independiente', 'Patio en terrazas'] },
+      { id: 'h2', img: 'assets/fotos/1577618163295-29d57a40e2b2.jpg', imgCredit: 'Photo by Anatolii Nesterov on Unsplash', imgHref: 'https://unsplash.com/@monadiform', addr: '742 N Holliston Ave', hood: 'Pasadena', price: 919000, beds: 4, baths: 3, sqft: 2100, park: 2, year: 1926, type: 'Craftsman', lat: 34.1580, lng: -118.1329, sent: true, status: 'visit', visit: 'Sat, Aug 15 · 11:00 AM', photos: 5, video: true, descEn: 'Classic 1926 Craftsman two blocks from a park: wraparound porch, formal dining, fully fenced cedar backyard (redone 2024) and a finished basement.', descEs: 'Craftsman clásico de 1926 a dos cuadras de un parque: porche envolvente, comedor formal, patio cercado de cedro (renovado 2024) y sótano terminado.', featEn: ['Wraparound porch', 'Fenced yard', 'Park 2 blocks', 'Finished basement'], featEs: ['Porche envolvente', 'Patio cercado', 'Parque a 2 cuadras', 'Sótano terminado'] },
+      { id: 'h3', img: 'assets/fotos/1523809040961-500fcd60697a.jpg', imgCredit: 'Photo by Jose Rago on Unsplash', imgHref: 'https://unsplash.com/@ragojose', addr: '5610 Aldama St', hood: 'Highland Park', price: 789000, beds: 3, baths: 2, sqft: 1540, park: 1, year: 1949, type: 'Single family', lat: 34.1108, lng: -118.1913, sent: true, status: 'declined', quote: 'Loved the kitchen — the street felt too busy for the kids.', photos: 4, descEn: 'Bright post-war bungalow with a remodeled kitchen, ADU potential over the garage, and a deep lot with mature citrus trees.', descEs: 'Bungalow luminoso de posguerra con cocina remodelada, potencial de ADU sobre el garaje y lote profundo con cítricos maduros.', featEn: ['Remodeled kitchen', 'ADU potential', 'Citrus trees'], featEs: ['Cocina remodelada', 'Potencial de ADU', 'Cítricos'] },
+      { id: 'h4', img: 'assets/fotos/1597211833712-5e41faa202ea.jpg', imgCredit: 'Photo by Durian Bullet on Unsplash', imgHref: 'https://unsplash.com/@durianbullet', addr: '3117 Rowena Ave', hood: 'Silver Lake', price: 829000, beds: 2, baths: 2, sqft: 1450, park: 2, year: 1955, type: 'Mid-century', lat: 34.1049, lng: -118.2631, sent: true, status: 'new', photos: 3, descEn: 'Mid-century post-and-beam with walls of glass, a flat grassy yard, and a converted garage studio — quiet cul-de-sac near the reservoir.', descEs: 'Mid-century post-and-beam con muros de cristal, patio plano de pasto y garaje convertido en estudio — cul-de-sac tranquilo cerca de la reserva.', featEn: ['Walls of glass', 'Flat yard', 'Garage studio'], featEs: ['Muros de cristal', 'Patio plano', 'Estudio en garaje'] },
+      { id: 'h5', img: 'assets/fotos/1735753706014-687ed4576f2b.jpg', imgCredit: 'Photo by Gene Giromini on Unsplash', imgHref: 'https://unsplash.com/@ewgino', addr: '6142 Meridian St', hood: 'Highland Park', price: 849000, beds: 3, baths: 2, sqft: 1600, park: 2, year: 1941, type: 'Single family', lat: 34.1142, lng: -118.1846, sent: false, status: 'catalog', photos: 3, descEn: 'Corner-lot traditional with a new roof, drought garden, and a bonus room off the kitchen.', descEs: 'Casa tradicional en esquina con techo nuevo, jardín de bajo consumo y cuarto extra junto a la cocina.', featEn: ['Corner lot', 'New roof', 'Bonus room'], featEs: ['Esquina', 'Techo nuevo', 'Cuarto extra'] },
+      { id: 'h6', img: 'assets/fotos/1617141372324-a37d164e08ae.jpg', imgCredit: 'Photo by Y S on Unsplash', imgHref: 'https://unsplash.com/@santonii', addr: '2210 Edgewater Ter', hood: 'Silver Lake', price: 965000, beds: 4, baths: 3, sqft: 2050, park: 2, year: 1962, type: 'Modern', lat: 34.0958, lng: -118.2743, sent: false, status: 'catalog', photos: 4, descEn: 'Reimagined modern on a hillside double lot — reservoir views, decks on two levels, EV-ready garage.', descEs: 'Moderna renovada en doble lote de ladera — vistas a la reserva, terrazas en dos niveles, garaje listo para EV.', featEn: ['Reservoir views', 'Two decks', 'EV garage'], featEs: ['Vista a la reserva', 'Dos terrazas', 'Garaje EV'] },
+    ],
+    threads: {
+      general: [
+        { from: 'sys', kind: 'sys', text: 'Aug 8' },
+        { from: 'agent', kind: 'text', text: 'Welcome, Carlos! This is your private space. Everything I send lands here — react honestly, it helps me aim better.' },
+        { from: 'agent', kind: 'house', house: 'h2' },
+        { from: 'client', kind: 'text', text: 'The Pasadena one looks amazing — is the backyard fully fenced?' },
+        { from: 'agent', kind: 'photos', house: 'h2', count: 3 },
+        { from: 'agent', kind: 'text', text: 'Fully fenced — cedar, redone in 2024. Shot these for you this morning.' },
+        { from: 'agent', kind: 'video', house: 'h2', dur: '0:42' },
+        { from: 'client', kind: 'text', text: 'Perfect. Could we see it this weekend?' },
+        { from: 'sys', kind: 'sys', text: 'Visit confirmed · Sat, Aug 15 · 11:00 AM' },
+      ],
+      h1: [
+        { from: 'client', kind: 'text', text: 'Could you send backyard photos? Thinking about the dog.' },
+        { from: 'agent', kind: 'photos', house: 'h1', count: 3 },
+        { from: 'agent', kind: 'text', text: 'Full sun until ~4pm. One fence panel needs fixing — seller will cover it.' },
+      ],
+      h2: [
+        { from: 'sys', kind: 'sys', text: 'Visit confirmed · Sat, Aug 15' },
+        { from: 'agent', kind: 'text', text: 'Bring the kids Saturday — there’s a great park two blocks away.' },
+      ],
+      h3: [{ from: 'sys', kind: 'sys', text: 'You passed on this home · Aug 9' }],
+      h4: [],
+    },
+    timeline: [
+      { en: 'Visit set for 742 N Holliston · Sat, Aug 15', es: 'Visita agendada en 742 N Holliston · sáb 15 ago', time: 'Aug 10' },
+      { en: 'Carlos passed on 5610 Aldama — “street too busy”', es: 'Carlos descartó 5610 Aldama — “calle muy transitada”', time: 'Aug 9' },
+      { en: 'Carlos requested a visit to 742 N Holliston', es: 'Carlos solicitó visita a 742 N Holliston', time: 'Aug 9' },
+      { en: 'Carlos entered the app with code TI-4Q7M', es: 'Carlos entró a la app con el código TI-4Q7M', time: 'Aug 8' },
+      { en: 'Access code TI-4Q7M shared', es: 'Código de acceso TI-4Q7M compartido', time: 'Aug 8' },
+    ],
+    leads: [
+      { id: 'l1', name: 'Robert Fuentes', phone: '(213) 555-0164', zone: 'Echo Park', last: 'Aug 9', calls: 4, flags: ['confirmed', 'appt'], notes: ['Wants a duplex — will rent one unit.', 'Prefers Spanish for documents.'] },
+      { id: 'l2', name: 'Alma Gutiérrez', phone: '(818) 555-0230', zone: 'Van Nuys', last: 'Aug 7', calls: 2, flags: ['continuity', 'callback'], notes: ['Waiting on BofA pre-approval.'] },
+      { id: 'l3', name: 'T. Nguyen', phone: '(626) 555-0114', zone: 'Alhambra', last: 'Jul 30', calls: 6, flags: ['noanswer', 'inaccessible'], notes: ['Try after 7pm — works doubles.'] },
+      { id: 'l4', name: 'Kevin Ross', phone: '(310) 555-0088', zone: 'Torrance', last: 'Aug 2', calls: 1, flags: ['notinterested'], notes: [] },
+      { id: 'l5', name: 'Lucía Herrera', phone: '(323) 555-0199', zone: 'Boyle Heights', last: 'Aug 10', calls: 3, flags: ['future', 'continuity'], notes: ['Timeline: spring 2027, after her lease ends.'] },
+    ],
+    clients: [
+      { id: 'carlos', live: true, status: 'active' },
+      { id: 'c2', name: 'María Torres', initials: 'MT', budget: '$500k – $620k', zones: 'Long Beach · San Pedro', pipe: '2 sent · reviewing', status: 'review' },
+      { id: 'c3', name: 'David Kim', initials: 'DK', budget: '$1.1M – $1.4M', zones: 'Culver City · Mar Vista', pipe: '5 sent · visit set', status: 'visit' },
+      { id: 'c4', name: 'Sofía Reyes', initials: 'SR', budget: '$680k – $740k', zones: 'Glendale', pipe: 'code shared', status: 'code' },
+    ],
+  };
+  get lang() { return this.state.lang ?? (this.props.defaultLang ?? 'en'); }
+  t() { return this.L[this.lang]; }
+  toast(side, msg, ms = 2600) {
+    clearTimeout(this['_to' + side]);
+    this.setState({ ['toast' + side]: msg });
+    this['_to' + side] = setTimeout(() => this.setState({ ['toast' + side]: null }), ms);
+  }
+  setHouse(id, patch) { this.setState((s) => ({ houses: s.houses.map((h) => (h.id === id ? { ...h, ...patch } : h)) })); }
+  pushMsg(tid, msg) { this.setState((s) => ({ threads: { ...s.threads, [tid]: [...(s.threads[tid] || []), msg] } })); }
+  logEvent(en, es) { this.setState((s) => ({ timeline: [{ en, es, time: 'Today' }, ...s.timeline] })); }
+  fmt(n) { return '$' + n.toLocaleString('en-US'); }
+  fmtK(n) { return '$' + n + 'k'; }
+  statusMeta(h) {
+    const t = this.t();
+    if (h.status === 'visit') return { stL: t.stVisit, stCol: '#9DBF8E', stBg: 'rgba(20,26,17,.75)', stBd: 'rgba(157,191,142,.45)' };
+    if (h.status === 'accepted') return { stL: t.stAcc, stCol: '#D4B06A', stBg: 'rgba(26,21,12,.78)', stBd: 'rgba(212,176,106,.5)' };
+    if (h.status === 'declined') return { stL: t.stDecl, stCol: '#C08268', stBg: 'rgba(25,15,11,.75)', stBd: 'rgba(192,130,104,.4)' };
+    return { stL: t.stNew, stCol: '#EAD9B0', stBg: 'rgba(26,21,12,.78)', stBd: 'rgba(198,161,91,.5)' };
+  }
+  houseById(id) { return this.state.houses.find((h) => h.id === id); }
+  enrichMsgs(list) {
+    return (list || []).map((m) => {
+      const h = m.house ? this.houseById(m.house) : null;
+      const mineC = m.from === 'client', mineA = m.from === 'agent';
+      return {
+        ...m,
+        isSys: m.kind === 'sys', isText: m.kind === 'text', isHouse: m.kind === 'house', isPhotos: m.kind === 'photos', isVideo: m.kind === 'video',
+        alignC: mineC ? 'flex-end' : 'flex-start', alignA: mineA ? 'flex-end' : 'flex-start',
+        bgC: mineC ? 'rgba(198,161,91,.16)' : 'rgba(255,255,255,.06)', bdC: mineC ? 'rgba(198,161,91,.35)' : 'rgba(255,255,255,.1)',
+        bgA: mineA ? 'rgba(198,161,91,.16)' : 'rgba(255,255,255,.06)', bdA: mineA ? 'rgba(198,161,91,.35)' : 'rgba(255,255,255,.1)',
+        hAddr: h ? h.addr : '', hHood: h ? h.hood : '', hPriceF: h ? this.fmt(h.price) : '',
+        hImgCss: h && h.img ? "url('" + h.img + "')" : 'repeating-linear-gradient(45deg,rgba(198,161,91,.14) 0 10px,rgba(198,161,91,.05) 10px 20px)',
+        thumbs: Array.from({ length: m.count || 0 }, (_, i) => ({ i })),
+        openC: () => h && this.openHouse(h.id),
+      };
+    });
+  }
+  openHouse(id) { this.setState({ openHouse: id, hview: 'info', ctab: this.state.ctab, draftH: '' }); }
+  componentDidUpdate() {
+    [this._gc, this._ac].forEach((el) => { if (el) el.scrollTop = el.scrollHeight; });
+  }
+  updateLead(id, patch) { this.setState((s) => ({ leads: s.leads.map((l) => (l.id === id ? { ...l, ...patch } : l)) })); }
+  flagMeta(k, lang) {
+    const en = { confirmed: 'CONFIRMED', appt: 'APPT SET', continuity: 'IN FOLLOW-UP', callback: 'CALL BACK', future: 'FUTURE INTEREST', noanswer: 'NO ANSWER', inaccessible: 'UNREACHABLE', notinterested: 'NOT INTERESTED' };
+    const es = { confirmed: 'CONFIRMADO', appt: 'CITA AGENDADA', continuity: 'EN CONTINUIDAD', callback: 'VOLVER A LLAMAR', future: 'INTERÉS A FUTURO', noanswer: 'NO CONTESTA', inaccessible: 'INACCESIBLE', notinterested: 'NO INTERESADO' };
+    const tone = { confirmed: 'gold', appt: 'green', continuity: 'cream', callback: 'cream', future: 'cream', noanswer: 'red', inaccessible: 'red', notinterested: 'dim' }[k];
+    const c = {
+      gold: { col: '#D4B06A', bg: 'rgba(198,161,91,.13)', bd: 'rgba(198,161,91,.45)' },
+      green: { col: '#9DBF8E', bg: 'rgba(157,191,142,.11)', bd: 'rgba(157,191,142,.4)' },
+      cream: { col: 'rgba(245,239,227,.75)', bg: 'rgba(255,255,255,.05)', bd: 'rgba(255,255,255,.16)' },
+      red: { col: '#C08268', bg: 'rgba(192,130,104,.1)', bd: 'rgba(192,130,104,.4)' },
+      dim: { col: 'rgba(245,239,227,.45)', bg: 'transparent', bd: 'rgba(255,255,255,.14)' },
+    }[tone];
+    return { label: (lang === 'en' ? en : es)[k], ...c };
+  }
+  sendHouseTo(id) {
+    const lang = this.lang, h = this.houseById(id);
+    const aFirst = (this.props.agentName ?? 'John Smith').split(' ')[0];
+    const cFirst = (this.props.clientName ?? 'Carlos Mendoza').split(' ')[0];
+    this.setHouse(id, { sent: true, status: 'new' });
+    this.pushMsg('general', { from: 'agent', kind: 'house', house: id });
+    this.logEvent(`Sent ${h.addr} to ${cFirst}`, `Enviaste ${h.addr} a ${cFirst}`);
+    this.toast('A', lang === 'en' ? `✓ Sent to ${cFirst}` : `✓ Enviada a ${cFirst}`);
+    this.toast('C', lang === 'en' ? `${aFirst} sent you a new home ⌂` : `${aFirst} te envió una casa nueva ⌂`);
+  }
+  renderVals() {
+    const s = this.state, t = this.t(), lang = this.lang;
+    const clientName = this.props.clientName ?? 'Carlos Mendoza';
+    const agentName = this.props.agentName ?? 'John Smith';
+    const cFirst = clientName.split(' ')[0], aFirst = agentName.split(' ')[0];
+    const initials = (n) => n.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+    const reasonRequired = this.props.reasonRequired ?? false;
+    const offersRaw = s.houses.filter((h) => h.sent);
+    const enrich = (h) => ({
+      ...h, ...this.statusMeta(h), priceF: this.fmt(h.price), sqftF: h.sqft.toLocaleString('en-US'),
+      isVisit: h.status === 'visit', isNew: h.status === 'new', isAcc: h.status === 'accepted', isDecl: h.status === 'declined',
+      hasQuote: !!h.quote && h.status === 'declined', hasFeedback: !!h.quote, slotId: 'photo-' + h.id, slotPh: 'Photo · ' + h.addr, op: h.status === 'declined' ? '.62' : '1',
+      imgCss: h.img ? "url('" + h.img + "')" : 'repeating-linear-gradient(45deg,rgba(198,161,91,.14) 0 10px,rgba(198,161,91,.05) 10px 20px)',
+      desc: lang === 'en' ? h.descEn : h.descEs,
+      feats: (lang === 'en' ? h.featEn : h.featEs || h.featEn || []).map((x) => ({ x })),
+      stats: [
+        { k: lang === 'en' ? 'beds' : 'rec', v: h.beds }, { k: lang === 'en' ? 'baths' : 'baños', v: h.baths }, { k: 'sqft', v: h.sqft.toLocaleString('en-US') },
+        { k: lang === 'en' ? 'parking' : 'estac.', v: h.park }, { k: lang === 'en' ? 'built' : 'año', v: h.year }, { k: lang === 'en' ? 'type' : 'tipo', v: h.type },
+      ],
+      dots: Array.from({ length: h.photos || 3 }, (_, i) => ({ op: i === 0 ? '.95' : '.35' })),
+      favGlyph: s.favs.includes(h.id) ? '◆' : '◇', favCol: s.favs.includes(h.id) ? '#E3C078' : 'rgba(245,239,227,.7)',
+      toggleFav: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState((st) => ({ favs: st.favs.includes(h.id) ? st.favs.filter((v) => v !== h.id) : [...st.favs, h.id] })); },
+      open: () => this.openHouse(h.id),
+    });
+    const offers = offersRaw.map(enrich);
+    const detailRaw = s.openHouse ? this.houseById(s.openHouse) : null;
+    const detail = detailRaw ? enrich(detailRaw) : null;
+    const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
+    const keypad = digits.map((d) => ({
+      label: d, blank: d === '',
+      bg: d === '' ? 'transparent' : 'rgba(255,255,255,.05)',
+      bd: d === '' ? 'none' : '1px solid rgba(255,255,255,.09)',
+      tap: () => {
+        if (d === '' || s.checking) return;
+        if (d === '⌫') { this.setState((st) => ({ code: st.code.slice(0, -1) })); return; }
+        if (s.code.length >= 4) return;
+        const code = [...s.code, d];
+        this.setState({ code });
+        if (code.length === 4) {
+          this.setState({ checking: true });
+          setTimeout(() => { this.setState({ view: 'meet', checking: false, code: [] }); }, 650);
+        }
+      },
+    }));
+    const codeSlots = Array.from({ length: 4 }, (_, i) => ({ ch: s.code[i] || '', bd: s.code[i] ? '#C6A15B' : 'rgba(245,239,227,.25)' }));
+    const zoneAll = ['Eagle Rock', 'Glendale', 'Mt Washington', 'Atwater Village', 'Echo Park'];
+    const zoneChips = s.zones.map((name) => ({
+      name,
+      remove: () => {
+        this.setState((st) => ({ zones: st.zones.filter((z) => z !== name) }));
+        this.logEvent(`${cFirst} removed ${name} from areas of interest`, `${cFirst} quitó ${name} de sus zonas`);
+        this.toast('A', lang === 'en' ? `${cFirst} removed ${name}` : `${cFirst} quitó ${name}`);
+      },
+    }));
+    const zoneSugg = zoneAll.filter((z) => !s.zones.includes(z)).map((name) => ({
+      name,
+      add: () => {
+        this.setState((st) => ({ zones: [...st.zones, name], zonesAdded: [...st.zonesAdded, name] }));
+        this.logEvent(`${cFirst} added ${name} to areas of interest`, `${cFirst} agregó ${name} a sus zonas`);
+        this.toast('A', lang === 'en' ? `${cFirst} added ${name} to their search` : `${cFirst} agregó ${name} a su búsqueda`);
+      },
+    }));
+    const prefRows = [
+      { k: t.rowType, v: 'Single family' }, { k: t.rowBeds, v: '3+' }, { k: t.rowBaths, v: '2+' },
+      { k: t.rowPark, v: '2' }, { k: t.rowFamily, v: lang === 'en' ? '2 kids · 1 dog' : '2 niños · 1 perro' }, { k: t.rowTarget, v: lang === 'en' ? 'Buy by Q1 2027' : 'Comprar antes de Q1 2027' },
+    ];
+    const meetRows = [
+      { k: t.rowBudget, v: `$750k – ${this.fmtK(s.budgetMax)}` },
+      { k: t.rowZones, v: s.zones.slice(0, 3).join(' · ') },
+      { k: t.rowType, v: lang === 'en' ? 'Single family · 3+ bd · 2+ ba' : 'Casa sola · 3+ rec · 2+ baños' },
+      { k: t.rowFamily, v: lang === 'en' ? '2 kids · 1 dog' : '2 niños · 1 perro' },
+      { k: t.rowPreap, v: '✓ Chase · $900k' },
+    ];
+    const howSteps = [
+      { n: '1', t: t.how1t.replace('John', aFirst), d: t.how1s },
+      { n: '2', t: t.how2t, d: t.how2s },
+      { n: '3', t: t.how3t, d: t.how3s.replace('John', aFirst) },
+    ];
+    const sheetDefs = {
+      accept: { title: t.shAccTitle, sub: t.shAccSub, btn: t.shAccBtn, chips: lang === 'en' ? ['Kitchen', 'Location', 'Natural light', 'Yard', 'Price', 'Layout'] : ['Cocina', 'Ubicación', 'Luz natural', 'Patio', 'Precio', 'Distribución'] },
+      decline: { title: t.shDecTitle, sub: t.shDecSub, btn: t.shDecBtn, chips: lang === 'en' ? ['Price', 'Busy street', 'Small yard', 'Needs work', 'Layout', 'Location'] : ['Precio', 'Calle transitada', 'Patio chico', 'Necesita trabajo', 'Distribución', 'Ubicación'] },
+    };
+    const sd = s.sheet ? sheetDefs[s.sheet] : null;
+    const sheetChipList = sd ? sd.chips.map((label) => {
+      const sel = s.sheetChips.includes(label);
+      return {
+        label, sel,
+        bg: sel ? 'rgba(198,161,91,.2)' : 'rgba(255,255,255,.04)',
+        bd: sel ? 'rgba(212,176,106,.6)' : 'rgba(255,255,255,.12)',
+        col: sel ? '#EAD9B0' : 'rgba(245,239,227,.6)',
+        tap: () => this.setState((st) => ({ sheetChips: sel ? st.sheetChips.filter((c) => c !== label) : [...st.sheetChips, label] })),
+      };
+    }) : [];
+    const doConfirm = (reason) => {
+      if (!s.sheet) return;
+      const h = this.houseById(s.openHouse);
+      if (s.sheet === 'accept') {
+        this.setHouse(h.id, { status: 'accepted', quote: reason || undefined });
+        this.pushMsg(h.id, { from: 'sys', kind: 'sys', text: lang === 'en' ? 'Visit requested · Today' : 'Visita solicitada · Hoy' });
+        this.logEvent(`${cFirst} requested a visit to ${h.addr}${reason ? ` — “${reason}”` : ''}`, `${cFirst} solicitó visita a ${h.addr}${reason ? ` — “${reason}”` : ''}`);
+        this.toast('A', `✓ ${cFirst} ${lang === 'en' ? 'accepted' : 'aceptó'} ${h.addr}`);
+        this.toast('C', lang === 'en' ? `Visit requested — ${aFirst} will propose times` : `Visita solicitada — ${aFirst} propondrá horarios`);
+      } else {
+        this.setHouse(h.id, { status: 'declined', quote: reason || (lang === 'en' ? 'No reason given' : 'Sin motivo') });
+        this.pushMsg(h.id, { from: 'sys', kind: 'sys', text: lang === 'en' ? 'Passed · Today' : 'Descartada · Hoy' });
+        this.logEvent(`${cFirst} passed on ${h.addr}${reason ? ` — “${reason}”` : ''}`, `${cFirst} descartó ${h.addr}${reason ? ` — “${reason}”` : ''}`);
+        this.toast('A', `${cFirst} ${lang === 'en' ? 'passed on' : 'descartó'} ${h.addr}`);
+      }
+      this.setState({ sheet: null, sheetChips: [], sheetText: '' });
+    };
+    const confirmSheet = () => {
+      const reason = [s.sheetChips.join(', '), s.sheetText.trim()].filter(Boolean).join(' — ');
+      if (reasonRequired && !reason) { this.toast('C', lang === 'en' ? 'Please add a reason' : 'Agrega un motivo, por favor'); return; }
+      doConfirm(reason);
+    };
+    const hMsgs = detail ? this.enrichMsgs(s.threads[detail.id]) : [];
+    const mapFocusRaw = s.mapFocus ? this.houseById(s.mapFocus) : null;
+    const hoods = [...new Set(offersRaw.map((h) => h.hood))];
+    const cmpCols = s.favs.map((id) => {
+      const h = this.houseById(id); if (!h) return null;
+      const e = enrich(h);
+      return { ...e, cmpRows: [
+        { k: lang === 'en' ? 'Beds' : 'Rec', v: h.beds }, { k: lang === 'en' ? 'Baths' : 'Baños', v: h.baths }, { k: 'Sqft', v: e.sqftF },
+        { k: lang === 'en' ? 'Parking' : 'Estac.', v: h.park }, { k: lang === 'en' ? 'Year' : 'Año', v: h.year }, { k: lang === 'en' ? 'Status' : 'Estado', v: e.stL },
+      ], open: () => { this.setState({ cmpOpen: false }); this.openHouse(h.id); } };
+    }).filter(Boolean);
+    const aT = lang === 'en' ? {
+      navClients: 'CLIENTS', navHomes: 'HOMES', navLeads: 'LEADS', navChats: 'CHATS',
+      addClient: '+ REGISTER CLIENT', activeLbl: 'ACTIVE CLIENTS', homesTitle: 'Home catalog', regHome: '+ REGISTER NEW HOME', sentTo: 'SENT',
+      leadsTitle: 'Continuity', addLead: '+ NEW LEAD', lastCall: 'last call', callsLbl: 'CALLS', callsLbl2: 'calls', logCall: 'Log a call', flagsLbl: 'FLAGS', notesLbl2: 'NOTES', addNotePh: 'Add a note…',
+      chatsTitle: 'Conversations', attachTitle: 'ATTACH — LINKED TO A HOME', attachHouse: 'Listing card', attachPhotos: 'Photos linked to a home', attachVideo: 'Video linked to a home', pickHome: 'PICK THE HOME',
+      fichaProfile: 'Profile', fichaHomes: 'Homes', fichaChats: 'Chats', liveNote: 'Live — client updates appear instantly', addedBy: 'added by client', activity: 'ACTIVITY', pipeline: 'PIPELINE', sendMore: 'SEND FROM CATALOG', sendBtn: 'Send ›', catalogEmpty: 'Catalog empty — register a new home.', feedback: 'CLIENT FEEDBACK',
+      newClientTitle: 'Register client', newHomeTitle: 'Register home', newLeadTitle: 'New lead', photosDrop: 'Photos & video — added later in this demo', pinNote: 'map pin set from address',
+      copyRow: 'Copy code', smsRow: 'Send by message', doneBtn: 'Done', codeReadySub: 'Share this code or QR — it unlocks their personalized app.', codeReadyChip: 'CLIENT REGISTERED ✓', demoFollow: 'This demo follows ' + cFirst, saveLbl: 'Save', listingPrev: 'Listing sent', searchPh: 'Search name or area…',
+    } : {
+      navClients: 'CLIENTES', navHomes: 'CASAS', navLeads: 'LEADS', navChats: 'CHATS',
+      addClient: '+ REGISTRAR CLIENTE', activeLbl: 'CLIENTES ACTIVOS', homesTitle: 'Catálogo de casas', regHome: '+ REGISTRAR CASA NUEVA', sentTo: 'ENVIADA',
+      leadsTitle: 'Continuidad', addLead: '+ NUEVO LEAD', lastCall: 'última llamada', callsLbl: 'LLAMADAS', callsLbl2: 'llamadas', logCall: 'Registrar llamada', flagsLbl: 'FLAGS', notesLbl2: 'NOTAS', addNotePh: 'Agregar nota…',
+      chatsTitle: 'Conversaciones', attachTitle: 'ADJUNTAR — LIGADO A UNA CASA', attachHouse: 'Ficha de casa', attachPhotos: 'Fotos ligadas a una casa', attachVideo: 'Video ligado a una casa', pickHome: 'ELIGE LA CASA',
+      fichaProfile: 'Perfil', fichaHomes: 'Casas', fichaChats: 'Chats', liveNote: 'En vivo — los cambios del cliente aparecen al instante', addedBy: 'agregada por el cliente', activity: 'ACTIVIDAD', pipeline: 'PIPELINE', sendMore: 'ENVIAR DEL CATÁLOGO', sendBtn: 'Enviar ›', catalogEmpty: 'Catálogo vacío — registra una casa nueva.', feedback: 'FEEDBACK DEL CLIENTE',
+      newClientTitle: 'Registrar cliente', newHomeTitle: 'Registrar casa', newLeadTitle: 'Nuevo lead', photosDrop: 'Fotos y video — se agregan después en este demo', pinNote: 'pin del mapa desde la dirección',
+      copyRow: 'Copiar código', smsRow: 'Enviar por mensaje', doneBtn: 'Listo', codeReadySub: 'Comparte este código o QR — desbloquea su app personalizada.', codeReadyChip: 'CLIENTE REGISTRADO ✓', demoFollow: 'Este demo sigue a ' + cFirst, saveLbl: 'Guardar', listingPrev: 'Ficha enviada', searchPh: 'Buscar nombre o zona…',
+    };
+    const nVisit = offersRaw.filter((h) => h.status === 'visit' || h.status === 'accepted').length;
+    const followUps = s.leads.filter((l) => l.flags.includes('continuity') || l.flags.includes('callback')).length;
+    const stMap = {
+      active: { stL: lang === 'en' ? 'ACTIVE' : 'ACTIVO', stCol: '#D4B06A', stBg: 'rgba(198,161,91,.13)', stBd: 'rgba(198,161,91,.45)' },
+      review: { stL: lang === 'en' ? 'REVIEWING' : 'REVISANDO', stCol: 'rgba(245,239,227,.75)', stBg: 'rgba(255,255,255,.05)', stBd: 'rgba(255,255,255,.16)' },
+      visit: { stL: lang === 'en' ? 'VISIT SET' : 'VISITA', stCol: '#9DBF8E', stBg: 'rgba(157,191,142,.11)', stBd: 'rgba(157,191,142,.4)' },
+      code: { stL: lang === 'en' ? 'CODE SHARED' : 'CÓDIGO', stCol: 'rgba(245,239,227,.5)', stBg: 'transparent', stBd: 'rgba(255,255,255,.14)' },
+    };
+    const aClientsAll = [
+      { name: clientName, initials: initials(clientName), budget: `$750k – ${this.fmtK(s.budgetMax)}`, zones: s.zones.slice(0, 3).join(' · '), pipe: `${offersRaw.length} ${lang === 'en' ? 'sent' : 'enviadas'} · ${nVisit} ${lang === 'en' ? 'visit' : 'visita'}`, edited: s.budgetEdited || s.notesEdited || s.zonesAdded.length > 0, rowBd: 'rgba(198,161,91,.4)', ...stMap.active, open: () => this.setState({ openClient: 'carlos', csub: 'profile' }) },
+      ...s.clients.filter((c) => !c.live).map((c) => ({ ...c, edited: false, rowBd: 'rgba(255,255,255,.09)', ...stMap[c.status], open: () => this.toast('A', aT.demoFollow) })),
+    ];
+    const cq = s.clientQ.trim().toLowerCase();
+    const aClients = cq ? aClientsAll.filter((c) => (c.name + ' ' + c.zones).toLowerCase().includes(cq)) : aClientsAll;
+    const catalogAvailRaw = s.houses.filter((h) => !h.sent);
+    const catalogAvail = catalogAvailRaw.map((h) => ({ ...h, priceF: this.fmt(h.price), send: () => this.sendHouseTo(h.id) }));
+    const hoodsAll = [...new Set(s.houses.map((h) => h.hood))];
+    const passF = (h) => (s.fZone === 'all' || h.hood === s.fZone) && (s.fPrice === 'all' || (s.fPrice === 'lo' ? h.price <= 850000 : h.price > 850000)) && (s.fBeds === 'all' || h.beds >= s.fBeds);
+    const aHomes = s.houses.filter(passF).map((h) => ({ ...h, priceF: this.fmt(h.price), sqftF: (h.sqft || 0).toLocaleString('en-US'), imgCss: h.img ? "url('" + h.img + "')" : 'repeating-linear-gradient(45deg,rgba(198,161,91,.14) 0 10px,rgba(198,161,91,.05) 10px 20px)', phLbl: h.img ? '' : h.photos + ' photos' }));
+    const fchip = (label, sel, tap) => ({ label, tap, bg: sel ? 'rgba(198,161,91,.2)' : 'rgba(255,255,255,.04)', bd: sel ? 'rgba(212,176,106,.6)' : 'rgba(255,255,255,.12)', col: sel ? '#EAD9B0' : 'rgba(245,239,227,.55)' });
+    const homeFilters = [
+      fchip(lang === 'en' ? 'All' : 'Todas', s.fZone === 'all' && s.fPrice === 'all' && s.fBeds === 'all', () => this.setState({ fZone: 'all', fPrice: 'all', fBeds: 'all' })),
+      ...hoodsAll.map((z) => fchip(z, s.fZone === z, () => this.setState({ fZone: s.fZone === z ? 'all' : z }))),
+      fchip('≤ $850k', s.fPrice === 'lo', () => this.setState({ fPrice: s.fPrice === 'lo' ? 'all' : 'lo' })),
+      fchip('$850k+', s.fPrice === 'hi', () => this.setState({ fPrice: s.fPrice === 'hi' ? 'all' : 'hi' })),
+      fchip('3+ bd', s.fBeds === 3, () => this.setState({ fBeds: s.fBeds === 3 ? 'all' : 3 })),
+      fchip('4+ bd', s.fBeds === 4, () => this.setState({ fBeds: s.fBeds === 4 ? 'all' : 4 })),
+    ];
+    const flagKeys = ['confirmed', 'appt', 'continuity', 'callback', 'future', 'noanswer', 'inaccessible', 'notinterested'];
+    const aLeads = s.leads.map((l) => ({ ...l, callLine: `${aT.lastCall} ${l.last} · ${l.calls} ${aT.callsLbl2}`, flagChips: l.flags.map((k) => this.flagMeta(k, lang)), open: () => this.setState({ openLead: l.id, leadNote: '' }) }));
+    const leadDRaw = s.openLead ? s.leads.find((l) => l.id === s.openLead) : null;
+    const leadD = leadDRaw || { name: '', phone: '', zone: '', calls: 0, last: '', notes: [], flags: [] };
+    const leadFlagsAll = leadDRaw ? flagKeys.map((k) => {
+      const meta = this.flagMeta(k, lang);
+      const sel = leadDRaw.flags.includes(k);
+      return { label: meta.label, col: sel ? meta.col : 'rgba(245,239,227,.45)', bg: sel ? meta.bg : 'rgba(255,255,255,.03)', bd: sel ? meta.bd : 'rgba(255,255,255,.12)', tap: () => this.updateLead(leadDRaw.id, { flags: sel ? leadDRaw.flags.filter((f) => f !== k) : [...leadDRaw.flags, k] }) };
+    }) : [];
+    const lastPrev = (list) => {
+      const l = (list || []).filter((m) => m.kind !== 'sys');
+      if (!l.length) return lang === 'en' ? 'No messages yet' : 'Aún sin mensajes';
+      const m = l[l.length - 1];
+      if (m.kind === 'text') return (m.from === 'agent' ? (lang === 'en' ? 'You: ' : 'Tú: ') : '') + m.text;
+      if (m.kind === 'house') return aT.listingPrev;
+      if (m.kind === 'photos') return lang === 'en' ? 'Photos sent' : 'Fotos enviadas';
+      return lang === 'en' ? 'Video sent' : 'Video enviado';
+    };
+    const openThreadFn = (tid) => this.setState({ aThread: tid, draftA: '', attach: null });
+    const houseThreadRows = offersRaw.map((h) => ({ title: h.addr, sub: lastPrev(s.threads[h.id]), badge: '⌂', rad: '13px', open: () => openThreadFn(h.id) }));
+    const fichaChatRows = [{ title: 'General · ' + clientName, sub: lastPrev(s.threads.general), badge: initials(clientName), rad: '50%', open: () => openThreadFn('general') }, ...houseThreadRows];
+    const chatRows = [...fichaChatRows,
+      { title: 'María Torres — General', sub: lang === 'en' ? '2 homes sent · reviewing' : '2 casas enviadas · revisando', badge: 'MT', rad: '50%', open: () => this.toast('A', aT.demoFollow) },
+      { title: 'David Kim — General', sub: lang === 'en' ? 'Visit set · Culver City' : 'Visita agendada · Culver City', badge: 'DK', rad: '50%', open: () => this.toast('A', aT.demoFollow) },
+    ];
+    const threadIsGen = s.aThread === 'general';
+    const threadHouse = s.aThread && !threadIsGen ? this.houseById(s.aThread) : null;
+    const aMsgs = s.aThread ? this.enrichMsgs(threadIsGen ? s.threads.general : s.threads[s.aThread]) : [];
+    const attachRows = [
+      { label: aT.attachHouse, rad: '3px', pick: () => this.setState({ attach: 'house' }) },
+      { label: aT.attachPhotos, rad: '50%', pick: () => this.setState({ attach: 'photos' }) },
+      { label: aT.attachVideo, rad: '6px', pick: () => this.setState({ attach: 'video' }) },
+    ];
+    const attachHouses = (s.attach === 'house' ? s.houses : s.houses.filter((h) => h.sent)).map((h) => ({
+      addr: h.addr, priceF: this.fmt(h.price),
+      pick: () => {
+        const kind = s.attach, tid = s.aThread;
+        if (!tid) return;
+        const msg = kind === 'house' ? { from: 'agent', kind: 'house', house: h.id } : kind === 'photos' ? { from: 'agent', kind: 'photos', house: h.id, count: 3 } : { from: 'agent', kind: 'video', house: h.id, dur: '0:38' };
+        this.pushMsg(tid, msg);
+        this.setState({ attach: null });
+        this.toast('C', lang === 'en' ? `${aFirst} sent you ${kind === 'house' ? 'a listing' : kind === 'photos' ? 'photos' : 'a video'} ⌂` : `${aFirst} te envió ${kind === 'house' ? 'una ficha' : kind === 'photos' ? 'fotos' : 'un video'} ⌂`);
+        this.toast('A', lang === 'en' ? 'Sent ✓' : 'Enviado ✓');
+      },
+    }));
+    const fichaRows = [
+      { k: t.rowPhone, v: '(213) 555-0177' },
+      { k: t.rowBudget, v: `$750k – ${this.fmtK(s.budgetMax)}`, hot: s.budgetEdited },
+      { k: t.rowType, v: lang === 'en' ? 'Single family · 3+ bd · 2+ ba' : 'Casa sola · 3+ rec · 2+ baños' },
+      { k: t.rowPark, v: '2' },
+      { k: t.rowFamily, v: lang === 'en' ? '2 kids · 1 dog' : '2 niños · 1 perro' },
+      { k: t.rowTarget, v: lang === 'en' ? 'Buy by Q1 2027' : 'Comprar antes de Q1 2027' },
+      { k: t.rowPreap, v: '✓ Chase · $900k' },
+    ];
+    const zonesFicha = s.zones.map((name) => ({ name, added: s.zonesAdded.includes(name), bd: s.zonesAdded.includes(name) ? 'rgba(212,176,106,.75)' : 'rgba(198,161,91,.35)' }));
+    const tlList = s.timeline.map((e) => ({ text: lang === 'en' ? e.en : e.es, time: e.time }));
+    const mkFields = (obj, defs, stateKey) => defs.map((d) => ({ label: d.l, ph: d.p || '', val: obj[d.k] || '', on: (e) => this.setState((st) => ({ [stateKey]: { ...st[stateKey], [d.k]: e.target.value } })) }));
+    const ncDefs = lang === 'en'
+      ? [{ k: 'name', l: 'FULL NAME', p: 'María Torres' }, { k: 'phone', l: 'PHONE', p: '(213) 555-0123' }, { k: 'bmin', l: 'BUDGET MIN ($K)', p: '500' }, { k: 'bmax', l: 'BUDGET MAX ($K)', p: '650' }, { k: 'zones', l: 'AREAS OF INTEREST', p: 'Silver Lake, Pasadena' }, { k: 'type', l: 'TYPE · BEDS · BATHS', p: 'Single family · 3+ · 2+' }, { k: 'target', l: 'TIMELINE', p: 'Q1 2027' }, { k: 'notes', l: 'PREFERENCE NOTES', p: 'Yard, quiet street, home office…' }]
+      : [{ k: 'name', l: 'NOMBRE COMPLETO', p: 'María Torres' }, { k: 'phone', l: 'TELÉFONO', p: '(213) 555-0123' }, { k: 'bmin', l: 'PRESUPUESTO MÍN ($K)', p: '500' }, { k: 'bmax', l: 'PRESUPUESTO MÁX ($K)', p: '650' }, { k: 'zones', l: 'ZONAS DE INTERÉS', p: 'Silver Lake, Pasadena' }, { k: 'type', l: 'TIPO · REC · BAÑOS', p: 'Casa sola · 3+ · 2+' }, { k: 'target', l: 'PLAZO', p: 'Q1 2027' }, { k: 'notes', l: 'NOTAS DE PREFERENCIA', p: 'Patio, calle tranquila, oficina…' }];
+    const nhDefs = lang === 'en'
+      ? [{ k: 'addr', l: 'ADDRESS', p: '1234 Sunset Blvd' }, { k: 'hood', l: 'NEIGHBORHOOD', p: 'Silver Lake' }, { k: 'price', l: 'PRICE ($)', p: '875000' }, { k: 'beds', l: 'BEDS', p: '3' }, { k: 'baths', l: 'BATHS', p: '2' }, { k: 'sqft', l: 'SQFT', p: '1600' }, { k: 'park', l: 'PARKING', p: '2' }, { k: 'notes', l: 'DESCRIPTION', p: 'Corner lot, remodeled kitchen…' }]
+      : [{ k: 'addr', l: 'DIRECCIÓN', p: '1234 Sunset Blvd' }, { k: 'hood', l: 'COLONIA / ZONA', p: 'Silver Lake' }, { k: 'price', l: 'PRECIO ($)', p: '875000' }, { k: 'beds', l: 'RECÁMARAS', p: '3' }, { k: 'baths', l: 'BAÑOS', p: '2' }, { k: 'sqft', l: 'SQFT', p: '1600' }, { k: 'park', l: 'ESTACIONAMIENTOS', p: '2' }, { k: 'notes', l: 'DESCRIPCIÓN', p: 'Esquina, cocina remodelada…' }];
+    const nlDefs = lang === 'en'
+      ? [{ k: 'name', l: 'NAME', p: 'Robert Fuentes' }, { k: 'phone', l: 'PHONE', p: '(213) 555-0100' }, { k: 'zone', l: 'AREA', p: 'Echo Park' }, { k: 'note', l: 'FIRST NOTE', p: 'Met at open house…' }]
+      : [{ k: 'name', l: 'NOMBRE', p: 'Robert Fuentes' }, { k: 'phone', l: 'TELÉFONO', p: '(213) 555-0100' }, { k: 'zone', l: 'ZONA', p: 'Echo Park' }, { k: 'note', l: 'PRIMERA NOTA', p: 'Conocido en open house…' }];
+    const formOpen = s.addClient || s.addHome || s.addLead;
+    const formTitle = s.addClient ? aT.newClientTitle : s.addHome ? aT.newHomeTitle : aT.newLeadTitle;
+    const formFields = s.addClient ? mkFields(s.nc, ncDefs, 'nc') : s.addHome ? mkFields(s.nh, nhDefs, 'nh') : mkFields(s.nl, nlDefs, 'nl');
+    const formSaveLbl = s.addClient ? (lang === 'en' ? 'Save & generate code' : 'Guardar y generar código') : aT.saveLbl;
+    const formSave = () => {
+      if (s.addClient) {
+        if (!s.nc.name.trim()) { this.toast('A', lang === 'en' ? 'Name is required' : 'El nombre es obligatorio'); return; }
+        const code = 'TI-' + Array.from({ length: 4 }, () => 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 31)]).join('');
+        this.setState({ newCode: code, addClient: false, ncDone: true });
+      } else if (s.addHome) {
+        const addr = s.nh.addr.trim(), price = parseInt((s.nh.price || '').replace(/\D/g, '')) || 0;
+        if (!addr || !price) { this.toast('A', lang === 'en' ? 'Address and price are required' : 'Dirección y precio son obligatorios'); return; }
+        const nh = {
+          id: 'h' + Date.now(), addr, hood: s.nh.hood.trim() || 'Los Angeles', price,
+          beds: parseInt(s.nh.beds) || 3, baths: parseInt(s.nh.baths) || 2, sqft: parseInt((s.nh.sqft || '').replace(/\D/g, '')) || 1500, park: parseInt(s.nh.park) || 1,
+          year: 2005, type: lang === 'en' ? 'Single family' : 'Casa sola', lat: 34.03 + Math.random() * 0.12, lng: -118.42 + Math.random() * 0.25,
+          sent: false, status: 'catalog', photos: 0,
+          descEn: s.nh.notes || 'Details coming soon.', descEs: s.nh.notes || 'Detalles próximamente.', featEn: [], featEs: [],
+        };
+        this.setState((st) => ({ houses: [...st.houses, nh], addHome: false, nh: { addr: '', hood: '', price: '', beds: '', baths: '', sqft: '', park: '', notes: '' } }));
+        this.toast('A', lang === 'en' ? '✓ Home registered — ready to send' : '✓ Casa registrada — lista para enviar');
+      } else if (s.addLead) {
+        if (!s.nl.name.trim() || !s.nl.phone.trim()) { this.toast('A', lang === 'en' ? 'Name and phone are required' : 'Nombre y teléfono son obligatorios'); return; }
+        const nl = { id: 'l' + Date.now(), name: s.nl.name.trim(), phone: s.nl.phone.trim(), zone: s.nl.zone.trim() || '—', last: '—', calls: 0, flags: ['continuity'], notes: s.nl.note.trim() ? [s.nl.note.trim()] : [] };
+        this.setState((st) => ({ leads: [nl, ...st.leads], addLead: false, nl: { name: '', phone: '', zone: '', note: '' } }));
+        this.toast('A', lang === 'en' ? '✓ Lead added to continuity' : '✓ Lead agregado a continuidad');
+      }
+    };
+    const codeShareDone = () => {
+      if (s.ncDone) {
+        const nc = s.nc;
+        const budget = nc.bmin && nc.bmax ? `$${nc.bmin}k – $${nc.bmax}k` : '—';
+        this.setState((st) => ({
+          clients: [...st.clients, { id: 'c' + Date.now(), name: nc.name, initials: initials(nc.name), budget, zones: nc.zones || '—', pipe: lang === 'en' ? 'code shared' : 'código compartido', status: 'code' }],
+          ncDone: false, newCode: '', nc: { name: '', phone: '', bmin: '', bmax: '', zones: '', type: '', beds: '', target: '', notes: '' },
+        }));
+        this.toast('A', lang === 'en' ? 'Client added to your list ✓' : 'Cliente agregado a tu lista ✓');
+      } else this.setState({ shareOpen: false });
+    };
+    return {
+      t, lang, langPill: lang === 'en' ? 'EN · ES' : 'ES · EN',
+      toggleLang: () => this.setState({ lang: lang === 'en' ? 'es' : 'en' }),
+      clientName, agentName, clientInitials: initials(clientName), agentInitials: initials(agentName),
+      cvWelcome: s.view === 'welcome', cvCode: s.view === 'code', cvMeet: s.view === 'meet', cvApp: s.view === 'app',
+      goCode: () => this.setState({ view: 'code', code: [] }),
+      goWelcome: () => this.setState({ view: 'welcome' }),
+      scanQr: () => { this.setState({ view: 'meet' }); this.toast('C', lang === 'en' ? 'QR detected — code TI-4Q7M verified ✓' : 'QR detectado — código TI-4Q7M verificado ✓'); },
+      startApp: () => this.setState({ view: 'app', ctab: 'offers' }),
+      welSub: lang === 'en' ? `A private, bilingual home search guided personally by ${agentName}. Your code opens a space built only for you.` : `Una búsqueda privada y bilingüe guiada personalmente por ${agentName}. Tu código abre un espacio hecho solo para ti.`,
+      invitedBy: (lang === 'en' ? 'INVITED BY ' : 'INVITADO POR ') + agentName.toUpperCase() + ' · REALTY ONE GROUP ELITE',
+      codeSub: lang === 'en' ? `Enter the 4-digit code ${aFirst} shared with you.` : `Ingresa el código de 4 dígitos que ${aFirst} te compartió.`,
+      codeState: s.checking ? t.codeOk : '',
+      keypad, codeSlots,
+      meetHi: lang === 'en' ? `Hello, ${cFirst}.` : `Hola, ${cFirst}.`,
+      meetSub: lang === 'en' ? `${aFirst} registered your profile. This is what your search is built on — you can adjust it anytime.` : `${aFirst} registró tu perfil. Sobre esto se construye tu búsqueda — puedes ajustarlo cuando quieras.`,
+      regTitle: lang === 'en' ? `WHAT ${aFirst.toUpperCase()} REGISTERED` : `LO QUE ${aFirst.toUpperCase()} REGISTRÓ`,
+      meetRows, howSteps, notes: s.notes,
+      meetPriv: lang === 'en' ? `Private between you and ${aFirst}` : `Privado entre tú y ${aFirst}`,
+      ctabOffers: s.ctab === 'offers' && !s.openHouse, ctabMap: s.ctab === 'map' && !s.openHouse, ctabChat: s.ctab === 'chat' && !s.openHouse, ctabProfile: s.ctab === 'profile' && !s.openHouse,
+      tabOffers: () => this.setState({ ctab: 'offers', openHouse: null }),
+      tabMap: () => this.setState({ ctab: 'map', openHouse: null }),
+      tabChat: () => this.setState({ ctab: 'chat', openHouse: null }),
+      tabProfile: () => this.setState({ ctab: 'profile', openHouse: null }),
+      colOffers: s.ctab === 'offers' ? '#D4B06A' : 'rgba(245,239,227,.42)',
+      colMap: s.ctab === 'map' ? '#D4B06A' : 'rgba(245,239,227,.42)',
+      colChat: s.ctab === 'chat' ? '#D4B06A' : 'rgba(245,239,227,.42)',
+      colProfile: s.ctab === 'profile' ? '#D4B06A' : 'rgba(245,239,227,.42)',
+      forYouTitle: lang === 'en' ? `Homes ${aFirst} picked for you` : `Casas que ${aFirst} eligió para ti`,
+      forYouSub: lang === 'en' ? `${offersRaw.length} homes · matched to your profile` : `${offersRaw.length} casas · según tu perfil`,
+      moreSoon: t.moreSoon.replace('John', aFirst),
+      offers, detail,
+      closeHouse: () => this.setState({ openHouse: null }),
+      hviewInfo: () => this.setState({ hview: 'info' }),
+      hviewChat: () => this.setState({ hview: 'chat' }),
+      hInfo: s.hview === 'info', hChat: s.hview === 'chat',
+      hInfoBg: s.hview === 'info' ? 'rgba(198,161,91,.18)' : 'transparent', hInfoCol: s.hview === 'info' ? '#EAD9B0' : 'rgba(245,239,227,.5)',
+      hChatBg: s.hview === 'chat' ? 'rgba(198,161,91,.18)' : 'transparent', hChatCol: s.hview === 'chat' ? '#EAD9B0' : 'rgba(245,239,227,.5)',
+      hMsgCount: detail ? (s.threads[detail.id] || []).length : 0,
+      hMsgs, hThreadCap: detail ? (lang === 'en' ? `Private thread · ${detail.addr}` : `Hilo privado · ${detail.addr}`) : '',
+      hComposerPh: t.hComposerPh,
+      draftH: s.draftH, onDraftH: (e) => this.setState({ draftH: e.target.value }),
+      sendH: () => {
+        const txt = s.draftH.trim(); if (!txt || !detail) return;
+        this.pushMsg(detail.id, { from: 'client', kind: 'text', text: txt });
+        this.setState({ draftH: '' });
+        const h = this.houseById(detail.id);
+        if (!h.rep) {
+          this.setHouse(detail.id, { rep: true });
+          setTimeout(() => { this.pushMsg(detail.id, { from: 'agent', kind: 'text', text: lang === 'en' ? 'On it — I’ll get you more media on this one tomorrow. — J' : 'Voy — mañana te consigo más material de esta casa. — J' }); }, 1200);
+        }
+      },
+      accSub: t.accSub2.replace('John', aFirst),
+      openAccept: () => this.setState({ sheet: 'accept', sheetChips: [], sheetText: '' }),
+      openDecline: () => this.setState({ sheet: 'decline', sheetChips: [], sheetText: '' }),
+      reconsider: () => { this.setHouse(detail.id, { status: 'new', quote: undefined }); this.toast('A', `${cFirst} ${lang === 'en' ? 'is reconsidering' : 'está reconsiderando'} ${detail.addr}`); },
+      sheetOpen: !!s.sheet,
+      sheetTitle: sd ? sd.title : '', sheetSub: sd ? sd.sub : '', sheetBtn: sd ? sd.btn : '',
+      sheetBtnBg: s.sheet === 'accept' ? 'linear-gradient(180deg,#E3C078,#A8853F)' : 'rgba(255,255,255,.06)',
+      sheetBtnCol: s.sheet === 'accept' ? '#171106' : '#F5EFE3',
+      sheetBtnBd: s.sheet === 'accept' ? 'none' : '1px solid rgba(245,239,227,.3)',
+      sheetBtnSh: s.sheet === 'accept' ? 'inset 0 1px 0 rgba(255,255,255,.5),0 10px 24px rgba(198,161,91,.3)' : 'none',
+      sheetChipList, sheetText: s.sheetText, onSheetText: (e) => this.setState({ sheetText: e.target.value }),
+      confirmSheet, skipSheet: () => doConfirm(''),
+      sheetSkippable: !reasonRequired,
+      closeSheet: () => this.setState({ sheet: null, sheetChips: [], sheetText: '' }),
+      mapHouses: offersRaw.map((h) => ({ id: h.id, lat: h.lat, lng: h.lng, tag: '$' + Math.round(h.price / 1000) + 'k', dim: h.status === 'declined' })),
+      detailMapHouses: detail ? [{ id: detail.id, lat: detail.lat, lng: detail.lng, tag: '$' + Math.round(detail.price / 1000) + 'k' }] : [],
+      mapFocus: s.mapFocus,
+      mapSelect: (id) => this.setState({ mapFocus: id }),
+      mapFocusHouse: mapFocusRaw ? enrich(mapFocusRaw) : null,
+      mapOpenFocus: () => mapFocusRaw && this.openHouse(mapFocusRaw.id),
+      mapChip: `${offersRaw.length} ${lang === 'en' ? 'homes' : 'casas'} · ${hoods.join(' · ')}`,
+      seeArea: () => this.setState({ openHouse: null, ctab: 'map', mapFocus: detail ? detail.id : null }),
+      genMsgs: this.enrichMsgs(s.threads.general),
+      refGenC: (el) => { this._gc = el; },
+      composerPh: t.composerPh.replace('John', aFirst),
+      draftG: s.draftG, onDraftG: (e) => this.setState({ draftG: e.target.value }),
+      sendG: () => {
+        const txt = s.draftG.trim(); if (!txt) return;
+        this.pushMsg('general', { from: 'client', kind: 'text', text: txt });
+        this.setState({ draftG: '' });
+        setTimeout(() => { this.pushMsg('general', { from: 'agent', kind: 'text', text: lang === 'en' ? 'Got it — I’ll follow up on that today. — J' : 'Recibido — hoy mismo te doy seguimiento. — J' }); }, 1100);
+      },
+      budgetLabel: `$750k – ${this.fmtK(s.budgetMax)}`,
+      budgetUp: () => { const v = Math.min(s.budgetMax + 25, 1200); this.setState({ budgetMax: v, budgetEdited: true }); this.logEvent(`${cFirst} raised max budget to ${this.fmtK(v)}`, `${cFirst} amplió su presupuesto a ${this.fmtK(v)}`); this.toast('A', `${cFirst} → budget ${this.fmtK(v)}`); },
+      budgetDown: () => { const v = Math.max(s.budgetMax - 25, 800); this.setState({ budgetMax: v, budgetEdited: true }); this.logEvent(`${cFirst} lowered max budget to ${this.fmtK(v)}`, `${cFirst} redujo su presupuesto a ${this.fmtK(v)}`); this.toast('A', `${cFirst} → budget ${this.fmtK(v)}`); },
+      zoneChips, zoneSugg, prefRows,
+      notesDraft: s.notesDraft, onNotesInput: (e) => this.setState({ notesDraft: e.target.value }),
+      notesDirty: s.notesDraft !== s.notes,
+      saveNotes: () => { this.setState({ notes: s.notesDraft, notesEdited: true }); this.logEvent(`${cFirst} updated their notes`, `${cFirst} actualizó sus notas`); this.toast('A', `${cFirst} ${lang === 'en' ? 'updated their notes' : 'actualizó sus notas'}`); this.toast('C', lang === 'en' ? `Shared with ${aFirst} ✓` : `Compartido con ${aFirst} ✓`); },
+      profFoot: (lang === 'en' ? 'PRIVATE PROFILE · MANAGED WITH ' : 'PERFIL PRIVADO · GESTIONADO CON ') + aFirst.toUpperCase(),
+      aT,
+      hasFavs: s.favs.length > 0, favCount: s.favs.length, cmpOpen: s.cmpOpen, cmpCols,
+      openCmp: () => this.setState({ cmpOpen: true }),
+      closeCmp: () => this.setState({ cmpOpen: false }),
+      homeFilters, clientQ: s.clientQ, onClientQ: (e) => this.setState({ clientQ: e.target.value }),
+      atabClients: s.atab === 'clients', atabHomes: s.atab === 'homes', atabLeads: s.atab === 'leads', atabChats: s.atab === 'chats',
+      tabAC: () => this.setState({ atab: 'clients' }), tabAH: () => this.setState({ atab: 'homes' }), tabAL: () => this.setState({ atab: 'leads' }), tabACh: () => this.setState({ atab: 'chats' }),
+      colAC: s.atab === 'clients' ? '#D4B06A' : 'rgba(245,239,227,.42)', colAH: s.atab === 'homes' ? '#D4B06A' : 'rgba(245,239,227,.42)', colAL: s.atab === 'leads' ? '#D4B06A' : 'rgba(245,239,227,.42)', colACh: s.atab === 'chats' ? '#D4B06A' : 'rgba(245,239,227,.42)',
+      admGreet: lang === 'en' ? `Good morning, ${aFirst}` : `Buenos días, ${aFirst}`,
+      admStats: `${lang === 'en' ? 'Mon, Aug 11' : 'lun 11 ago'} · ${s.clients.length} ${lang === 'en' ? 'clients' : 'clientes'} · ${s.houses.length} ${lang === 'en' ? 'homes' : 'casas'} · ${followUps} follow-ups`,
+      aClients, startAddClient: () => this.setState({ addClient: true }),
+      aHomes, homesSub: `${aHomes.length}/${s.houses.length} ${lang === 'en' ? 'shown' : 'mostradas'} · ${catalogAvailRaw.length} ${lang === 'en' ? 'available to send' : 'disponibles'}`,
+      startAddHome: () => this.setState({ addHome: true }),
+      aLeads, leadsSub: `${s.leads.length} ${lang === 'en' ? 'numbers in follow-up' : 'números en continuidad'}`,
+      startAddLead: () => this.setState({ addLead: true }),
+      chatRows, chatsSub: lang === 'en' ? 'General + per-home threads' : 'General + hilos por casa',
+      aFicha: !!s.openClient, closeFicha: () => this.setState({ openClient: null }),
+      openShare: () => this.setState({ shareOpen: true }),
+      fichaSub: `TI-4Q7M · ${lang === 'en' ? 'registered Aug 8' : 'registrado el 8 ago'} · (213) 555-0177`,
+      subProfile: () => this.setState({ csub: 'profile' }), subHomes: () => this.setState({ csub: 'homes' }), subChats: () => this.setState({ csub: 'chats' }),
+      csubProfile: s.csub === 'profile', csubHomes: s.csub === 'homes', csubChats: s.csub === 'chats',
+      subPBg: s.csub === 'profile' ? 'rgba(198,161,91,.18)' : 'transparent', subPCol: s.csub === 'profile' ? '#EAD9B0' : 'rgba(245,239,227,.5)',
+      subHBg: s.csub === 'homes' ? 'rgba(198,161,91,.18)' : 'transparent', subHCol: s.csub === 'homes' ? '#EAD9B0' : 'rgba(245,239,227,.5)',
+      subCBg: s.csub === 'chats' ? 'rgba(198,161,91,.18)' : 'transparent', subCCol: s.csub === 'chats' ? '#EAD9B0' : 'rgba(245,239,227,.5)',
+      fichaRows, zonesFicha, tlList,
+      pipeCount: `${offersRaw.length} ${lang === 'en' ? 'sent' : 'enviadas'}`,
+      catalogAvail, noCatalog: catalogAvailRaw.length === 0, fichaChatRows,
+      aThreadOpen: !!s.aThread, closeThread: () => this.setState({ aThread: null, attach: null }),
+      threadTitle: threadIsGen ? `${clientName} · General` : threadHouse ? threadHouse.addr : '',
+      threadSub: threadIsGen ? (lang === 'en' ? 'General conversation' : 'Conversación general') : (lang === 'en' ? `Home thread with ${cFirst}` : `Hilo de casa con ${cFirst}`),
+      aMsgs, refGenA: (el) => { this._ac = el; },
+      draftA: s.draftA, onDraftA: (e) => this.setState({ draftA: e.target.value }),
+      aComposerPh: lang === 'en' ? `Message ${cFirst}…` : `Mensaje a ${cFirst}…`,
+      sendA: () => {
+        const txt = s.draftA.trim(); if (!txt || !s.aThread) return;
+        this.pushMsg(s.aThread, { from: 'agent', kind: 'text', text: txt });
+        this.setState({ draftA: '' });
+        this.toast('C', lang === 'en' ? `New message from ${aFirst}` : `Nuevo mensaje de ${aFirst}`);
+      },
+      openAttach: () => this.setState({ attach: 'menu' }), closeAttach: () => this.setState({ attach: null }),
+      attachOpen: !!s.attach, attachMenu: s.attach === 'menu', attachPick: s.attach === 'house' || s.attach === 'photos' || s.attach === 'video',
+      attachRows, attachHouses,
+      aLeadOpen: !!s.openLead, closeLead: () => this.setState({ openLead: null }),
+      leadD, leadFlagsAll, leadNotes: leadD.notes.map((x) => ({ x })),
+      logCall: () => {
+        if (!leadDRaw) return;
+        this.updateLead(leadDRaw.id, { calls: leadDRaw.calls + 1, last: lang === 'en' ? 'Today' : 'Hoy', notes: [...leadDRaw.notes, lang === 'en' ? 'Call logged — today' : 'Llamada registrada — hoy'] });
+        this.toast('A', lang === 'en' ? 'Call logged ✓' : 'Llamada registrada ✓');
+      },
+      leadNote: s.leadNote, onLeadNote: (e) => this.setState({ leadNote: e.target.value }),
+      addLeadNote: () => {
+        if (!leadDRaw || !s.leadNote.trim()) return;
+        this.updateLead(leadDRaw.id, { notes: [...leadDRaw.notes, s.leadNote.trim()] });
+        this.setState({ leadNote: '' });
+      },
+      formOpen, formTitle, formFields, formSave, formSaveLbl, formIsHome: s.addHome,
+      closeForm: () => this.setState({ addClient: false, addHome: false, addLead: false }),
+      codeShareOpen: s.ncDone || s.shareOpen,
+      codeShareChip: s.ncDone ? aT.codeReadyChip : 'TEAM IRIGOYEN',
+      codeShareTitle: s.ncDone ? (s.nc.name || '') : clientName,
+      shareCodeVal: s.ncDone ? s.newCode : 'TI-4Q7M',
+      shareCopy: () => this.toast('A', lang === 'en' ? 'Code copied ✓' : 'Código copiado ✓'),
+      shareSms: () => this.toast('A', lang === 'en' ? 'Opening Messages… (demo)' : 'Abriendo Mensajes… (demo)'),
+      codeShareDone,
+      toastC: s.toastC, toastA: s.toastA,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacidad · Nudo</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; padding: 2.5rem 1.25rem 5rem;
+    background: #1c1a17; color: #ece7e0;
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 40rem; margin: 0 auto; }
+  h1 { font-size: 2rem; line-height: 1.15; margin: 0 0 .25rem; color: #d99a76; font-weight: 700; }
+  .bajada { color: #ece7e0a6; margin: 0 0 2.5rem; }
+  h2 { font-size: 1.15rem; margin: 2.5rem 0 .75rem; color: #d99a76; }
+  h3 { font-size: 1rem; margin: 1.75rem 0 .4rem; color: #ece7e0; }
+  p, li { color: #ece7e0d9; }
+  ul { padding-left: 1.25rem; }
+  li { margin: .4rem 0; }
+  strong { color: #ece7e0; }
+  .destacado {
+    border: 1px solid #d99a7659; border-radius: .75rem;
+    padding: 1.25rem 1.4rem; margin: 2rem 0; background: #d99a761f;
+  }
+  .destacado p:first-child { margin-top: 0; }
+  .destacado p:last-child { margin-bottom: 0; }
+  a { color: #e8b997; }
+  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid #ece7e01f; font-size: .9rem; color: #ece7e08c; }
+  footer p { margin: .3rem 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Privacidad</h1>
+<p class="bajada">Nudo — una mascota que cuidan dos personas, cada una desde su propio teléfono.</p>
+
+<div class="destacado">
+  <p>Nudo no tiene cuentas con correo ni contraseña, no muestra anuncios y no usa analítica ni
+  identificadores publicitarios. Para funcionar, sincroniza entre los dos teléfonos de un mismo
+  nudo un identificador anónimo, los mensajes, la pregunta del día y el estado de la mascota, a
+  través de Firebase (un servicio de Google).</p>
+</div>
+
+<h2>Quién trata tus datos</h2>
+
+<p>Nudo es una app independiente desarrollada por Juan Cornejo, en México. No hay una empresa
+detrás ni un equipo de terceros con acceso a los datos: los servicios que procesan la
+información son los que se describen abajo, y el contacto para cualquier duda o solicitud es
+<a href="mailto:&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</p>
+
+<h2>Qué datos recibe Nudo</h2>
+
+<p>Nudo usa Firebase para tres cosas concretas: identificar tu teléfono sin pedirte una cuenta,
+sincronizar entre los dos teléfonos de un mismo nudo lo que se comparte, y avisarte cuando la
+otra persona escribe.</p>
+
+<h3>Identidad anónima</h3>
+<p>Al abrir la app por primera vez, Firebase Authentication te asigna un identificador aleatorio
+(un inicio de sesión anónimo). No pedimos ni guardamos tu correo, tu teléfono ni tu nombre real
+como parte de esa identidad: el identificador no significa nada fuera de Nudo y no está ligado a
+tu Apple ID ni a ninguna otra cuenta tuya.</p>
+
+<h3>Lo que se sincroniza entre los dos teléfonos</h3>
+<p>Cuando emparejas tu teléfono con el de otra persona, Firestore (la base de datos de Firebase)
+guarda, por cada lado del nudo:</p>
+<ul>
+  <li>El mensaje corto que escribes, para que la otra persona lo pueda leer.</li>
+  <li>Tu respuesta a la pregunta del día, para poder compararla con la del otro tras contestar.</li>
+  <li>El nombre que le pusiste a la mascota, la especie, la etapa, el ánimo y el atuendo, para
+  que se vea igual en los dos widgets.</li>
+  <li>Cuánta panza y cariño tiene la mascota, y su racha de cuidados, para que el cuidado de uno
+  cuente para los dos.</li>
+  <li>El testigo (token) de notificaciones de tu teléfono, para poder avisarte cuando te
+  escriben.</li>
+</ul>
+<p>El código de emparejamiento que se genera para invitar a alguien también se guarda
+temporalmente en Firestore, y caduca solo a las doce horas si nadie lo usa.</p>
+<p><strong>Lo que no viaja a ningún servidor:</strong> el nombre que le diste a la persona con la
+que compartes el nudo (solo lo ves tú, en tu teléfono) y los dibujos del juego de dibujar y
+adivinar. Los trazos que dibujas se guardan únicamente en el almacenamiento compartido de tu
+propio teléfono entre la app y sus widgets — no se suben ni se envían al otro dispositivo por
+internet.</p>
+
+<h3>Notificaciones</h3>
+<p>Si aceptas recibir avisos, Firebase Cloud Messaging usa el testigo de tu dispositivo
+únicamente para entregarte una notificación cuando la otra persona te escribe. Si desactivas los
+avisos en Ajustes, ese testigo se borra de los dos lados del nudo.</p>
+
+<h2>Lo que Nudo no recopila</h2>
+
+<ul>
+  <li>No accede a tu ubicación.</li>
+  <li>No accede a tus contactos.</li>
+  <li>No accede a tus fotos ni a tu cámara ni a tu micrófono.</li>
+  <li>No recopila datos de salud ni de actividad física.</li>
+  <li>No usa identificadores publicitarios ni redes de anuncios.</li>
+  <li>No usa herramientas de analítica de terceros ni rastrea tu actividad entre apps y sitios
+  web de otras empresas.</li>
+  <li>No vende ni comparte tus datos con nadie fuera del proveedor de infraestructura ya
+  mencionado (Firebase, de Google), que solo lo procesa para que la app funcione.</li>
+</ul>
+
+<h2>Cuánto tiempo se guardan los datos</h2>
+
+<p>Lo que se sincroniza se conserva mientras el nudo siga existiendo, es decir, mientras ninguna
+de las dos personas lo borre. Borrar un nudo desde la app (Ajustes del nudo → Borrar) lo quita de
+tu teléfono de inmediato; para borrar por completo lo que quedó guardado en el servidor,
+escríbenos siguiendo las instrucciones de abajo.</p>
+
+<h2>Cómo pedir que se borren tus datos</h2>
+
+<p>Escribe a
+<a href="mailto:&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
+pidiendo el borrado de tu información. Indícanos, si los recuerdas, la fecha aproximada en la que
+emparejaste el nudo y el nombre que le pusiste a la mascota, para poder localizar el registro
+correcto entre los que no llevan ni nombre ni correo asociado. Atenderemos la solicitud borrando
+el nudo correspondiente de Firestore en un plazo razonable.</p>
+
+<h2>Menores de edad</h2>
+
+<p>Nudo está clasificada para todo público (4+) porque no expone a quien la usa a contenido de
+terceros, a publicidad ni a la posibilidad de contactar con desconocidos: solo se puede escribir
+con la persona con la que ya se compartió, en persona o por otro medio, el código de
+emparejamiento. Aun así, recomendamos que un menor de edad use la app con el conocimiento de su
+madre, padre o tutor, especialmente al compartir ese código. No solicitamos deliberadamente datos
+de menores de edad más allá de los mismos datos anónimos que recibe cualquier usuario; si tenemos
+motivos para creer que recibimos datos de un menor sin el consentimiento correspondiente, los
+eliminaremos al ser notificados en el correo de contacto.</p>
+
+<h2>Seguridad</h2>
+
+<p>Los datos viajan cifrados entre tu teléfono y los servidores de Firebase mediante el cifrado
+estándar de conexión (TLS/HTTPS) que usa cualquier app de iOS al conectarse a internet. Nudo no
+aplica un cifrado adicional propio sobre el contenido de los mensajes.</p>
+
+<h2>Cambios</h2>
+
+<p>Si esta política cambia, se actualizará la fecha de abajo antes de que ese cambio llegue a la
+tienda. El uso continuado de Nudo después de un cambio implica que lo aceptas.</p>
+
+<h2>Contacto</h2>
+
+<p>Dudas sobre privacidad: <a href="mailto:&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</p>
+
+<footer>
+  <p>Última actualización: 30 de agosto de 2026 · Nudo</p>
+  <p><a href="/nudo/terminos.html">Términos</a> · <a href="/nudo/soporte.html">Soporte</a> ·
+  <a href="/nudo/privacy.html">English</a> · <a href="/nudo/">Inicio</a></p>
+</footer>
+
+</main>
+</body>
+</html>

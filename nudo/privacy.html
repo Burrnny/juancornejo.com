@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · Nudo</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0; padding: 2.5rem 1.25rem 5rem;
+    background: #1c1a17; color: #ece7e0;
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 40rem; margin: 0 auto; }
+  h1 { font-size: 2rem; line-height: 1.15; margin: 0 0 .25rem; color: #d99a76; font-weight: 700; }
+  .bajada { color: #ece7e0a6; margin: 0 0 2.5rem; }
+  h2 { font-size: 1.15rem; margin: 2.5rem 0 .75rem; color: #d99a76; }
+  h3 { font-size: 1rem; margin: 1.75rem 0 .4rem; color: #ece7e0; }
+  p, li { color: #ece7e0d9; }
+  ul { padding-left: 1.25rem; }
+  li { margin: .4rem 0; }
+  strong { color: #ece7e0; }
+  .destacado {
+    border: 1px solid #d99a7659; border-radius: .75rem;
+    padding: 1.25rem 1.4rem; margin: 2rem 0; background: #d99a761f;
+  }
+  .destacado p:first-child { margin-top: 0; }
+  .destacado p:last-child { margin-bottom: 0; }
+  a { color: #e8b997; }
+  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid #ece7e01f; font-size: .9rem; color: #ece7e08c; }
+  footer p { margin: .3rem 0; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Privacy</h1>
+<p class="bajada">Nudo — a pet cared for by two people, each from their own phone.</p>
+
+<div class="destacado">
+  <p>Nudo has no email-and-password accounts, shows no ads, and uses no analytics or
+  advertising identifiers. To work, it syncs between the two phones of the same nudo an
+  anonymous identifier, the messages, the question of the day, and the pet's state, through
+  Firebase (a Google service).</p>
+</div>
+
+<h2>Who processes your data</h2>
+
+<p>Nudo is an independent app developed by Juan Cornejo, in Mexico. There is no company behind
+it and no third-party team with access to the data: the services that process the information
+are the ones described below, and the contact for any question or request is
+<a href="mailto:&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</p>
+
+<h2>What data Nudo receives</h2>
+
+<p>Nudo uses Firebase for three specific things: identifying your phone without asking you to
+create an account, syncing what's shared between the two phones of a nudo, and notifying you
+when the other person writes.</p>
+
+<h3>Anonymous identity</h3>
+<p>When you first open the app, Firebase Authentication assigns you a random identifier (an
+anonymous sign-in). We don't ask for or store your email, your phone number, or your real name
+as part of that identity: the identifier means nothing outside Nudo and isn't tied to your Apple
+ID or to any other account of yours.</p>
+
+<h3>What's synced between the two phones</h3>
+<p>When you pair your phone with someone else's, Firestore (Firebase's database) stores, for
+each side of the nudo:</p>
+<ul>
+  <li>The short message you write, so the other person can read it.</li>
+  <li>Your answer to the question of the day, so it can be compared with the other person's
+  after you answer.</li>
+  <li>The name you gave the pet, its species, stage, mood and outfit, so it looks the same on
+  both widgets.</li>
+  <li>How much fullness and affection the pet has, and its care streak, so one person's care
+  counts for both.</li>
+  <li>Your phone's notification token, so we can notify you when you're written to.</li>
+</ul>
+<p>The pairing code generated to invite someone is also stored temporarily in Firestore, and
+expires after twelve hours if nobody uses it.</p>
+<p><strong>What never travels to any server:</strong> the name you gave the person you share the
+nudo with (only you see it, on your phone) and the drawings from the draw-and-guess game. The
+strokes you draw are stored only in the storage your own phone shares between the app and its
+widgets — they aren't uploaded or sent to the other device over the internet.</p>
+
+<h3>Notifications</h3>
+<p>If you allow notifications, Firebase Cloud Messaging uses your device's token only to deliver
+a notification when the other person writes to you. If you turn notifications off in Settings,
+that token is deleted from both sides of the nudo.</p>
+
+<h2>What Nudo does not collect</h2>
+
+<ul>
+  <li>It doesn't access your location.</li>
+  <li>It doesn't access your contacts.</li>
+  <li>It doesn't access your photos, your camera or your microphone.</li>
+  <li>It doesn't collect health or fitness data.</li>
+  <li>It doesn't use advertising identifiers or ad networks.</li>
+  <li>It doesn't use third-party analytics tools or track your activity across other companies'
+  apps and websites.</li>
+  <li>It doesn't sell or share your data with anyone outside the infrastructure provider
+  already mentioned (Firebase, by Google), which only processes it to make the app work.</li>
+</ul>
+
+<h2>How long data is kept</h2>
+
+<p>What's synced is kept for as long as the nudo exists, meaning as long as neither person
+deletes it. Deleting a nudo from the app (Nudo Settings → Delete) removes it from your phone
+immediately; to have what's stored on the server fully deleted, write to us following the
+instructions below.</p>
+
+<h2>How to request deletion of your data</h2>
+
+<p>Write to
+<a href="mailto:&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
+asking for your information to be deleted. Let us know, if you remember, the approximate date
+you paired the nudo and the name you gave the pet, so we can locate the right record among ones
+that carry neither a name nor an email address. We'll handle the request by deleting the
+corresponding nudo from Firestore within a reasonable time.</p>
+
+<h2>Children</h2>
+
+<p>Nudo is rated for everyone (4+) because it doesn't expose whoever uses it to third-party
+content, to advertising, or to the possibility of contacting strangers: you can only write to
+the person you already shared the pairing code with, in person or through another channel. Even
+so, we recommend that a minor use the app with the knowledge of a parent or guardian, especially
+when sharing that code. We don't deliberately request data from minors beyond the same anonymous
+data any user receives; if we have reason to believe we received a minor's data without the
+appropriate consent, we will delete it once notified at the contact email.</p>
+
+<h2>Security</h2>
+
+<p>Data travels encrypted between your phone and Firebase's servers using the standard
+connection encryption (TLS/HTTPS) any iOS app uses when connecting to the internet. Nudo doesn't
+apply any additional encryption of its own over the content of the messages.</p>
+
+<h2>Changes</h2>
+
+<p>If this policy changes, the date below will be updated before that change reaches the store.
+Continuing to use Nudo after a change means you accept it.</p>
+
+<h2>Contact</h2>
+
+<p>Privacy questions: <a href="mailto:&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</p>
+
+<footer>
+  <p>Last updated: August 30, 2026 · Nudo</p>
+  <p><a href="/nudo/terms.html">Terms</a> · <a href="/nudo/support.html">Support</a> ·
+  <a href="/nudo/privacidad.html">Español</a> · <a href="/nudo/">Home</a></p>
+</footer>
+
+</main>
+</body>
+</html>

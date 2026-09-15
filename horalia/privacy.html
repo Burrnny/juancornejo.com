@@ -47,7 +47,8 @@
 <h2>What the app stores, and where</h2>
 
 <p>Horalia stores what you type: the names of the families you work for, their rates, the hours
-you log, your notes, and the invoices you close.</p>
+you log, your notes, the expenses you record, and the invoices you close. And, only if you add
+them, photos of the purchase receipts for those expenses.</p>
 
 <p>That lives in two places, both yours:</p>
 
@@ -70,9 +71,33 @@ what you store in iCloud, their privacy policy explains it:
   <li>No analytics, no usage measurement, no crash reporting.</li>
   <li>No ads, and nothing shared with advertisers.</li>
   <li>No tracking across apps or websites.</li>
-  <li>It never asks for your location, contacts, photos, microphone or camera.</li>
+  <li>It never asks for your location, contacts or microphone.</li>
+  <li>It doesn't touch your camera or your photos except when you attach or save a receipt
+  photo (explained in the next section).</li>
   <li>No third-party code: the only pieces it uses are frameworks from the operating system
   itself.</li>
+</ul>
+
+<h2>Receipt photos</h2>
+
+<p>When you record an expense you can attach up to five photos of the purchase receipt, if you
+want to. It's optional: without photos, the expense is saved just the same.</p>
+
+<ul>
+  <li><strong>Choosing a photo you already have.</strong> This uses the iOS photo picker, which
+  shows your library without handing it to the app: <strong>Horalia only receives the photos you
+  pick</strong>, nothing else. That's why no permission is needed.</li>
+  <li><strong>Taking the photo right then.</strong> Horalia uses the camera only when you tap
+  "Take photo". The first time, iOS asks for your permission.</li>
+  <li><strong>Before saving it</strong>, the app shrinks the photo and strips its metadata,
+  <strong>including the location</strong> where it was taken. So if you share it, it doesn't
+  say where you were.</li>
+  <li>It's stored like everything else: on your device and in your private iCloud. The author
+  can't see it.</li>
+  <li>It isn't included in the PDF invoice. It leaves the app only if you share it or save it to
+  Photos; to save it, iOS asks for permission to <strong>add</strong> photos, not to see the ones
+  you have.</li>
+  <li>Deleting an expense also deletes its photos.</li>
 </ul>
 
 <h2>Face ID</h2>
@@ -117,7 +142,7 @@ can check.</p>
 <p>Privacy questions: <a href="mailto:&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#117;&#97;&#110;&#109;&#97;&#110;&#117;&#101;&#108;&#99;&#104;&#105;&#111;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</p>
 
 <footer>
-  <p>Last updated: August 15, 2026 · Horalia</p>
+  <p>Last updated: September 14, 2026 · Horalia</p>
 </footer>
 
 </main>

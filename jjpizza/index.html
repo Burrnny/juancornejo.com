@@ -81,7 +81,7 @@ a{color:#2E6B1F}a:hover{color:#255A18}
   <div style="display:flex;flex-wrap:nowrap;gap:{{ gap }}px;align-items:flex-start;justify-content:center">
     <sc-for list="{{ phones }}" as="p" hint-placeholder-count="2">
       <div style="flex:none;width:{{ boxW }}px;height:{{ boxH }}px;border-radius:{{ boxR }}px;overflow:hidden;box-shadow:0 24px 60px rgba(31,26,21,.22)">
-        <iframe loading="lazy" src="{{ p.src }}" title="{{ p.label }}" style="width:402px;height:874px;border:0;display:block;transform:scale({{ scale }});transform-origin:0 0;background:transparent"></iframe>
+        <iframe ref="{{ p.mount }}" src="about:blank" title="{{ p.label }}" style="width:402px;height:874px;border:0;display:block;transform:scale({{ scale }});transform-origin:0 0;background:transparent"></iframe>
       </div>
     </sc-for>
   </div>
@@ -90,11 +90,15 @@ a{color:#2E6B1F}a:hover{color:#255A18}
 <script type="text/x-dc" data-dc-script="">
 class Component extends DCLogic {
   state = { scale: 1 };
-  componentDidMount() { this.fit(); this._r = () => this.fit(); window.addEventListener('resize', this._r); }
-  componentWillUnmount() { window.removeEventListener('resize', this._r); }
+  componentDidMount() {
+    this.fit(); this._r = () => this.fit(); window.addEventListener('resize', this._r);
+    // No todos los cambios de tamaño disparan 'resize' (rotación tardía, emulación): observar el documento.
+    this._ro = new ResizeObserver(this._r); this._ro.observe(document.documentElement);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._r); this._ro && this._ro.disconnect(); }
   // Las dos apps siempre lado a lado: se reduce la escala hasta que quepan.
   fit() {
-    const W = window.innerWidth, H = window.innerHeight, pad = W < 600 ? 12 : 32;
+    const W = document.documentElement.clientWidth, H = document.documentElement.clientHeight, pad = W < 600 ? 12 : 32;
     const s = Math.max(0.2, Math.min(1, (H - pad * 2) / 874, (W - pad * 2) / (402 * 2 + 48)));
     if (Math.abs(s - this.state.scale) > 0.005 || pad !== this.state.pad) this.setState({ scale: s, pad });
   }
@@ -103,7 +107,10 @@ class Component extends DCLogic {
     return {
       scale: s.toFixed(3), boxW: Math.round(402 * s), boxH: Math.round(874 * s), boxR: Math.round(48 * s),
       gap: Math.round(48 * s), pad: this.state.pad ?? 32,
-      phones: [ { label: 'Customer app', src: 'app.html?embed=1' }, { label: 'Store app', src: 'admin.html?embed=1' } ],
+      // La URL se asigna al montar: en la plantilla cruda el iframe nace en about:blank y
+      // el navegador no pide la ruta sin resolver. Una sola vez, para que un re-render no lo recargue.
+      phones: [['Customer app', 'app.html?embed=1'], ['Store app', 'admin.html?embed=1']].map(([label, src]) => ({
+        label, mount: el => { if (el && !el.dataset.live) { el.dataset.live = '1'; el.src = src; } } })),
     };
   }
 }

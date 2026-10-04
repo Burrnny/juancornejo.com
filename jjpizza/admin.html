@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Propuesta privada: accesible con el enlace, fuera de buscadores. -->
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>JJ Pizza · Store app</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>/* vietnamese */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/Archivo-400-900-f37014.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/Archivo-400-900-0bcd0d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/Archivo-400-900-9b5bcb.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>/* fallback */
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url("fonts/MaterialSymbolsRounded-500-sub.woff2") format('woff2');
+}
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+</style>
+<script src="data.js"></script>
+<style>
+html,body{margin:0;background:#E9E2D7}
+body{font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1F1A15}
+a{color:#2E6B1F}a:hover{color:#255A18}
+*::-webkit-scrollbar{width:0;height:0}
+input,button,select,textarea{font-family:inherit}
+@keyframes jjDrop{from{transform:translateY(-130%);opacity:0}to{transform:none;opacity:1}}
+@keyframes jjUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes jjIn{from{transform:translateX(100%)}to{transform:none}}
+@keyframes jjFade{from{opacity:0}to{opacity:1}}
+@keyframes jjFlash{0%,100%{box-shadow:0 0 0 0 rgba(181,50,26,0)}50%{box-shadow:0 0 0 4px rgba(181,50,26,.4)}}
+@keyframes jjPulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes jjToast{from{transform:translate(-50%,16px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+</style>
+<title>JJ Pizza · Store app</title>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:44px;padding:{{ pagePad }};box-sizing:border-box">
+<div style="flex:none;width:402px;height:874px">
+<x-import component-from-global-scope="IOSDevice" from="ios-frame.jsx#/ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="position:relative;z-index:0;height:874px;overflow:hidden;background:#F4EFE7;color:#1F1A15;font-family:'Archivo',sans-serif">
+
+<sc-if value="{{ isOrders }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:110px;box-sizing:border-box">
+  <div style="background:#2E6B1F;color:#fff;padding:58px 16px 16px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;position:relative;background:#fff;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.85)"><img src="img/img-25eaf398.jpg" alt="JJ Pizza" style="position:absolute;width:146%;height:146%;left:-23%;top:-23%;max-width:none"></div>
+      <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:15px">JJ Pizza Store</div><div style="font-size:12px;opacity:.85;margin-top:1px">{{ today }}</div></div>
+      <button sc-camel-on-click="{{ toggleAccept }}" style="height:34px;padding:0 12px 0 10px;border-radius:999px;border:0;background:{{ accept.bg }};color:{{ accept.fg }};font:700 12.5px 'Archivo';display:flex;align-items:center;gap:7px;cursor:pointer"><span style="width:8px;height:8px;border-radius:50%;background:currentColor;animation:{{ accept.anim }}"></span>{{ accept.label }}</button>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:10px;margin-top:22px">
+      <div style="flex:1;font:780 31px/1 'Archivo';font-stretch:106%;letter-spacing:-.012em;">Orders</div>
+      <button sc-camel-on-click="{{ cyclePrep }}" style="height:32px;padding:0 11px;border-radius:999px;border:1.5px solid rgba(255,255,255,.6);background:transparent;color:#fff;font:700 12px 'Archivo';display:flex;align-items:center;gap:5px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1;width:17px;height:17px;overflow:hidden;display:block">timer</span>Prep {{ prep }} min</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3"><div style="background:rgba(0,0,0,.18);border-radius:12px;padding:10px 12px"><div style="font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.85">{{ s.label }}</div><div style="font:780 19px/1 'Archivo';font-stretch:110%;margin-top:7px">{{ s.value }}</div></div></sc-for>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;overflow-x:auto;padding:14px 16px 4px;scrollbar-width:none">
+    <sc-for list="{{ statusTabs }}" as="st" hint-placeholder-count="4"><button sc-camel-on-click="{{ st.pick }}" style="flex:none;height:38px;padding:0 6px 0 14px;border-radius:999px;border:1.5px solid {{ st.bd }};background:{{ st.bg }};color:{{ st.fg }};font:700 13px 'Archivo';display:flex;align-items:center;gap:8px;cursor:pointer">{{ st.label }}<span style="min-width:24px;height:24px;padding:0 6px;box-sizing:border-box;border-radius:999px;background:{{ st.cbg }};color:{{ st.cfg }};font-size:12px;font-weight:780;display:flex;align-items:center;justify-content:center">{{ st.count }}</span></button></sc-for>
+  </div>
+  <sc-if value="{{ paused }}" hint-placeholder-val="{{ false }}"><div style="margin:10px 16px 0;padding:11px 14px;border-radius:12px;background:#FBE9E6;color:#8C1D0B;display:flex;align-items:center;gap:10px;font-weight:700;font-size:12.5px;line-height:1.35"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;flex:none">pause_circle</span>Online ordering is paused. The customer app shows the store as not taking orders.</div></sc-if>
+  <div style="display:flex;flex-direction:column;gap:10px;padding:10px 16px 0">
+    <sc-for list="{{ orderCards }}" as="o" hint-placeholder-count="3">
+      <div sc-camel-on-click="{{ o.open }}" style="background:#fff;border-radius:16px;padding:14px;border:1px solid #E6DDD0;cursor:pointer;display:flex;flex-direction:column;gap:10px;animation:{{ o.anim }}">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font:700 13px ui-monospace,Menlo,monospace">#{{ o.id }}</span>
+          <sc-if value="{{ o.fromApp }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:780;letter-spacing:.08em;padding:2px 6px;border-radius:5px;background:#1F1A15;color:#fff">APP</span></sc-if>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:{{ o.timeColor }}"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1;width:15px;height:15px;overflow:hidden;display:block">schedule</span>{{ o.elapsed }}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="flex:1;font-weight:700;font-size:16px">{{ o.name }}</div>
+          <span style="display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#EFE7DA;color:#28401F"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1;width:15px;height:15px;overflow:hidden;display:block">{{ o.modeIcon }}</span>{{ o.modeLabel }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <sc-for list="{{ o.items }}" as="i" hint-placeholder-count="2"><div style="font-size:13.5px;line-height:1.3"><b>{{ i.qty }}×</b> {{ i.name }}<div style="font-size:12px;color:#6F665C">{{ i.detail }}</div></div></sc-for>
+          <sc-if value="{{ o.hasMore }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;font-weight:700;color:#6F665C">{{ o.more }}</div></sc-if>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid #F0EADF">
+          <span style="font-weight:780;font-size:15px">{{ o.total }}</span>
+          <span style="font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:{{ o.payBg }};color:{{ o.payFg }}">{{ o.payLabel }}</span>
+          <sc-if value="{{ o.hasAction }}" hint-placeholder-val="{{ true }}"><button sc-camel-on-click="{{ o.act }}" style="margin-left:auto;height:38px;padding:0 14px;border-radius:10px;border:0;background:{{ o.actBg }};color:#fff;font:700 13px 'Archivo';cursor:pointer;white-space:nowrap">{{ o.actLabel }}</button></sc-if>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ noOrders }}" hint-placeholder-val="{{ false }}"><div style="text-align:center;font-size:13px;color:#8A8177;padding:34px 16px;border:1.5px dashed #D6CCBE;border-radius:16px">{{ emptyText }}</div></sc-if>
+    <button sc-camel-on-click="{{ testOrder }}" style="height:44px;border-radius:12px;border:1.5px dashed #AEB8A6;background:transparent;color:#6F665C;font:700 13px 'Archivo';cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:4px"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;width:19px;height:19px;overflow:hidden;display:block">add</span>Simulate a new order (demo)</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMenu }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column">
+  <div style="background:#2E6B1F;color:#fff;padding:60px 16px 0;flex:none">
+    <div style="display:flex;align-items:flex-end;gap:10px">
+      <div style="flex:1;font:780 31px/1 'Archivo';font-stretch:106%;letter-spacing:-.012em;">Menu</div>
+      <div style="font-size:12px;font-weight:700;opacity:.9;padding-bottom:3px">{{ soldOutNote }}</div>
+    </div>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding:16px 16px 14px;margin:0 -16px;scrollbar-width:none">
+      <sc-for list="{{ menuCats }}" as="c" hint-placeholder-count="7"><button sc-camel-on-click="{{ c.pick }}" style="flex:none;height:36px;padding:0 15px;border-radius:999px;border:0;background:{{ c.bg }};color:{{ c.fg }};font:700 13px 'Archivo';white-space:nowrap;cursor:pointer">{{ c.label }}</button></sc-for>
+    </div>
+  </div>
+  <div style="flex:1;overflow-y:auto;scrollbar-width:none;padding:14px 16px 110px;display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ menuRows }}" as="r" hint-placeholder-count="6">
+      <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:12px;display:flex;gap:12px;align-items:center">
+        <div style="width:56px;height:56px;border-radius:10px;overflow:hidden;background:#EFE7DA;flex:none;opacity:{{ r.op }}">
+          <img loading="lazy" decoding="async" src="{{ r.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+          <div style="font-weight:700;font-size:14.5px;line-height:1.2;opacity:{{ r.op }}">{{ r.name }}</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="display:flex;align-items:center;gap:2px;height:32px;border:1px solid #E2D9CB;border-radius:8px;padding:0 8px;background:#F8F4EE;width:86px;box-sizing:border-box"><span style="color:#8A8177;font-weight:700;font-size:13px">$</span><input value="{{ r.price }}" sc-camel-on-change="{{ r.onPrice }}" inputmode="decimal" style="width:100%;min-width:0;border:0;outline:0;font:700 13.5px 'Archivo';color:#1F1A15;background:transparent"></div>
+            <span style="font-size:11.5px;color:#8A8177;font-weight:700">{{ r.priceNote }}</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:none">
+          <button sc-camel-on-click="{{ r.toggle }}" style="width:50px;height:30px;border-radius:15px;background:{{ r.swBg }};border:0;position:relative;cursor:pointer;transition:background .2s"><span style="position:absolute;top:3px;left:{{ r.swLeft }}px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+          <span style="font-size:11px;font-weight:780;letter-spacing:.04em;text-transform:uppercase;color:{{ r.stateColor }}">{{ r.stateLabel }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRewards }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:110px;box-sizing:border-box">
+  <div style="background:#2E6B1F;color:#fff;padding:60px 16px 70px">
+    <div style="font:780 31px/1 'Archivo';font-stretch:106%;letter-spacing:-.012em;">Rewards</div>
+    <div style="font-size:13.5px;margin-top:8px;opacity:.88">10 pizzas = 1 free large pizza · 1 stamp per pizza</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:-50px 16px 0;position:relative">
+    <sc-for list="{{ rewardStats }}" as="s" hint-placeholder-count="3"><div style="background:#fff;border:1px solid #E6DDD0;border-radius:14px;padding:12px;box-shadow:0 8px 20px rgba(31,26,21,.1)"><div style="font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8A8177;line-height:1.2">{{ s.label }}</div><div style="font:780 22px/1 'Archivo';font-stretch:110%;margin-top:8px">{{ s.value }}</div></div></sc-for>
+  </div>
+  <div style="padding:24px 20px 0;font:780 17px 'Archivo';font-stretch:106%;text-transform:uppercase;letter-spacing:.01em">Stamp cards</div>
+  <div style="margin:10px 16px 0;background:#fff;border:1px solid #E6DDD0;border-radius:16px;overflow:hidden">
+    <sc-for list="{{ customers }}" as="c" hint-placeholder-count="6">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #F0EADF">
+        <div style="width:38px;height:38px;border-radius:50%;background:#EFE7DA;color:#2E6B1F;display:flex;align-items:center;justify-content:center;font:780 13px 'Archivo';flex:none">{{ c.initials }}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:14px;display:flex;gap:6px;align-items:center">{{ c.name }}<sc-if value="{{ c.ready }}" hint-placeholder-val="{{ false }}"><span style="font-size:9.5px;font-weight:780;letter-spacing:.06em;padding:2px 6px;border-radius:5px;background:#B5321A;color:#fff">FREE PIZZA</span></sc-if></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:6px"><div style="flex:1;height:7px;border-radius:4px;background:#F0EADF;overflow:hidden"><div style="height:100%;width:{{ c.pct }}%;background:{{ c.barColor }};border-radius:4px;transition:width .3s"></div></div><span style="font-size:11.5px;font-weight:780;min-width:34px;text-align:right">{{ c.count }}/10</span></div>
+          <div style="font-size:11.5px;color:#8A8177;margin-top:4px">{{ c.meta }}</div>
+        </div>
+        <button sc-camel-on-click="{{ c.add }}" style="width:36px;height:36px;border-radius:10px;border:1.5px solid #E2D9CB;background:#fff;color:#2E6B1F;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">add</span></button>
+      </div>
+    </sc-for>
+  </div>
+  <div style="padding:24px 20px 0;display:flex;align-items:baseline;gap:8px"><div style="flex:1;font:780 17px 'Archivo';font-stretch:106%;text-transform:uppercase;letter-spacing:.01em">Wheel prizes</div><div style="font-size:12px;color:#6F665C;font-weight:700">Odds update live</div></div>
+  <div style="margin:10px 16px 0;background:#fff;border:1px solid #E6DDD0;border-radius:16px;overflow:hidden">
+    <sc-for list="{{ prizeRows }}" as="p" hint-placeholder-count="8">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #F0EADF">
+        <span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1;width:21px;height:21px;overflow:hidden;display:block;color:#2E6B1F">{{ p.icon }}</span>
+        <div style="flex:1;font-weight:700;font-size:14px">{{ p.label }}</div>
+        <button sc-camel-on-click="{{ p.dec }}" style="width:30px;height:30px;border-radius:50%;border:1px solid #E2D9CB;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1F1A15"><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1;width:16px;height:16px;overflow:hidden;display:block">remove</span></button>
+        <div style="width:44px;text-align:center;font-weight:780;font-size:13.5px">{{ p.odds }}</div>
+        <button sc-camel-on-click="{{ p.inc }}" style="width:30px;height:30px;border-radius:50%;border:1px solid #E2D9CB;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1F1A15"><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1;width:16px;height:16px;overflow:hidden;display:block">add</span></button>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin:14px 16px 0;background:#1F1A15;color:#fff;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start">
+    <span style="font-family:'Material Symbols Rounded';font-size:28px;line-height:1;width:28px;height:28px;overflow:hidden;display:block;color:#CFE0C4">emoji_events</span>
+    <div style="flex:1"><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.75">Weekly challenge</div><div style="font-weight:780;font-size:15px;margin-top:6px;line-height:1.3">Order 2 pizzas by Sunday → +1 stamp</div><div style="font-size:12.5px;opacity:.8;margin-top:6px">38 joined · 12 completed · resets Monday</div></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPromos }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:110px;box-sizing:border-box">
+  <div style="background:#2E6B1F;color:#fff;padding:60px 16px 18px;display:flex;align-items:flex-end;gap:10px">
+    <div style="flex:1;font:780 31px/1 'Archivo';font-stretch:106%;letter-spacing:-.012em;">Promos</div>
+    <button sc-camel-on-click="{{ openCoupon }}" style="height:36px;padding:0 14px 0 10px;border-radius:999px;border:0;background:#fff;color:#2E6B1F;font:700 13px 'Archivo';display:flex;align-items:center;gap:4px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;width:19px;height:19px;overflow:hidden;display:block">add</span>New coupon</button>
+  </div>
+  <div style="padding:22px 20px 0;font:780 17px 'Archivo';font-stretch:106%;text-transform:uppercase;letter-spacing:.01em">Coupons</div>
+  <div style="margin:10px 16px 0;background:#fff;border:1px solid #E6DDD0;border-radius:16px;overflow:hidden">
+    <sc-for list="{{ couponRows }}" as="c" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #F0EADF">
+        <div style="flex:1;min-width:0;opacity:{{ c.op }}"><div style="font:700 14px ui-monospace,Menlo,monospace;color:#2E6B1F">{{ c.code }}</div><div style="font-size:12.5px;color:#6F665C;margin-top:3px;line-height:1.3">{{ c.desc }}</div></div>
+        <div style="text-align:right;font-size:11px;color:#8A8177;font-weight:700;min-width:44px"><div style="font-size:15px;font-weight:780;color:#1F1A15">{{ c.uses }}</div>uses</div>
+        <button sc-camel-on-click="{{ c.toggle }}" style="width:50px;height:30px;border-radius:15px;background:{{ c.swBg }};border:0;position:relative;cursor:pointer;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ c.swLeft }}px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+      </div>
+    </sc-for>
+  </div>
+  <div style="padding:24px 20px 0;display:flex;align-items:baseline;gap:8px"><div style="flex:1;font:780 17px 'Archivo';font-stretch:106%;text-transform:uppercase;letter-spacing:.01em">App banners</div><div style="font-size:12px;color:#6F665C;font-weight:700">“Deals”</div></div>
+  <div style="margin:10px 16px 0;background:#fff;border:1px solid #E6DDD0;border-radius:16px;overflow:hidden">
+    <sc-for list="{{ banners }}" as="bn" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #F0EADF">
+        <div style="width:62px;height:46px;border-radius:9px;overflow:hidden;background:#EFE7DA;flex:none"><img loading="lazy" decoding="async" src="{{ bn.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+        <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">{{ bn.title }}</div><div style="font-size:12px;color:#6F665C;margin-top:2px">{{ bn.when }}</div></div>
+        <button sc-camel-on-click="{{ bn.toggle }}" style="width:50px;height:30px;border-radius:15px;background:{{ bn.swBg }};border:0;position:relative;cursor:pointer;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ bn.swLeft }}px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isStore }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:110px;box-sizing:border-box">
+  <div style="background:#2E6B1F;color:#fff;padding:60px 16px 18px">
+    <div style="font:780 31px/1 'Archivo';font-stretch:106%;letter-spacing:-.012em;">Store</div>
+    <div style="font-size:13.5px;margin-top:8px;opacity:.88">Changes apply to the customer app</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px;padding:16px">
+    <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="font-weight:780;font-size:15px">Store info</div>
+      <sc-for list="{{ storeFields }}" as="f" hint-placeholder-count="3"><label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;font-weight:700;color:#6F665C;letter-spacing:.02em">{{ f.label }}<input value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" style="height:42px;border:1px solid #E2D9CB;border-radius:10px;padding:0 12px;font:600 14px 'Archivo';color:#1F1A15;outline:0;background:#F8F4EE"></label></sc-for>
+    </div>
+    <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px">
+      <div style="font-weight:780;font-size:15px;margin-bottom:2px">Hours</div>
+      <sc-for list="{{ hours }}" as="h" hint-placeholder-count="7"><div style="display:flex;align-items:center;gap:8px;font-size:13.5px"><span style="width:40px;font-weight:700">{{ h.day }}</span><input value="{{ h.open }}" sc-camel-on-change="{{ h.onOpen }}" style="flex:1;min-width:0;height:36px;border:1px solid #E2D9CB;border-radius:9px;padding:0 10px;font:600 13px 'Archivo';color:#1F1A15;outline:0;background:#F8F4EE"><span style="color:#8A8177">–</span><input value="{{ h.close }}" sc-camel-on-change="{{ h.onClose }}" style="flex:1;min-width:0;height:36px;border:1px solid #E2D9CB;border-radius:9px;padding:0 10px;font:600 13px 'Archivo';color:#1F1A15;outline:0;background:#F8F4EE"></div></sc-for>
+    </div>
+    <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:4px 14px">
+      <div style="font-weight:780;font-size:15px;padding:12px 0 6px">Ordering &amp; payments</div>
+      <sc-for list="{{ toggles }}" as="tg" hint-placeholder-count="6">
+        <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid #F0EADF">
+          <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:#2E6B1F">{{ tg.icon }}</span>
+          <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">{{ tg.label }}</div><div style="font-size:12px;color:#6F665C;margin-top:2px">{{ tg.sub }}</div></div>
+          <button sc-camel-on-click="{{ tg.toggle }}" style="width:50px;height:30px;border-radius:15px;background:{{ tg.swBg }};border:0;position:relative;cursor:pointer;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ tg.swLeft }}px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="font-weight:780;font-size:15px;grid-column:1 / -1">Fees &amp; tax</div>
+      <sc-for list="{{ feeFields }}" as="f" hint-placeholder-count="4"><label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;font-weight:700;color:#6F665C">{{ f.label }}<input value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" style="height:42px;border:1px solid #E2D9CB;border-radius:10px;padding:0 12px;font:700 14px 'Archivo';color:#1F1A15;outline:0;background:#F8F4EE;width:100%;box-sizing:border-box"></label></sc-for>
+    </div>
+    <button sc-camel-on-click="{{ saveSettings }}" style="height:50px;border-radius:14px;border:0;background:#B5321A;color:#fff;font:780 15px 'Archivo';cursor:pointer">Save changes</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showTabs }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;left:0;right:0;bottom:0;height:88px;background:#fff;border-top:1px solid #E6DDD0;display:flex;padding:8px 6px 0;box-sizing:border-box;z-index:30">
+    <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+      <button sc-camel-on-click="{{ tb.go }}" style="flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ tb.color }};font:700 11px 'Archivo';cursor:pointer;position:relative;padding:4px 0 0">
+        <span style="font-family:'Material Symbols Rounded';font-size:26px;line-height:1;width:26px;height:26px;overflow:hidden;display:block;font-variation-settings:'FILL' {{ tb.fill }}">{{ tb.icon }}</span>
+        <span>{{ tb.label }}</span>
+        <sc-if value="{{ tb.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:999px;background:#B5321A;color:#fff;font-size:11px;font-weight:780;display:flex;align-items:center;justify-content:center;border:2px solid #fff">{{ tb.badge }}</span></sc-if>
+      </button>
+    </sc-for>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:40;background:#F4EFE7;animation:jjIn .3s cubic-bezier(.2,.8,.2,1)">
+  <div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:120px;box-sizing:border-box">
+    <div style="background:#2E6B1F;color:#fff;padding:54px 16px 18px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button sc-camel-on-click="{{ closeSel }}" style="width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:inherit;display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">arrow_back</span></button>
+        <span style="font:700 14px ui-monospace,Menlo,monospace">#{{ sel.id }}</span>
+        <sc-if value="{{ sel.fromApp }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:780;letter-spacing:.08em;padding:2px 6px;border-radius:5px;background:#fff;color:#2E6B1F">APP</span></sc-if>
+      </div>
+      <div style="font:780 26px/1 'Archivo';font-stretch:106%;letter-spacing:-.012em;margin-top:18px;">{{ sel.status }}</div>
+      <div style="font-size:13px;margin-top:8px;opacity:.88">{{ sel.sub }}</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:16px">
+        <sc-for list="{{ sel.bars }}" as="br" hint-placeholder-count="4"><div style="height:6px;border-radius:3px;background:{{ br.bg }}"></div></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;padding:16px">
+      <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:50%;background:#EFE7DA;color:#2E6B1F;display:flex;align-items:center;justify-content:center;font:780 15px 'Archivo';flex:none">{{ sel.initials }}</div>
+          <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:15.5px">{{ sel.name }}</div><div style="font-size:12.5px;color:#6F665C;margin-top:2px">{{ sel.phone }}</div></div>
+          <a href="tel:+19254776683" style="width:40px;height:40px;border-radius:50%;background:#EFE7DA;color:#2E6B1F;display:flex;align-items:center;justify-content:center;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1;width:21px;height:21px;overflow:hidden;display:block">call</span></a>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding-top:12px;border-top:1px solid #F0EADF">
+          <span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1;width:21px;height:21px;overflow:hidden;display:block;color:#2E6B1F">{{ sel.modeIcon }}</span>
+          <div style="flex:1;font-size:13.5px;line-height:1.35"><b>{{ sel.modeLabel }}</b> · {{ sel.modeDetail }}</div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:4px 14px">
+        <sc-for list="{{ sel.items }}" as="i" hint-placeholder-count="2">
+          <div style="display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #F0EADF"><div style="min-width:30px;height:26px;border-radius:7px;background:#1F1A15;color:#fff;font-weight:780;font-size:13px;display:flex;align-items:center;justify-content:center">{{ i.qty }}×</div><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14.5px">{{ i.name }}</div><div style="font-size:12.5px;color:#6F665C;line-height:1.35;margin-top:2px">{{ i.detail }}</div></div></div>
+        </sc-for>
+        <div style="display:flex;flex-direction:column;gap:6px;padding:12px 0;font-size:13.5px">
+          <div style="display:flex;justify-content:space-between;color:#6F665C"><span>Subtotal</span><span>{{ sel.sub2 }}</span></div>
+          <div style="display:flex;justify-content:space-between;color:#6F665C"><span>Tax (9.75%)</span><span>{{ sel.tax }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-weight:780;font-size:16px"><span>Total</span><span>{{ sel.total }}</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px">
+        <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block;color:#2E6B1F">{{ sel.payIcon }}</span>
+        <div style="flex:1"><div style="font-weight:700;font-size:14px">{{ sel.payMethod }}</div><div style="font-size:12px;font-weight:700;margin-top:2px;color:{{ sel.payColor }}">{{ sel.payStatus }}</div></div>
+        <sc-if value="{{ sel.canMarkPaid }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ sel.markPaid }}" style="height:36px;padding:0 12px;border-radius:10px;border:1.5px solid #2E6B1F;background:#fff;color:#2E6B1F;font:700 12.5px 'Archivo';cursor:pointer">Mark received</button></sc-if>
+      </div>
+      <div style="background:#fff;border:1px solid #E6DDD0;border-radius:16px;padding:14px">
+        <div style="font-weight:780;font-size:15px;margin-bottom:10px">Timeline</div>
+        <sc-for list="{{ sel.timeline }}" as="tl" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:10px;padding:6px 0;color:{{ tl.color }}"><span style="width:10px;height:10px;border-radius:50%;background:{{ tl.dot }};flex:none"></span><span style="flex:1;font-size:13.5px;font-weight:700">{{ tl.label }}</span><span style="font-size:12.5px;font-weight:700">{{ tl.time }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <sc-if value="{{ sel.hasAction }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 30px;background:#fff;border-top:1px solid #E6DDD0"><button sc-camel-on-click="{{ sel.act }}" style="width:100%;height:56px;border-radius:14px;border:0;background:{{ sel.actBg }};color:#fff;font:780 16px 'Archivo';cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block">{{ sel.actIcon }}</span>{{ sel.actLabel }}</button></div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCouponSheet }}" hint-placeholder-val="{{ false }}">
+  <div sc-camel-on-click="{{ closeCoupon }}" style="position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:50;animation:jjFade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:51;background:#fff;border-radius:24px 24px 0 0;padding:16px 18px 34px;animation:jjUp .3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:14px">
+    <div style="width:40px;height:5px;border-radius:3px;background:#E6DDD0;align-self:center"></div>
+    <div style="font:780 21px/1 'Archivo';font-stretch:106%;letter-spacing:-.012em">New coupon</div>
+    <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;font-weight:700;color:#6F665C">Code<input value="{{ form.code }}" sc-camel-on-change="{{ form.onCode }}" placeholder="FRIDAYNIGHT" style="height:46px;border:1px solid #E2D9CB;border-radius:12px;padding:0 14px;font:700 15px ui-monospace,Menlo,monospace;color:#1F1A15;text-transform:uppercase;outline:0;background:#F8F4EE"></label>
+    <div style="display:flex;gap:4px;background:#EFE7DA;padding:4px;border-radius:12px">
+      <sc-for list="{{ form.types }}" as="ty" hint-placeholder-count="3"><button sc-camel-on-click="{{ ty.pick }}" style="flex:1;height:38px;border:0;border-radius:9px;background:{{ ty.bg }};color:{{ ty.fg }};font:700 12.5px 'Archivo';cursor:pointer">{{ ty.label }}</button></sc-for>
+    </div>
+    <sc-if value="{{ form.needsValue }}" hint-placeholder-val="{{ true }}"><label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;font-weight:700;color:#6F665C">{{ form.valueLabel }}<input value="{{ form.value }}" sc-camel-on-change="{{ form.onValue }}" inputmode="decimal" placeholder="{{ form.valuePh }}" style="height:46px;border:1px solid #E2D9CB;border-radius:12px;padding:0 14px;font:700 15px 'Archivo';color:#1F1A15;outline:0;background:#F8F4EE"></label></sc-if>
+    <sc-if value="{{ form.hasErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:#B5321A">{{ form.err }}</div></sc-if>
+    <button sc-camel-on-click="{{ form.create }}" style="height:52px;border-radius:14px;border:0;background:#B5321A;color:#fff;font:780 15px 'Archivo';cursor:pointer">Create coupon</button>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasNotif }}" hint-placeholder-val="{{ false }}">
+  <div sc-camel-on-click="{{ tapNotif }}" style="position:absolute;top:54px;left:8px;right:8px;z-index:80;border-radius:24px;background:rgba(246,246,246,.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);box-shadow:0 10px 30px rgba(0,0,0,.28);padding:12px 14px;display:flex;gap:12px;align-items:center;color:#111;cursor:pointer;animation:jjDrop .5s cubic-bezier(.2,.9,.25,1.15)">
+    <div style="width:40px;height:40px;border-radius:10px;background:#2E6B1F;color:#fff;display:flex;align-items:center;justify-content:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">storefront</span></div>
+    <div style="flex:1;min-width:0">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b6b6b"><span style="font-weight:700;letter-spacing:.04em">JJ STORE</span><span>now</span></div>
+      <div style="font-size:14.5px;font-weight:700;margin-top:1px">{{ notifTitle }}</div>
+      <div style="font-size:13.5px;color:#333;line-height:1.3">{{ notifBody }}</div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:50%;bottom:{{ toastBottom }}px;transform:translateX(-50%);z-index:70;background:#141414;color:#fff;border-radius:999px;padding:10px 16px;font:700 14px 'Archivo';display:flex;gap:8px;align-items:center;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.3);animation:jjToast .25s"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;width:19px;height:19px;overflow:hidden;display:block;color:#7BD86A;font-variation-settings:'FILL' 1">check_circle</span>{{ toastMsg }}</div>
+</sc-if>
+
+</div>
+</x-import>
+</div>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="">
+const SK = 'jjpizza.orders.v1', HK = 'jjpizza.admin.v1', SOLD = 'jjpizza.soldout.v1', STORE = 'jjpizza.store.v1';
+const readLS = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
+const writeLS = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const usd = n => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 });
+const MODE = { pickup:{ label:'Pickup', icon:'storefront' }, delivery:{ label:'Delivery', icon:'delivery_dining' }, dine:{ label:'Dine-in', icon:'table_restaurant' } };
+const COLORS = ['#B5321A', '#C9741C', '#2E6B1F', '#8A8177'];
+const BTN = ['#B5321A', '#2E6B1F', '#1F1A15'];
+const actFor = o => o.step === 0 ? ['Accept & start', 'local_fire_department'] : o.step === 1 ? ({ pickup:['Mark ready', 'notifications_active'], delivery:['Out for delivery', 'two_wheeler'], dine:['Send to table', 'table_restaurant'] })[o.mode] : ({ pickup:['Picked up', 'check_circle'], delivery:['Delivered', 'check_circle'], dine:['Served', 'check_circle'] })[o.mode];
+const titleFor = o => [ 'New order', 'In the oven', ({ pickup:'Ready for pickup', delivery:'Out for delivery', dine:'Going to the table' })[o.mode], ({ pickup:'Picked up', delivery:'Delivered', dine:'Served' })[o.mode] ][o.step];
+const T0 = Date.now(), ago = m => T0 - m * 60000, Ln = (qty, name, detail) => ({ qty, name, detail });
+const SEED = [
+  { id:'JJ-4102', name:'Carlos Méndez', phone:'(925) 555-0187', mode:'delivery', address:'418 W 10th St, Antioch', lines:[Ln(1, 'Meat Lovers', '16" X-Large · Hand-tossed'), Ln(1, 'Bone-in Wings', '10 pieces · Buffalo · Ranch'), Ln(1, '2-liter soda', 'Cola')], total:59.03, pay:'cash', step:0, placed:ago(2), pizzas:1, times:[ago(2)] },
+  { id:'JJ-4098', name:'Ana Ruiz', phone:'(925) 555-0123', mode:'pickup', lines:[Ln(2, 'Pepperoni', '14" Large · Thin'), Ln(3, 'Pupusa', 'Revuelta')], total:58.11, pay:'zelle', paid:false, step:1, placed:ago(9), pizzas:2, times:[ago(9), ago(8)] },
+  { id:'JJ-4095', name:'Table 3', phone:'Walk-in', mode:'dine', table:3, lines:[Ln(1, 'JJ Special', '14" Large · Hand-tossed'), Ln(2, 'Horchata', '24 oz')], total:34.13, pay:'cash', step:1, placed:ago(13), pizzas:1, times:[ago(13), ago(11)] },
+  { id:'JJ-4091', name:'Luis Pérez', phone:'(925) 555-0164', mode:'pickup', lines:[Ln(1, 'Hawaiian', '12" Medium · + Jalapeños (left)'), Ln(1, 'Churros (4)', 'Chocolate dip')], total:30.47, pay:'zelle', paid:true, step:2, placed:ago(24), pizzas:1, times:[ago(24), ago(22), ago(4)] },
+  { id:'JJ-4087', name:'Sofía Torres', phone:'(925) 555-0109', mode:'delivery', address:'2210 Hillcrest Ave, Antioch', lines:[Ln(1, 'Veggie', '14" Large · Thin'), Ln(1, 'Fettuccine Alfredo', '+ Grilled chicken')], total:41.13, pay:'cash', step:3, placed:ago(52), pizzas:1, times:[ago(52), ago(50), ago(31), ago(18)] },
+  { id:'JJ-4080', name:'Table 7', phone:'Walk-in', mode:'dine', table:7, lines:[Ln(2, 'Cheese', '16" X-Large'), Ln(4, 'Fountain soda', 'Cola')], total:58.82, pay:'cash', step:3, placed:ago(80), pizzas:2, times:[ago(80), ago(78), ago(61), ago(58)] },
+];
+const TEMPLATES = [
+  { name:'Diego Herrera', mode:'pickup', lines:[Ln(1, 'BBQ Chicken', '14" Large · Hand-tossed'), Ln(1, 'Boneless Wings', '10 pieces · Lemon pepper · Ranch')], total:45.03, pizzas:1 },
+  { name:'Karla Flores', mode:'delivery', address:'905 Sycamore Dr, Antioch', lines:[Ln(1, 'Supreme', '16" X-Large · Pan'), Ln(2, 'Pupusa plate (3)', 'Queso')], total:57.63, pizzas:1 },
+  { name:'Table 5', mode:'dine', table:5, lines:[Ln(2, 'Pepperoni', '12" Medium'), Ln(2, 'Agua fresca', 'Jamaica')], total:45.81, pizzas:2 },
+  { name:'Jorge Ramos', mode:'pickup', lines:[Ln(1, 'Classic Cheeseburger', 'Fries · + Bacon'), Ln(1, 'Margherita', '12" Medium · Thin')], total:37.03, pizzas:1 },
+];
+const CUSTOMERS = [['María González', 7, 'Last order Sep 28 · app'], ['Carlos Méndez', 9, 'Last order today'], ['Luis Pérez', 10, 'Reward ready to redeem'], ['Ana Ruiz', 3, 'Last order today'], ['Sofía Torres', 5, 'Last order today'], ['Karla Flores', 6, 'Last order Sep 30'], ['Diego Herrera', 1, 'Joined Sep 26 · referred by María'], ['Jorge Ramos', 2, 'Last order Sep 21']];
+const initials = n => n.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+const fmtTime = ts => new Date(ts).toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+const sw = on => ({ swBg:on ? '#2E6B1F' : '#CFC7BB', swLeft:on ? 23 : 3 });
+
+class Component extends DCLogic {
+  state = {
+    tab:'orders', filter:0, orders:SEED, sel:null, accepting:true, prep:20, soldout:[], prices:{}, cat:'pizza',
+    customers:CUSTOMERS.map(([name, count, meta]) => ({ name, count, meta })), weights:null,
+    coupons:[['JJBIENVENIDO', '15% off the first app order', 42], ['MARTES2X1', 'Tuesdays · 2nd pizza free', 118], ['RULETA10', '10% off · wheel prize', 23], ['RULETA5', '$5 off $25+ · wheel prize', 9]].map(([code, desc, uses]) => ({ code, desc, uses, on:true })),
+    couponSheet:false, form:{ code:'', type:'pct', value:'', err:null }, banners:[true, true, true],
+    toggles:{ pickup:true, delivery:true, dine:true, cash:true, zelle:true, push:true },
+    fields:{ name:'JJ Pizza', address:'1139 E 18th St, Antioch, CA 94509', phone:'(925) 477-6683', fee:'3.99', freeOver:'30.00', tax:'9.75', radius:'5' },
+    hours:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => ({ day, open:'11:00 am', close:'10:00 pm' })),
+    notif:null, toast:null, flash:{}, now:Date.now(), ready:!!window.JJ,
+  };
+  componentDidMount() {
+    this.embed = /[?&]embed=1/.test(location.search);
+    if (this.embed) { document.documentElement.style.background = 'transparent'; document.body.style.background = 'transparent'; }
+    if (!window.JJ) this._poll = setInterval(() => { if (window.JJ) { clearInterval(this._poll); this.setState({ ready:true }); } }, 50);
+    const store = readLS(STORE, {});
+    this.setState({ soldout:readLS(SOLD, []), accepting:store.accepting !== false, prep:store.prep || 20 });
+    this.merge(true);
+    const beat = () => { try { localStorage.setItem(HK, String(Date.now())); } catch (e) {} };
+    beat(); this._beat = setInterval(beat, 2000);
+    this._tick = setInterval(() => this.setState({ now:Date.now() }), 15000);
+    this._onStorage = e => { if (e.key === SK) this.merge(false); if (e.key === SOLD) this.setState({ soldout:readLS(SOLD, []) }); };
+    window.addEventListener('storage', this._onStorage);
+  }
+  componentWillUnmount() { clearInterval(this._beat); clearInterval(this._tick); clearInterval(this._poll); clearTimeout(this._n); clearTimeout(this._t); window.removeEventListener('storage', this._onStorage); try { localStorage.removeItem(HK); } catch (e) {} }
+  toast(msg) { clearTimeout(this._t); this.setState({ toast:msg }); this._t = setTimeout(() => this.setState({ toast:null }), 2400); }
+  notify(title, body, id) { clearTimeout(this._n); this.setState({ notif:{ title, body, id } }); this._n = setTimeout(() => this.setState({ notif:null }), 5000); }
+  flash(id) { this.setState(s => ({ flash:{ ...s.flash, [id]:true } })); setTimeout(() => this.setState(s => { const f = { ...s.flash }; delete f[id]; return { flash:f }; }), 5000); }
+  merge(initial) {
+    const arr = readLS(SK, []), fresh = [];
+    this.setState(s => {
+      const orders = s.orders.slice();
+      arr.forEach(o => { if (o.src !== 'app') return; const i = orders.findIndex(x => x.id === o.id);
+        if (i < 0) { if (initial && (Date.now() - o.placed > 3 * 3600e3)) return; const times = []; for (let k = 0; k <= o.step; k++) times[k] = k === 0 ? o.placed : Date.now(); orders.push({ ...o, times }); if (!initial) fresh.push(o); }
+        else if (o.step > orders[i].step) { const times = orders[i].times.slice(); for (let k = orders[i].step + 1; k <= o.step; k++) times[k] = Date.now(); orders[i] = { ...orders[i], step:o.step, times }; } });
+      return { orders };
+    }, () => fresh.forEach(o => { this.flash(o.id); this.notify('New order #' + o.id, o.name + ' · ' + MODE[o.mode].label + ' · ' + usd(o.total), o.id); this.setState({ filter:0 }); }));
+  }
+  sync(o) { if (o.src !== 'app') return; const arr = readLS(SK, []), i = arr.findIndex(x => x.id === o.id); if (i < 0) return; arr[i] = { ...arr[i], step:o.step, paid:o.paid }; writeLS(SK, arr); }
+  advance(id) {
+    const o = this.state.orders.find(x => x.id === id); if (!o || o.step >= 3) return;
+    const step = o.step + 1, times = o.times.slice(); times[step] = Date.now();
+    const next = { ...o, step, times }, first = o.name.split(' ')[0];
+    const upd = { orders:this.state.orders.map(x => x.id === id ? next : x) };
+    if (step === 3 && o.pizzas) upd.customers = this.state.customers.map(c => c.name === o.name ? { ...c, count:Math.min(10, c.count + o.pizzas), meta:'Last order today' } : c);
+    this.setState(upd); this.sync(next);
+    this.toast(step === 1 ? 'Accepted · in the oven' : step === 2 ? (this.state.toggles.push && o.src === 'app' ? 'Push sent to ' + first + '’s phone' : 'Customer notified') : o.pizzas ? '+' + o.pizzas + ' stamp' + (o.pizzas > 1 ? 's' : '') + ' for ' + first : 'Order completed');
+  }
+  testOrder() {
+    const tpl = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)], n = this.state.orders.length;
+    const o = { ...tpl, id:'JJ-' + (4103 + n), phone:tpl.mode === 'dine' ? 'Walk-in' : '(925) 555-01' + (20 + n), pay:Math.random() > .6 ? 'zelle' : 'cash', paid:false, step:0, placed:Date.now(), times:[Date.now()], src:'test' };
+    this.setState(s => ({ orders:[...s.orders, o], filter:0 })); this.flash(o.id);
+    this.notify('New order #' + o.id, o.name + ' · ' + MODE[o.mode].label + ' · ' + usd(o.total), o.id);
+  }
+  saveStore(p) { writeLS(STORE, { accepting:this.state.accepting, prep:this.state.prep, ...p }); }
+
+  renderVals() {
+    const J = window.JJ; if (!J) return {};
+    const st = this.state, now = st.now, set = o => () => this.setState(o);
+    const bundled = !/\.dc\.html$/i.test(decodeURIComponent(location.pathname)), embed = /[?&]embed=1/.test(location.search);
+    const counts = [0, 1, 2, 3].map(i => st.orders.filter(o => o.step === i).length);
+    const mins = ts => Math.max(0, Math.floor((now - ts) / 60000));
+    const list = st.orders.filter(o => o.step === st.filter).sort((a, b) => st.filter === 3 ? b.placed - a.placed : a.placed - b.placed);
+    const payInfo = o => o.pay === 'cash' ? ['Cash', '#EFE7DA', '#28401F'] : o.paid ? ['Zelle · paid', '#E4EDDC', '#255A18'] : ['Zelle · pending', '#F8EBD0', '#8A5200'];
+    const sales = 912.4 + st.orders.reduce((a, o) => a + o.total, 0), cnt = 27 + st.orders.length;
+    const totalW = (st.weights || J.PRIZES.map(p => p.w)).reduce((a, b) => a + b, 0), weights = st.weights || J.PRIZES.map(p => p.w);
+    const o = st.sel && st.orders.find(x => x.id === st.sel);
+    let sel = {};
+    if (o) { const [actLabel, actIcon] = o.step < 3 ? actFor(o) : ['', '']; const [pl] = payInfo(o);
+      const stepNames = ['Order placed', 'Accepted · in the oven', ({ pickup:'Ready for pickup', delivery:'Out for delivery', dine:'Sent to the table' })[o.mode], ({ pickup:'Picked up', delivery:'Delivered', dine:'Served' })[o.mode]];
+      sel = { id:o.id, fromApp:o.src === 'app', status:titleFor(o), sub:o.step < 3 ? 'Placed ' + fmtTime(o.placed) + ' · ' + mins(o.placed) + ' min ago' : 'Completed ' + fmtTime(o.times[3] || now),
+        bars:[0, 1, 2, 3].map(i => ({ bg:i <= o.step ? '#fff' : 'rgba(255,255,255,.28)' })), initials:initials(o.name), name:o.name, phone:o.phone || '',
+        modeIcon:MODE[o.mode].icon, modeLabel:MODE[o.mode].label, modeDetail:o.mode === 'delivery' ? (o.address || 'Address on file') : o.mode === 'dine' ? 'Table ' + o.table : 'Counter pickup · ~' + st.prep + ' min',
+        items:o.lines.map(l => ({ qty:l.qty, name:l.name, detail:l.detail || '' })), sub2:usd(o.total / 1.0975), tax:usd(o.total - o.total / 1.0975), total:usd(o.total),
+        payIcon:o.pay === 'cash' ? 'payments' : 'account_balance', payMethod:o.pay === 'cash' ? 'Cash' : 'Zelle transfer', payStatus:o.pay === 'cash' ? ({ pickup:'Collect at pickup', delivery:'Driver collects', dine:'Pay at the counter' })[o.mode] : o.paid ? 'Received' : 'Waiting for transfer',
+        payColor:o.pay === 'zelle' && !o.paid ? '#8A5200' : '#255A18', canMarkPaid:o.pay === 'zelle' && !o.paid,
+        markPaid:() => { const next = { ...o, paid:true }; this.setState({ orders:st.orders.map(x => x.id === o.id ? next : x) }); this.sync(next); this.toast('Payment marked as received'); },
+        timeline:stepNames.map((label, i) => ({ label, time:o.times[i] ? fmtTime(o.times[i]) : '—', color:i <= o.step ? '#1F1A15' : '#9AA394', dot:i <= o.step ? COLORS[Math.min(i, 3)] : '#E2D9CB' })),
+        hasAction:o.step < 3, actLabel, actIcon, actBg:BTN[Math.min(o.step, 2)], act:() => this.advance(o.id) }; }
+    const ITEM = id => J.ITEMS.find(i => i.id === id), CATICON = Object.fromEntries(J.CATS.map(c => [c.id, c.icon]));
+    const typeOpts = [['pct', 'Percent'], ['off', 'Amount'], ['bogo', '2-for-1']];
+    const createCoupon = () => { const f = st.form, code = f.code.trim().toUpperCase(), v = parseFloat(f.value);
+      if (!/^[A-Z0-9]{3,14}$/.test(code)) return this.setState({ form:{ ...f, err:'Use 3–14 letters or numbers' } });
+      if (st.coupons.some(c => c.code === code)) return this.setState({ form:{ ...f, err:'That code already exists' } });
+      if (f.type !== 'bogo' && !(v > 0 && v <= (f.type === 'pct' ? 90 : 50))) return this.setState({ form:{ ...f, err:f.type === 'pct' ? 'Enter a percent between 1 and 90' : 'Enter an amount between $1 and $50' } });
+      const desc = f.type === 'pct' ? v + '% off any order' : f.type === 'off' ? '$' + v + ' off any order' : '2nd pizza free';
+      this.setState({ coupons:[{ code, desc, uses:0, on:true }, ...st.coupons], couponSheet:false, form:{ code:'', type:'pct', value:'', err:null } }); this.toast('Coupon ' + code + ' is live'); };
+    return {
+      pagePad:embed ? '0' : '36px 24px 60px', showPanel:!embed, appHref:bundled ? 'app.html' : 'JJ Pizza App.dc.html',
+      isOrders:st.tab === 'orders', isMenu:st.tab === 'menu', isRewards:st.tab === 'rewards', isPromos:st.tab === 'promos', isStore:st.tab === 'store', showTabs:!o,
+      today:new Date(now).toLocaleDateString('en-US', { weekday:'long', month:'short', day:'numeric' }),
+      accept:st.accepting ? { label:'Open', bg:'#fff', fg:'#2E6B1F', anim:'jjPulse 1.6s infinite' } : { label:'Paused', bg:'#B5321A', fg:'#fff', anim:'none' },
+      toggleAccept:() => { const accepting = !st.accepting; this.setState({ accepting }); this.saveStore({ accepting }); this.toast(accepting ? 'Taking online orders' : 'Online ordering paused'); },
+      prep:st.prep, cyclePrep:() => { const opts = [15, 20, 25, 30, 40], prep = opts[(opts.indexOf(st.prep) + 1) % opts.length]; this.setState({ prep }); this.saveStore({ prep }); }, paused:!st.accepting,
+      stats:[{ label:'Sales', value:usd(sales).replace(/\.\d\d$/, '') }, { label:'Orders', value:String(cnt) }, { label:'Avg ticket', value:usd(sales / cnt) }],
+      statusTabs:['New', 'In the oven', 'Ready', 'Done'].map((label, i) => { const on = st.filter === i; return { label, count:counts[i], pick:set({ filter:i }), bg:on ? '#1F1A15' : '#fff', fg:on ? '#fff' : '#1F1A15', bd:on ? '#1F1A15' : '#E2D9CB', cbg:on ? 'rgba(255,255,255,.22)' : (counts[i] ? COLORS[i] : '#F0EADF'), cfg:on || counts[i] ? '#fff' : '#8A8177' }; }),
+      orderCards:list.map(o => { const [payLabel, payBg, payFg] = payInfo(o), m = mins(o.placed), a = o.step < 3 ? actFor(o) : null;
+        return { id:o.id, fromApp:o.src === 'app', name:o.name, modeIcon:MODE[o.mode].icon, modeLabel:o.mode === 'dine' ? 'Table ' + o.table : MODE[o.mode].label,
+          elapsed:o.step === 3 ? fmtTime(o.times[3] || o.placed) : m < 1 ? 'now' : m + ' min', timeColor:o.step < 2 && m > st.prep ? '#B5321A' : '#6F665C',
+          items:o.lines.slice(0, 3).map(l => ({ qty:l.qty, name:l.name, detail:l.detail || '' })), hasMore:o.lines.length > 3, more:'+' + (o.lines.length - 3) + ' more',
+          total:usd(o.total), payLabel, payBg, payFg, hasAction:!!a, actLabel:a ? a[0] : '', actBg:BTN[Math.min(o.step, 2)],
+          act:e => { e.stopPropagation(); this.advance(o.id); }, open:() => this.setState({ sel:o.id }), anim:st.flash[o.id] ? 'jjFlash 1s 4' : 'none' }; }),
+      noOrders:!list.length, emptyText:['No new orders right now', 'Nothing in the oven', 'Nothing waiting', 'No completed orders yet'][st.filter], testOrder:() => this.testOrder(),
+      hasSel:!!o, sel, closeSel:set({ sel:null }),
+      menuCats:J.CATS.map(c => { const on = st.cat === c.id; return { label:c.n[0], pick:set({ cat:c.id }), bg:on ? '#fff' : 'rgba(255,255,255,.16)', fg:on ? '#2E6B1F' : '#fff' }; }),
+      soldOutNote:st.soldout.length ? st.soldout.length + ' sold out today' : 'Everything available',
+      menuRows:J.ITEMS.filter(i => i.cat === st.cat && i.id !== 'custom').map(it => { const out = st.soldout.includes(it.id);
+        return { name:it.n[0], img:it.img, isPizza:it.cat === 'pizza', notPizza:it.cat !== 'pizza', tops:it.tops || {}, sauce:it.sauce || 'red', icon:CATICON[it.cat],
+          price:st.prices[it.id] ?? it.p.toFixed(2), onPrice:e => this.setState({ prices:{ ...st.prices, [it.id]:e.target.value } }), priceNote:it.cat === 'pizza' ? 'Small 10" · +$3 per size' : it.prices ? '6 pieces' : '',
+          op:out ? .45 : 1, ...sw(!out), stateLabel:out ? 'Sold out' : 'Available', stateColor:out ? '#B5321A' : '#2E6B1F',
+          toggle:() => { const soldout = out ? st.soldout.filter(x => x !== it.id) : [...st.soldout, it.id]; this.setState({ soldout }); writeLS(SOLD, soldout); this.toast(out ? it.n[0] + ' is back on the menu' : it.n[0] + ' marked sold out'); } }; }),
+      rewardStats:[{ label:'Members', value:'214' }, { label:'Stamps this week', value:String(96 + st.orders.filter(x => x.step === 3).reduce((a, x) => a + (x.pizzas || 0), 0) - 3) }, { label:'Free pizzas Oct', value:'11' }],
+      customers:st.customers.map((c, i) => ({ name:c.name, initials:initials(c.name), count:c.count, pct:c.count * 10, ready:c.count >= 10, barColor:c.count >= 10 ? '#B5321A' : '#2E6B1F', meta:c.meta,
+        add:() => { if (c.count >= 10) return this.toast(c.name.split(' ')[0] + ' already has a free pizza'); this.setState({ customers:st.customers.map((x, j) => j === i ? { ...x, count:x.count + 1 } : x) }); this.toast('+1 stamp for ' + c.name.split(' ')[0]); } })),
+      prizeRows:J.PRIZES.map((p, i) => ({ icon:p.icon, label:p.n[0], odds:Math.round(weights[i] / totalW * 100) + '%',
+        dec:() => this.setState({ weights:weights.map((w, j) => j === i ? Math.max(0, w - 2) : w) }), inc:() => this.setState({ weights:weights.map((w, j) => j === i ? Math.min(60, w + 2) : w) }) })),
+      couponRows:st.coupons.map((c, i) => ({ code:c.code, desc:c.desc, uses:c.uses, op:c.on ? 1 : .45, ...sw(c.on), toggle:() => { this.setState({ coupons:st.coupons.map((x, j) => j === i ? { ...x, on:!x.on } : x) }); this.toast(c.code + (c.on ? ' paused' : ' is live')); } })),
+      banners:[['2-for-1 Tuesdays', 'Tuesdays · code MARTES2X1', '#B5321A', 'local_pizza', 'deal2x1'], ['Family combo $39.99', 'Every day', '#2E6B1F', 'groups', 'combo'], ['15% welcome', 'First app order · JJBIENVENIDO', '#1F1A15', 'redeem', 'hero']].map(([title, when, color, icon, img], i) => ({ title, when, color, icon, img:'img/menu/' + img + '.webp', ...sw(st.banners[i]), toggle:() => this.setState({ banners:st.banners.map((b, j) => j === i ? !b : b) }) })),
+      openCoupon:set({ couponSheet:true }), closeCoupon:set({ couponSheet:false }), isCouponSheet:st.couponSheet,
+      form:{ code:st.form.code, value:st.form.value, err:st.form.err || '', hasErr:!!st.form.err, needsValue:st.form.type !== 'bogo', valueLabel:st.form.type === 'pct' ? 'Percent off' : 'Amount off ($)', valuePh:st.form.type === 'pct' ? '15' : '5',
+        onCode:e => this.setState({ form:{ ...st.form, code:e.target.value, err:null } }), onValue:e => this.setState({ form:{ ...st.form, value:e.target.value, err:null } }),
+        types:typeOpts.map(([id, label]) => ({ label, pick:() => this.setState({ form:{ ...st.form, type:id, err:null } }), bg:st.form.type === id ? '#fff' : 'transparent', fg:st.form.type === id ? '#1F1A15' : '#6F665C' })), create:createCoupon },
+      storeFields:[['name', 'Store name'], ['address', 'Address'], ['phone', 'Phone · WhatsApp']].map(([k, label]) => ({ label, value:st.fields[k], onChange:e => this.setState({ fields:{ ...st.fields, [k]:e.target.value } }) })),
+      hours:st.hours.map((h, i) => ({ day:h.day, open:h.open, close:h.close, onOpen:e => this.setState({ hours:st.hours.map((x, j) => j === i ? { ...x, open:e.target.value } : x) }), onClose:e => this.setState({ hours:st.hours.map((x, j) => j === i ? { ...x, close:e.target.value } : x) }) })),
+      toggles:[['pickup', 'storefront', 'Pickup', 'Order ahead, grab it at the counter'], ['delivery', 'delivery_dining', 'Delivery', '$' + st.fields.fee + ' · free over $' + st.fields.freeOver + ' · ' + st.fields.radius + ' mi'], ['dine', 'table_restaurant', 'Dine-in', 'Order from the table with a QR code'], ['cash', 'payments', 'Cash', 'At pickup, delivery or the counter'], ['zelle', 'account_balance', 'Zelle transfer', 'To ' + st.fields.phone], ['push', 'notifications_active', 'Push notifications', 'Tell customers when the order is ready']].map(([k, icon, label, sub]) => ({ icon, label, sub, ...sw(st.toggles[k]), toggle:() => this.setState({ toggles:{ ...st.toggles, [k]:!st.toggles[k] } }) })),
+      feeFields:[['fee', 'Delivery fee ($)'], ['freeOver', 'Free delivery over ($)'], ['tax', 'Sales tax (%)'], ['radius', 'Delivery radius (mi)']].map(([k, label]) => ({ label, value:st.fields[k], onChange:e => this.setState({ fields:{ ...st.fields, [k]:e.target.value } }) })),
+      saveSettings:() => this.toast('Settings saved'),
+      tabs:[['orders', 'Orders', 'receipt_long'], ['menu', 'Menu', 'restaurant_menu'], ['rewards', 'Rewards', 'loyalty'], ['promos', 'Promos', 'sell'], ['store', 'Store', 'storefront']].map(([id, label, icon]) => ({ label, icon, go:set({ tab:id, sel:null }), color:st.tab === id ? '#2E6B1F' : '#8A8177', fill:st.tab === id ? 1 : 0, hasBadge:id === 'orders' && counts[0] > 0, badge:counts[0] })),
+      hasNotif:!!st.notif, notifTitle:st.notif ? st.notif.title : '', notifBody:st.notif ? st.notif.body : '', tapNotif:() => this.setState({ notif:null, tab:'orders', sel:st.notif ? st.notif.id : null }),
+      hasToast:!!st.toast, toastMsg:st.toast || '', toastBottom:o ? 104 : 104,
+    };
+  }
+}
+</script>
+
+
+</body></html>

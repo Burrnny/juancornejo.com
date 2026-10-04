@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Propuesta privada: accesible con el enlace, fuera de buscadores. -->
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>JJ Pizza · Customer app</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>/* vietnamese */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/Archivo-400-900-f37014.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/Archivo-400-900-0bcd0d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("fonts/Archivo-400-900-9b5bcb.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>/* fallback */
+@font-face {
+  font-family: 'Material Symbols Rounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url("fonts/MaterialSymbolsRounded-500-sub.woff2") format('woff2');
+}
+
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+</style>
+<script src="data.js"></script>
+<style>
+html,body{margin:0;background:#E9E2D7}
+body{font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#1F1A15}
+a{color:#2E6B1F}a:hover{color:#255A18}
+*::-webkit-scrollbar{width:0;height:0}
+input,button,textarea{font-family:inherit}
+@keyframes jjDrop{from{transform:translateY(-130%);opacity:0}to{transform:none;opacity:1}}
+@keyframes jjUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes jjFade{from{opacity:0}to{opacity:1}}
+@keyframes jjPop{0%{transform:scale(.3) rotate(-30deg);opacity:0}70%{transform:scale(1.15) rotate(-6deg);opacity:1}100%{transform:scale(1) rotate(-8deg)}}
+@keyframes jjPulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes jjToast{from{transform:translate(-50%,16px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+</style>
+<title>JJ Pizza · Customer app</title>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:44px;padding:{{ pagePad }};box-sizing:border-box">
+<div style="flex:none;width:402px;height:874px">
+<x-import component-from-global-scope="IOSDevice" from="ios-frame.jsx#/ios-frame.jsx" dark="{{ statusLight }}" hint-size="402px,874px">
+<div ref="{{ rootRef }}" style="position:relative;z-index:0;height:874px;overflow:hidden;background:var(--bg,#fff);color:var(--ink,#1F1A15);font-family:'Archivo',sans-serif">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:160px;box-sizing:border-box"><div style="position:sticky;top:0;height:56px;margin-bottom:-56px;z-index:6;pointer-events:none;background:linear-gradient(var(--bg,#F5EFE6) 46px, rgba(245,239,230,0) 56px)"></div>
+  <div style="padding:56px 16px 0;color:var(--ink,#1F1A15)">
+    <div style="display:flex;align-items:center;gap:11px">
+      <div style="width:42px;height:42px;border-radius:50%;overflow:hidden;position:relative;background:#fff;flex:none;box-shadow:0 0 0 1px var(--line,#E6DDD0)"><img src="img/img-25eaf398.jpg" alt="JJ Pizza" style="position:absolute;width:146%;height:146%;left:-23%;top:-23%;max-width:none"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12.5px;font-weight:600;color:var(--mut,#6F665C)">{{ t.hello }}</div>
+        <div style="font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ modeWhere }}</div>
+      </div>
+      <button sc-camel-on-click="{{ toggleLang }}" style="height:32px;padding:0 11px;border-radius:999px;border:1px solid var(--line,#E6DDD0);background:var(--card,#fff);color:inherit;font:700 12px 'Archivo';letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';line-height:1;overflow:hidden;display:block;font-weight:normal;font-size:17px;width:17px;height:17px">language</span>{{ langOther }}</button>
+    </div>
+    <div style="margin-top:16px;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:var(--soft,#EFE7DA)"><img src="img/menu/hero.webp" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:-.018em;font-size:30px;line-height:1.04;margin:18px 2px 0;text-wrap:balance">{{ t.crave }}</div>
+    <div style="display:flex;gap:4px;margin-top:16px;background:var(--soft,#EFE7DA);padding:4px;border-radius:var(--rb,12px)">
+      <sc-for list="{{ modes }}" as="m" hint-placeholder-count="3">
+        <button sc-camel-on-click="{{ m.pick }}" style="flex:1;height:38px;border:0;border-radius:9px;background:{{ m.hbg }};color:{{ m.hfg }};font:700 13px 'Archivo';display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:background .2s"><span style="font-family:'Material Symbols Rounded';line-height:1;overflow:hidden;display:block;font-weight:normal;font-size:18px;width:18px;height:18px">{{ m.icon }}</span>{{ m.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="margin:16px 16px 0;position:relative">
+    <div sc-camel-on-click="{{ goRewards }}" style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,14px);padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:12px;color:var(--ink,#1F1A15)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div style="font-weight:700;font-size:15px">{{ t.stampCard }}</div>
+        <div style="font-weight:780;font-size:15px;color:var(--price,#B5321A)">{{ stampsLabel }}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:5px">
+        <sc-for list="{{ stampDots }}" as="d" hint-placeholder-count="10">
+          <div style="aspect-ratio:1;border-radius:50%;background:{{ d.bg }};border:2px {{ d.bs }} {{ d.bd }};box-sizing:border-box;display:flex;align-items:center;justify-content:center;color:var(--onstamp,#fff)"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1;width:15px;height:15px;overflow:hidden;display:block;font-variation-settings:'FILL' 1;opacity:{{ d.op }}">local_pizza</span></div>
+        </sc-for>
+      </div>
+      <div style="font-size:13px;color:var(--mut,#6F665C)">{{ stampsMsg }}</div>
+    </div>
+  </div>
+
+  <div style="padding:30px 20px 0;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:var(--dt,-.012em);font-size:19px;color:var(--onbg,#1F1A15)">{{ t.promos }}</div>
+  <div style="display:flex;gap:12px;overflow-x:auto;padding:12px 20px 4px;scroll-snap-type:x mandatory;scrollbar-width:none">
+    <sc-for list="{{ promos }}" as="p" hint-placeholder-count="3">
+      <div style="flex:none;width:272px;scroll-snap-align:start;border-radius:var(--r,14px);background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);overflow:hidden;display:flex;flex-direction:column;box-sizing:border-box;color:var(--ink,#1F1A15)">
+        <div style="height:148px;background:var(--soft,#EFE7DA)"><img loading="lazy" decoding="async" src="{{ p.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+        <div style="padding:13px 15px 15px;display:flex;flex-direction:column;gap:3px;flex:1">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:{{ p.tagc }}">{{ p.tag }}</div>
+          <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:-.012em;font-size:19px;line-height:1.12">{{ p.title }}</div>
+          <div style="font-size:13px;line-height:1.38;color:var(--mut,#6F665C)">{{ p.sub }}</div>
+          <button sc-camel-on-click="{{ p.act }}" style="margin-top:10px;align-self:flex-start;height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--ink,#1F1A15);background:transparent;color:var(--ink,#1F1A15);font:700 13px 'Archivo';cursor:pointer">{{ p.cta }}</button>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ hasLast }}" hint-placeholder-val="{{ true }}">
+  <div style="margin:22px 16px 0;padding:14px;background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);display:flex;gap:12px;align-items:center;color:var(--ink,#1F1A15)">
+    <div style="width:44px;height:44px;border-radius:50%;background:var(--soft,#EFE7DA);display:flex;align-items:center;justify-content:center;color:var(--pri,#2E6B1F);flex:none"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">replay</span></div>
+    <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">{{ t.reorder }}</div><div style="font-size:12.5px;color:var(--mut,#6F665C);line-height:1.35;margin-top:2px">{{ lastSummary }}</div></div>
+    <button sc-camel-on-click="{{ reorderLast }}" style="height:36px;padding:0 14px;border-radius:var(--rb,14px);border:0;background:var(--cta,#B5321A);color:var(--oncta,#fff);font:700 13px 'Archivo';cursor:pointer;flex:none">{{ t.reorderBtn }}</button>
+  </div>
+  </sc-if>
+
+  <div style="padding:30px 20px 0;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:var(--dt,-.012em);font-size:19px;color:var(--onbg,#1F1A15)">{{ t.menu }}</div>
+  <div style="display:flex;gap:8px;overflow-x:auto;padding:12px 16px 2px;scrollbar-width:none">
+    <sc-for list="{{ catTiles }}" as="c" hint-placeholder-count="7">
+      <button sc-camel-on-click="{{ c.go }}" style="flex:none;width:74px;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:7px;color:var(--ink,#1F1A15);cursor:pointer;font:600 12.5px 'Archivo'"><span style="width:66px;height:66px;border-radius:50%;overflow:hidden;display:block;background:var(--soft,#EFE7DA);box-shadow:0 0 0 1px var(--line,#E6DDD0)"><img loading="lazy" decoding="async" src="{{ c.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.18)"></span>{{ c.label }}</button>
+    </sc-for>
+  </div>
+
+  <div sc-camel-on-click="{{ openCustom }}" style="margin:22px 16px 0;border-radius:var(--r,16px);background:var(--pri,#2E6B1F);color:var(--onpri,#fff);padding:20px;display:flex;align-items:center;gap:10px;cursor:pointer;overflow:hidden;position:relative;min-height:132px;box-sizing:border-box">
+    <div style="flex:1;position:relative;z-index:1">
+      <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 23px);line-height:.98">{{ t.buildTitle }}</div>
+      <div style="font-size:13px;line-height:1.35;opacity:.92;margin-top:6px;max-width:170px">{{ t.buildSub }}</div>
+      <div style="display:inline-flex;align-items:center;gap:4px;margin-top:12px;font-weight:700;font-size:13px;border-bottom:2px solid currentColor;padding-bottom:1px">{{ t.start }}<span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">arrow_forward</span></div>
+    </div>
+    <div style="width:150px;height:150px;margin:-30px -52px -30px 0;flex:none"><dc-import name="PizzaArt" tops="{{ demoHalf }}" split="{{ true }}" hint-size="150px,150px" style="width:150px;height:150px"></dc-import></div>
+  </div>
+
+  <div style="padding:30px 20px 0;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:var(--dt,-.012em);font-size:19px;color:var(--onbg,#1F1A15)">{{ t.popular }}</div>
+  <div style="display:flex;gap:12px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none">
+    <sc-for list="{{ popular }}" as="it" hint-placeholder-count="4">
+      <div sc-camel-on-click="{{ it.open }}" style="flex:none;width:150px;border:1px solid var(--line,#E6DDD0);background:var(--card,#fff);border-radius:var(--r,16px);padding:10px;display:flex;flex-direction:column;gap:8px;color:var(--ink,#1F1A15);cursor:pointer;box-sizing:border-box">
+        <div style="height:132px;border-radius:9px;background:var(--soft,#EFE7DA);position:relative;overflow:hidden">
+          <img loading="lazy" decoding="async" src="{{ it.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+        <div style="font-weight:700;font-size:14px;line-height:1.2">{{ it.name }}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto">
+          <span style="font-weight:780;font-size:14px;color:var(--price,#B5321A)">{{ it.priceLabel }}</span>
+          <span style="width:30px;height:30px;border-radius:50%;background:var(--cta,#B5321A);color:var(--oncta,#fff);display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">add</span></span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 16px 0">
+    <div sc-camel-on-click="{{ openWheel }}" style="background:var(--cta,#B5321A);color:var(--oncta,#fff);border-radius:var(--r,16px);padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-height:140px;box-sizing:border-box">
+      <span style="font-family:'Material Symbols Rounded';font-size:30px;line-height:1;width:30px;height:30px;overflow:hidden;display:block">casino</span>
+      <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 17px);line-height:1">{{ t.wheel }}</div>
+      <div style="font-size:12.5px;line-height:1.3;opacity:.92;margin-top:auto">{{ spinStatus }}</div>
+    </div>
+    <div sc-camel-on-click="{{ goRewards }}" style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);color:var(--ink,#1F1A15);border-radius:var(--r,16px);padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-height:140px;box-sizing:border-box">
+      <span style="font-family:'Material Symbols Rounded';font-size:30px;line-height:1;width:30px;height:30px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">emoji_events</span>
+      <div style="font-weight:700;font-size:14px">{{ t.challenge }}</div>
+      <div style="font-size:12.5px;line-height:1.3;color:var(--mut,#6F665C)">{{ challengeText }}</div>
+      <div style="height:6px;border-radius:3px;background:var(--soft,#EFE7DA);overflow:hidden;margin-top:auto"><div style="height:100%;width:{{ challengePct }}%;background:var(--pri,#2E6B1F);border-radius:3px"></div></div>
+    </div>
+  </div>
+
+  <div style="margin:22px 16px 0;padding:14px;border-radius:var(--r,16px);background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);display:flex;gap:12px;align-items:center;color:var(--ink,#1F1A15)">
+    <span style="font-family:'Material Symbols Rounded';font-size:26px;line-height:1;width:26px;height:26px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">storefront</span>
+    <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">JJ Pizza · Antioch, CA</div><div style="font-size:12.5px;color:var(--mut,#6F665C);margin-top:2px">{{ t.openHours }}</div></div>
+    <a href="tel:+19254776683" style="width:40px;height:40px;border-radius:50%;background:var(--soft,#EFE7DA);color:var(--pri,#2E6B1F);display:flex;align-items:center;justify-content:center;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block">call</span></a>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMenu }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column">
+  <div style="background:var(--hdr,#2E6B1F);color:var(--onhdr,#fff);padding:60px 16px 0;flex:none;border-bottom:1px solid var(--line,#E6DDD0)">
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 30px);line-height:1;text-shadow:var(--dsh,3px 3px 0 #CFE0C4)">{{ t.menu }}</div>
+    <div style="margin-top:14px;height:44px;border-radius:var(--rb,12px);background:var(--card,#fff);box-shadow:0 0 0 1px var(--line,#E6DDD0);display:flex;align-items:center;gap:8px;padding:0 14px;color:#1F1A15">
+      <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:#8A8177">search</span>
+      <input value="{{ query }}" sc-camel-on-change="{{ onQuery }}" placeholder="{{ t.search }}" style="flex:1;min-width:0;border:0;outline:0;background:transparent;font:500 15px 'Archivo';color:#1F1A15">
+      <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ clearQuery }}" style="border:0;background:none;padding:0;color:#8A8177;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">close</span></button></sc-if>
+    </div>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding:14px 16px 14px;margin:0 -16px;scrollbar-width:none">
+      <sc-for list="{{ catTabs }}" as="c" hint-placeholder-count="7">
+        <button sc-camel-on-click="{{ c.pick }}" style="flex:none;height:36px;padding:0 15px;border-radius:999px;border:0;box-shadow:0 0 0 1px var(--line,#E6DDD0);background:{{ c.bg }};color:{{ c.fg }};font:700 13px 'Archivo';white-space:nowrap;cursor:pointer">{{ c.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="flex:1;overflow-y:auto;scrollbar-width:none;padding:14px 16px 170px;display:flex;flex-direction:column;gap:10px">
+    <sc-if value="{{ showBuildRow }}" hint-placeholder-val="{{ false }}">
+      <div sc-camel-on-click="{{ openCustom }}" style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:var(--r,16px);background:var(--pri,#2E6B1F);color:var(--onpri,#fff);cursor:pointer">
+        <div style="width:72px;height:72px;flex:none"><dc-import name="PizzaArt" tops="{{ demoHalf }}" split="{{ true }}" hint-size="72px,72px" style="width:72px;height:72px"></dc-import></div>
+        <div style="flex:1"><div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 17px);line-height:1">{{ t.buildTitle }}</div><div style="font-size:12.5px;opacity:.92;margin-top:4px">{{ t.buildSub }}</div></div>
+        <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">chevron_right</span>
+      </div>
+    </sc-if>
+    <sc-for list="{{ menuItems }}" as="it" hint-placeholder-count="5">
+      <div sc-camel-on-click="{{ it.open }}" style="display:flex;gap:12px;padding:12px;background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);cursor:pointer;color:var(--ink,#1F1A15);opacity:{{ it.op }}">
+        <div style="width:92px;height:92px;flex:none;border-radius:10px;background:var(--soft,#EFE7DA);position:relative;overflow:hidden">
+          <img loading="lazy" decoding="async" src="{{ it.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+        </div>
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;align-items:flex-start;gap:6px">
+            <div style="flex:1;font-weight:700;font-size:15px;line-height:1.2">{{ it.name }}</div>
+            <button sc-camel-on-click="{{ it.fav }}" style="border:0;background:none;padding:0;margin:-2px -2px 0 0;color:{{ it.favColor }};cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;font-variation-settings:'FILL' {{ it.favFill }}">favorite</span></button>
+          </div>
+          <div style="font-size:12.5px;color:var(--mut,#6F665C);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ it.desc }}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:4px">
+            <span style="font-weight:780;font-size:15px;color:var(--price,#B5321A)">{{ it.priceLabel }}</span>
+            <sc-if value="{{ it.hasTag }}" hint-placeholder-val="{{ false }}"><span style="font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;border-radius:999px;background:var(--soft,#EFE7DA);color:{{ it.tagColor }}">{{ it.tag }}</span></sc-if>
+            <span style="margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--cta,#B5321A);color:var(--oncta,#fff);display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">add</span></span>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}"><div style="text-align:center;padding:40px 20px;color:var(--onbg2,#6F665C);font-size:14px">{{ t.noResults }}</div></sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRewards }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:130px;box-sizing:border-box"><div style="position:sticky;top:0;height:56px;margin-bottom:-56px;z-index:6;pointer-events:none;background:linear-gradient(var(--bg,#F5EFE6) 46px, rgba(245,239,230,0) 56px)"></div>
+  <div style="background:var(--hdr,#2E6B1F);color:var(--onhdr,#fff);padding:60px 20px 96px">
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 30px);line-height:1;text-shadow:var(--dsh,3px 3px 0 #CFE0C4)">{{ t.rewardsTitle }}</div>
+    <div style="font-size:14px;margin-top:8px;color:var(--onhdr2,rgba(255,255,255,.84))">{{ t.rewardsSub }}</div>
+  </div>
+  <div style="margin:-76px 16px 0;position:relative;background:var(--sc,#2E6B1F);color:var(--onsc,#fff);border-radius:var(--r,16px);padding:18px;box-shadow:0 16px 34px rgba(0,0,0,.22);outline:3px solid rgba(255,255,255,.9);outline-offset:-9px">
+    <div style="display:flex;align-items:center;gap:10px;padding:4px 4px 0">
+      <div style="width:38px;height:38px;border-radius:50%;overflow:hidden;position:relative;background:#fff;flex:none"><img src="img/img-25eaf398.jpg" alt="" style="position:absolute;width:146%;height:146%;left:-23%;top:-23%;max-width:none"></div>
+      <div style="flex:1;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 16px)">{{ t.stampCard }}</div>
+      <div style="font:600 12px ui-monospace,Menlo,monospace;opacity:.8">Nº 0427</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px;padding:0 4px">
+      <sc-for list="{{ bigStamps }}" as="s" hint-placeholder-count="10">
+        <div style="aspect-ratio:1;border-radius:50%;border:2px dashed {{ s.ring }};display:flex;align-items:center;justify-content:center;position:relative;box-sizing:border-box">
+          <sc-if value="{{ s.on }}" hint-placeholder-val="{{ false }}"><div style="width:88%;height:88%;border-radius:50%;background:var(--stamp,#B5321A);color:var(--onstamp,#fff);display:flex;align-items:center;justify-content:center;font:780 15px 'Archivo';font-stretch:106%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4);transform:rotate(-8deg);animation:{{ s.anim }}">JJ</div></sc-if>
+          <sc-if value="{{ s.freeSlot }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;align-items:center;gap:1px"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block">redeem</span><span style="font:780 8.5px 'Archivo';letter-spacing:.06em">{{ s.freeLabel }}</span></div></sc-if>
+          <sc-if value="{{ s.empty }}" hint-placeholder-val="{{ true }}"><span style="font-weight:700;font-size:14px;opacity:.55">{{ s.n }}</span></sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-weight:700;font-size:14px;margin-top:16px;padding:0 4px 4px">{{ stampsMsg }}</div>
+  </div>
+  <sc-if value="{{ cardFull }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:14px 16px 0;padding:16px;border-radius:var(--r,16px);background:var(--cta,#B5321A);color:var(--oncta,#fff);display:flex;align-items:center;gap:12px;animation:jjFade .3s">
+      <span style="font-family:'Material Symbols Rounded';font-size:34px;line-height:1;width:34px;height:34px;overflow:hidden;display:block">celebration</span>
+      <div style="flex:1"><div style="font-weight:780;font-size:15px">{{ t.unlocked }}</div><div style="font-size:12.5px;opacity:.92;margin-top:2px">{{ t.unlockedSub }}</div></div>
+      <button sc-camel-on-click="{{ redeem }}" style="height:38px;padding:0 14px;border-radius:var(--rb,14px);border:0;background:var(--oncta,#fff);color:var(--cta,#B5321A);font:780 13px 'Archivo';cursor:pointer;flex:none">{{ redeemLabel }}</button>
+    </div>
+  </sc-if>
+  <div style="padding:30px 20px 0;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:var(--dt,-.012em);font-size:19px;color:var(--onbg,#1F1A15)">{{ t.moreWays }}</div>
+  <div style="margin:12px 16px 0;background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);color:var(--ink,#1F1A15);overflow:hidden">
+    <sc-for list="{{ ways }}" as="w" hint-placeholder-count="4">
+      <div sc-camel-on-click="{{ w.go }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--line,#E6DDD0);cursor:pointer">
+        <div style="width:42px;height:42px;border-radius:50%;background:var(--soft,#EFE7DA);color:var(--pri,#2E6B1F);display:flex;align-items:center;justify-content:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:23px;line-height:1;width:23px;height:23px;overflow:hidden;display:block">{{ w.icon }}</span></div>
+        <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14.5px">{{ w.title }}</div><div style="font-size:12.5px;color:var(--mut,#6F665C);margin-top:2px;line-height:1.3">{{ w.sub }}</div></div>
+        <span style="font-size:12px;font-weight:780;color:var(--price,#B5321A);white-space:nowrap">{{ w.badge }}</span>
+        <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:var(--mut,#6F665C)">chevron_right</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="padding:30px 20px 0;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:var(--dt,-.012em);font-size:19px;color:var(--onbg,#1F1A15)">{{ t.how }}</div>
+  <div style="display:flex;flex-direction:column;gap:12px;padding:14px 20px 0">
+    <sc-for list="{{ howSteps }}" as="h" hint-placeholder-count="3">
+      <div style="display:flex;gap:14px;align-items:center;color:var(--onbg,#1F1A15)">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--cta,#B5321A);color:var(--oncta,#fff);display:flex;align-items:center;justify-content:center;font:780 16px 'Archivo';flex:none">{{ h.n }}</div>
+        <div style="font-size:14px;line-height:1.4">{{ h.text }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="padding:30px 20px 0;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:var(--dt,-.012em);font-size:19px;color:var(--onbg,#1F1A15)">{{ t.stampHistory }}</div>
+  <div style="margin:12px 16px 0;background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);color:var(--ink,#1F1A15);padding:0 14px">
+    <sc-for list="{{ logRows }}" as="l" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line,#E6DDD0)">
+        <div style="flex:1"><div style="font-weight:700;font-size:14px">{{ l.t }}</div><div style="font-size:12px;color:var(--mut,#6F665C);margin-top:2px">{{ l.d }}</div></div>
+        <div style="font-weight:780;font-size:15px;color:var(--pri,#2E6B1F)">{{ l.n }}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOrders }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:130px;box-sizing:border-box"><div style="position:sticky;top:0;height:56px;margin-bottom:-56px;z-index:6;pointer-events:none;background:linear-gradient(var(--bg,#F5EFE6) 46px, rgba(245,239,230,0) 56px)"></div>
+  <div style="background:var(--hdr,#2E6B1F);color:var(--onhdr,#fff);padding:60px 20px 22px">
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 30px);line-height:1;text-shadow:var(--dsh,3px 3px 0 #CFE0C4)">{{ t.orders }}</div>
+  </div>
+  <sc-if value="{{ hasActive }}" hint-placeholder-val="{{ false }}">
+  <div style="margin:16px 16px 0;background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:18px;color:var(--ink,#1F1A15);box-shadow:0 10px 24px rgba(0,0,0,.08)">
+    <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--mut,#6F665C)">
+      <span style="flex:1">{{ act.idLabel }}</span>
+      <sc-if value="{{ act.notDone }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:5px;color:var(--price,#B5321A)"><span style="width:8px;height:8px;border-radius:50%;background:currentColor;animation:jjPulse 1.2s infinite"></span>{{ t.live }}</span></sc-if>
+    </div>
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 25px);line-height:1;margin-top:10px">{{ act.title }}</div>
+    <div style="font-size:14px;color:var(--mut,#6F665C);margin-top:6px">{{ act.sub }}</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:18px">
+      <sc-for list="{{ act.steps }}" as="st" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="height:6px;border-radius:3px;background:{{ st.bar }};animation:{{ st.anim }}"></div>
+          <div style="display:flex;flex-direction:column;gap:3px;color:{{ st.c }}"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">{{ st.icon }}</span><span style="font-size:11px;font-weight:700;line-height:1.15">{{ st.label }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ act.isPickup }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px;border-radius:calc(var(--r,16px) - 4px);background:var(--soft,#EFE7DA)">
+        <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">storefront</span>
+        <div style="flex:1;font-size:13px;line-height:1.35"><b>JJ Pizza</b><br>1139 E 18th St, Antioch, CA 94509</div>
+        <a href="https://maps.google.com/?q=1139+E+18th+St+Antioch+CA" target="_blank" style="height:34px;padding:0 12px;border-radius:var(--rb,14px);background:var(--pri,#2E6B1F);color:var(--onpri,#fff);display:flex;align-items:center;gap:4px;font-weight:700;font-size:12.5px;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">directions</span>{{ t.directions }}</a>
+      </div>
+    </sc-if>
+    <sc-if value="{{ act.isDelivery }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:18px;height:120px;border-radius:calc(var(--r,16px) - 4px);background:repeating-linear-gradient(45deg,#ECE5DA 0 10px,#F3EEE6 10px 20px);display:flex;align-items:center;justify-content:center;font:12px ui-monospace,Menlo,monospace;color:#6F786A">mapa en vivo</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--pri,#2E6B1F);color:var(--onpri,#fff);display:flex;align-items:center;justify-content:center;font-weight:780">C</div>
+        <div style="flex:1;font-size:13.5px;font-weight:700">{{ t.driver }}</div>
+        <a href="tel:+19254776683" style="width:38px;height:38px;border-radius:50%;background:var(--soft,#EFE7DA);color:var(--pri,#2E6B1F);display:flex;align-items:center;justify-content:center;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">call</span></a>
+      </div>
+    </sc-if>
+    <sc-if value="{{ act.isDine }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px;border-radius:calc(var(--r,16px) - 4px);background:var(--soft,#EFE7DA)">
+        <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">table_restaurant</span>
+        <div style="flex:1;font-size:14px;font-weight:700">{{ act.tableLabel }}</div>
+      </div>
+    </sc-if>
+    <div style="font-size:13px;color:var(--mut,#6F665C);margin-top:14px;line-height:1.4">{{ act.items }}</div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:8px"><span style="font-size:13px;color:var(--mut,#6F665C)">{{ act.payLabel }}</span><span style="font-weight:780;font-size:16px">{{ act.total }}</span></div>
+    <sc-if value="{{ act.notDone }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line,#E6DDD0)">
+        <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">notifications</span>
+        <div style="flex:1;font-size:13.5px;font-weight:700">{{ t.notifyMe }}</div>
+        <button sc-camel-on-click="{{ notifySw.toggle }}" style="width:50px;height:30px;border-radius:15px;background:{{ notifySw.bg }};border:0;position:relative;cursor:pointer;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ notifySw.left }}px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+      </div>
+      <button sc-camel-on-click="{{ act.advance }}" style="margin-top:12px;width:100%;height:36px;border-radius:var(--rb,14px);border:1px dashed var(--line,#D3C9BB);background:transparent;color:var(--mut,#6F665C);font:700 12.5px 'Archivo';cursor:pointer">{{ t.advance }}</button>
+    </sc-if>
+    <sc-if value="{{ act.done }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:14px;padding:14px;border-radius:calc(var(--r,16px) - 4px);background:var(--sc,#2E6B1F);color:var(--onsc,#fff);display:flex;align-items:center;gap:12px;animation:jjFade .4s">
+        <span style="font-family:'Material Symbols Rounded';font-size:30px;line-height:1;width:30px;height:30px;overflow:hidden;display:block;font-variation-settings:'FILL' 1">local_pizza</span>
+        <div style="flex:1;font-weight:700;font-size:14px">{{ act.stampsAdded }}</div>
+        <button sc-camel-on-click="{{ goRewards }}" style="border:0;background:none;color:inherit;cursor:pointer;padding:0"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">chevron_right</span></button>
+      </div>
+      <sc-if value="{{ act.canRate }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ act.rate }}" style="margin-top:10px;width:100%;height:48px;border-radius:var(--rb,14px);border:0;background:var(--cta,#B5321A);color:var(--oncta,#fff);font:700 15px 'Archivo';cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block;font-variation-settings:'FILL' 1">star</span>{{ t.rate }}</button></sc-if>
+    </sc-if>
+  </div>
+  </sc-if>
+  <sc-if value="{{ noActive }}" hint-placeholder-val="{{ true }}">
+    <div style="margin:16px 16px 0;padding:22px;border-radius:var(--r,16px);background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);display:flex;align-items:center;gap:14px;color:var(--ink,#1F1A15)">
+      <span style="font-family:'Material Symbols Rounded';font-size:32px;line-height:1;width:32px;height:32px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">receipt_long</span>
+      <div style="flex:1;font-weight:700;font-size:14.5px">{{ t.noActive }}</div>
+      <button sc-camel-on-click="{{ goMenu }}" style="height:38px;padding:0 14px;border-radius:var(--rb,14px);border:0;background:var(--cta,#B5321A);color:var(--oncta,#fff);font:700 13px 'Archivo';cursor:pointer">{{ t.orderNow }}</button>
+    </div>
+  </sc-if>
+  <div style="padding:30px 20px 0;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,780);font-stretch:var(--ds,106%);letter-spacing:var(--dt,-.012em);font-size:19px;color:var(--onbg,#1F1A15)">{{ t.history }}</div>
+  <div style="display:flex;flex-direction:column;gap:10px;padding:12px 16px 0">
+    <sc-for list="{{ pastOrders }}" as="o" hint-placeholder-count="2">
+      <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:14px;color:var(--ink,#1F1A15);display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut,#6F665C);font-weight:700"><span>{{ o.head }}</span><span>{{ o.date }}</span></div>
+        <div style="font-size:14px;font-weight:700;line-height:1.35">{{ o.items }}</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-weight:780;font-size:15px">{{ o.total }}</span>
+          <span style="font-size:12.5px;color:var(--price,#B5321A);font-weight:700;letter-spacing:.05em">{{ o.stars }}</span>
+          <sc-if value="{{ o.canRate }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ o.rate }}" style="border:0;background:none;padding:0;color:var(--pri,#2E6B1F);font:700 13px 'Archivo';cursor:pointer">{{ t.rate }}</button></sc-if>
+          <button sc-camel-on-click="{{ o.reorder }}" style="margin-left:auto;height:34px;padding:0 14px;border-radius:var(--rb,14px);border:1.5px solid var(--pri,#2E6B1F);background:transparent;color:var(--pri,#2E6B1F);font:700 13px 'Archivo';cursor:pointer;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">replay</span>{{ t.reorderBtn }}</button>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:130px;box-sizing:border-box"><div style="position:sticky;top:0;height:56px;margin-bottom:-56px;z-index:6;pointer-events:none;background:linear-gradient(var(--bg,#F5EFE6) 46px, rgba(245,239,230,0) 56px)"></div>
+  <div style="background:var(--hdr,#2E6B1F);color:var(--onhdr,#fff);padding:62px 20px 24px;display:flex;align-items:center;gap:14px">
+    <div style="width:64px;height:64px;border-radius:50%;background:var(--pri,#2E6B1F);color:#fff;display:flex;align-items:center;justify-content:center;font:700 22px 'Archivo';font-stretch:106%;flex:none">MG</div>
+    <div><div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 21px);line-height:1">María González</div><div style="font-size:13px;margin-top:6px;color:var(--onhdr2,rgba(255,255,255,.84))">{{ t.member }} · (925) 555-0142</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;padding:16px">
+    <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:12px 14px;display:flex;align-items:center;gap:12px;color:var(--ink,#1F1A15)">
+      <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">language</span>
+      <div style="flex:1;font-weight:700;font-size:14.5px">{{ t.language }}</div>
+      <div style="display:flex;gap:3px;background:var(--soft,#EFE7DA);padding:3px;border-radius:999px">
+        <sc-for list="{{ langOpts }}" as="lo" hint-placeholder-count="2"><button sc-camel-on-click="{{ lo.pick }}" style="height:32px;padding:0 14px;border-radius:999px;border:0;background:{{ lo.bg }};color:{{ lo.fg }};font:700 13px 'Archivo';cursor:pointer">{{ lo.label }}</button></sc-for>
+      </div>
+    </div>
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 17px);color:var(--onbg,#1F1A15);padding:8px 4px 0">{{ t.favorites }}</div>
+    <sc-if value="{{ hasFavs }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:10px;overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none">
+        <sc-for list="{{ favItems }}" as="it" hint-placeholder-count="3">
+          <div sc-camel-on-click="{{ it.open }}" style="flex:none;width:120px;background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:8px;color:var(--ink,#1F1A15);cursor:pointer;display:flex;flex-direction:column;gap:6px">
+            <div style="height:88px;border-radius:calc(var(--r,16px) - 6px);background:var(--soft,#EFE7DA);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+              <img loading="lazy" decoding="async" src="{{ it.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+            </div>
+            <div style="font-weight:700;font-size:13px;line-height:1.2">{{ it.name }}</div>
+            <div style="font-weight:780;font-size:13px;color:var(--price,#B5321A)">{{ it.priceLabel }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noFavs }}" hint-placeholder-val="{{ false }}"><div style="font-size:13.5px;color:var(--onbg2,#6F665C);padding:0 4px">{{ t.noFavs }}</div></sc-if>
+    <div style="background:var(--pri,#2E6B1F);color:var(--onpri,#fff);border-radius:var(--r,16px);padding:18px;display:flex;flex-direction:column;gap:10px;margin-top:6px">
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-family:'Material Symbols Rounded';font-size:26px;line-height:1;width:26px;height:26px;overflow:hidden;display:block">group_add</span><div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 18px)">{{ t.invite }}</div></div>
+      <div style="font-size:13.5px;line-height:1.4;opacity:.94">{{ t.inviteSub }}</div>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 10px 10px 14px;border:2px dashed rgba(255,255,255,.7);border-radius:calc(var(--r,16px) - 4px)">
+        <div style="flex:1"><div style="font-size:11px;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.08em">{{ t.yourCode }}</div><div style="font:700 20px ui-monospace,Menlo,monospace;letter-spacing:.06em;margin-top:2px">JJ-MARIA7</div></div>
+        <button sc-camel-on-click="{{ copyCode }}" style="height:38px;padding:0 14px;border-radius:var(--rb,14px);border:0;background:#fff;color:#1F1A15;font:700 13px 'Archivo';cursor:pointer;display:flex;align-items:center;gap:5px"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">content_copy</span>{{ t.copy }}</button>
+      </div>
+      <div style="font-size:12.5px;opacity:.88">{{ t.inviteStats }}</div>
+    </div>
+    <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:14px;display:flex;align-items:center;gap:12px;color:var(--ink,#1F1A15)">
+      <span style="font-family:'Material Symbols Rounded';font-size:26px;line-height:1;width:26px;height:26px;overflow:hidden;display:block;color:var(--price,#B5321A)">cake</span>
+      <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14.5px">{{ t.birthday }}</div><div style="font-size:12.5px;color:var(--mut,#6F665C);margin-top:2px;line-height:1.3">{{ t.birthdaySub }}</div></div>
+      <input type="date" value="{{ birthday }}" sc-camel-on-change="{{ onBirthday }}" style="border:1px solid var(--line,#E6DDD0);border-radius:10px;padding:6px 8px;font:600 13px 'Archivo';color:var(--ink,#1F1A15);background:var(--soft,#EFE7DA);width:128px">
+    </div>
+    <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:4px 14px;color:var(--ink,#1F1A15)">
+      <div style="font-weight:700;font-size:14.5px;padding:12px 0 4px">{{ t.notifications }}</div>
+      <sc-for list="{{ notifRows }}" as="nr" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line,#E6DDD0)">
+          <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:var(--mut,#6F665C)">{{ nr.icon }}</span>
+          <div style="flex:1;font-size:14px">{{ nr.label }}</div>
+          <button sc-camel-on-click="{{ nr.toggle }}" style="width:50px;height:30px;border-radius:15px;background:{{ nr.bg }};border:0;position:relative;cursor:pointer;transition:background .2s;flex:none"><span style="position:absolute;top:3px;left:{{ nr.left }}px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s"></span></button>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:16px;color:var(--ink,#1F1A15);display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;position:relative;background:#fff;flex:none;border:1px solid var(--line,#E6DDD0)"><img src="img/img-25eaf398.jpg" alt="" style="position:absolute;width:146%;height:146%;left:-23%;top:-23%;max-width:none"></div>
+        <div><div style="font-weight:700;font-size:14.5px">JJ Pizza</div><div style="font-size:12.5px;color:var(--mut,#6F665C);margin-top:2px">1139 E 18th St, Antioch, CA 94509</div></div>
+      </div>
+      <div style="font-size:13px;color:var(--mut,#6F665C)">{{ t.hours }} · @jjpizza2026</div>
+      <div style="display:flex;gap:8px">
+        <a href="tel:+19254776683" style="flex:1;height:40px;border-radius:var(--rb,14px);background:var(--soft,#EFE7DA);color:var(--pri,#2E6B1F);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:13px;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;width:19px;height:19px;overflow:hidden;display:block">call</span>{{ t.call }}</a>
+        <a href="https://wa.me/19254776683" target="_blank" style="flex:1;height:40px;border-radius:var(--rb,14px);background:var(--soft,#EFE7DA);color:var(--pri,#2E6B1F);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:13px;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;width:19px;height:19px;overflow:hidden;display:block">chat</span>WhatsApp</a>
+        <a href="https://instagram.com/jjpizza2026" target="_blank" style="flex:1;height:40px;border-radius:var(--rb,14px);background:var(--soft,#EFE7DA);color:var(--pri,#2E6B1F);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:13px;text-decoration:none"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;width:19px;height:19px;overflow:hidden;display:block">photo_camera</span>Instagram</a>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showTabs }}" hint-placeholder-val="{{ true }}">
+  <sc-if value="{{ showCartBar }}" hint-placeholder-val="{{ false }}">
+    <div sc-camel-on-click="{{ openCart }}" style="position:absolute;left:12px;right:12px;bottom:96px;height:56px;border-radius:var(--rb,14px);background:var(--cta,#B5321A);color:var(--oncta,#fff);display:flex;align-items:center;gap:12px;padding:0 10px 0 10px;box-shadow:0 10px 24px rgba(0,0,0,.28);cursor:pointer;z-index:30;animation:jjFade .25s">
+      <div style="min-width:32px;height:32px;border-radius:999px;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-weight:780;font-size:14px;padding:0 6px;box-sizing:border-box">{{ cartQty }}</div>
+      <div style="flex:1;font-weight:780;font-size:15px">{{ t.viewOrder }}</div>
+      <div style="font-weight:780;font-size:15px">{{ cartSubLabel }}</div>
+      <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">chevron_right</span>
+    </div>
+  </sc-if>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:88px;background:var(--tab,#fff);border-top:1px solid var(--line,#E6DDD0);display:flex;padding:8px 6px 0;box-sizing:border-box;z-index:30">
+    <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+      <button sc-camel-on-click="{{ tb.go }}" style="flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ tb.color }};font:700 11px 'Archivo';cursor:pointer;position:relative;padding:4px 0 0">
+        <span style="font-family:'Material Symbols Rounded';font-size:26px;line-height:1;width:26px;height:26px;overflow:hidden;display:block;font-variation-settings:'FILL' {{ tb.fill }}">{{ tb.icon }}</span>
+        <span>{{ tb.label }}</span>
+        <sc-if value="{{ tb.dot }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:2px;left:calc(50% + 8px);width:9px;height:9px;border-radius:50%;background:var(--price,#B5321A);border:2px solid var(--tab,#fff)"></span></sc-if>
+      </button>
+    </sc-for>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isBuilder }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:40;background:var(--bg,#fff);animation:jjUp .32s cubic-bezier(.2,.8,.2,1)">
+  <div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:120px;box-sizing:border-box"><div style="position:sticky;top:0;height:56px;margin-bottom:-56px;z-index:6;pointer-events:none;background:linear-gradient(var(--bg,#F5EFE6) 46px, rgba(245,239,230,0) 56px)"></div>
+    <div style="background:var(--hdr,#2E6B1F);color:var(--onhdr,#fff);padding:54px 16px 22px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <button sc-camel-on-click="{{ closeOverlay }}" style="width:40px;height:40px;border-radius:50%;border:0;background:var(--card,#fff);box-shadow:0 0 0 1px var(--line,#E6DDD0);color:inherit;display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">close</span></button>
+        <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.9">{{ b.eyebrow }}</div>
+        <button sc-camel-on-click="{{ b.fav }}" style="width:40px;height:40px;border-radius:50%;border:0;background:var(--card,#fff);box-shadow:0 0 0 1px var(--line,#E6DDD0);color:inherit;display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;font-variation-settings:'FILL' {{ b.favFill }}">favorite</span></button>
+      </div>
+      <div style="position:relative;width:250px;height:250px;margin:10px auto 0">
+        <dc-import name="PizzaArt" tops="{{ b.tops }}" sauce="{{ b.sauce }}" cheese="{{ b.cheese }}" dough="{{ b.dough }}" edge="{{ b.edge }}" hint-size="250px,250px" style="width:250px;height:250px;transform:scale({{ b.scale }});transition:transform .35s cubic-bezier(.3,1.4,.5,1)"></dc-import>
+        <sc-if value="{{ b.split }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:-46px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:780;letter-spacing:.08em;text-transform:uppercase;opacity:.9">{{ t.L }}</div>
+          <div style="position:absolute;right:-46px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:780;letter-spacing:.08em;text-transform:uppercase;opacity:.9">{{ t.R }}</div>
+        </sc-if>
+      </div>
+      <div style="text-align:center;margin-top:16px;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 25px);line-height:1;text-shadow:var(--dsh,3px 3px 0 #CFE0C4)">{{ b.name }}</div>
+      <div style="text-align:center;font-size:13px;margin-top:8px;color:var(--onhdr2,rgba(255,255,255,.84));line-height:1.4;text-wrap:pretty">{{ b.summary }}</div>
+    </div>
+    <div style="padding:18px 16px 0;display:flex;flex-direction:column;gap:22px">
+      <div>
+        <div style="font-weight:780;font-size:15px;color:var(--onbg,#1F1A15);margin-bottom:10px">{{ t.size }}</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+          <sc-for list="{{ b.sizes }}" as="o" hint-placeholder-count="4">
+            <button sc-camel-on-click="{{ o.pick }}" style="border-radius:var(--r,16px);border:2px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};padding:10px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;opacity:{{ o.op }}">
+              <div style="height:36px;display:flex;align-items:center"><div style="width:{{ o.dot }}px;height:{{ o.dot }}px;border-radius:50%;border:2.5px solid currentColor;box-sizing:border-box"></div></div>
+              <div style="font-weight:780;font-size:15px">{{ o.inch }}</div>
+              <div style="font-size:11.5px;font-weight:700;opacity:.85">{{ o.label }}</div>
+              <div style="font-size:11.5px;font-weight:700">{{ o.price }}</div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <sc-for list="{{ b.groups }}" as="g" hint-placeholder-count="4">
+        <div>
+          <div style="font-weight:780;font-size:15px;color:var(--onbg,#1F1A15);margin-bottom:10px">{{ g.label }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ g.opts }}" as="o" hint-placeholder-count="4">
+              <button sc-camel-on-click="{{ o.pick }}" style="height:40px;padding:0 14px;border-radius:999px;border:2px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};font:700 13.5px 'Archivo';cursor:pointer;display:flex;align-items:center;gap:6px">{{ o.label }}<span style="font-size:11.5px;font-weight:700;opacity:.8">{{ o.price }}</span></button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;color:var(--onbg,#1F1A15)"><div style="font-weight:780;font-size:15px">{{ t.toppings }}</div><div style="font-size:12px;color:var(--onbg2,#6F665C)">{{ b.topPriceLabel }}</div></div>
+        <div style="font-size:12.5px;color:var(--onbg2,#6F665C);margin:4px 0 10px">{{ t.halfHint }}</div>
+        <sc-for list="{{ b.topGroups }}" as="tg" hint-placeholder-count="2">
+          <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:4px 12px;margin-bottom:10px;color:var(--ink,#1F1A15)">
+            <div style="font-size:11px;font-weight:780;letter-spacing:.1em;text-transform:uppercase;color:var(--mut,#6F665C);padding:10px 0 4px">{{ tg.label }}</div>
+            <sc-for list="{{ tg.rows }}" as="tp" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line,#E6DDD0)">
+                <img loading="lazy" decoding="async" src="{{ tp.thumb }}" alt="" style="width:30px;height:30px;object-fit:contain;flex:none">
+                <div style="flex:1;font-size:14.5px;font-weight:{{ tp.fw }}">{{ tp.name }}</div>
+                <div style="display:flex;gap:4px">
+                  <sc-for list="{{ tp.opts }}" as="o" hint-placeholder-count="3">
+                    <button sc-camel-on-click="{{ o.pick }}" title="{{ o.title }}" style="width:38px;height:34px;border-radius:10px;border:0;background:{{ o.bg }};display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s"><div style="width:18px;height:18px;border-radius:50%;border:2px solid {{ o.fg }};background:{{ o.fill }};box-sizing:border-box"></div></button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 30px;background:var(--card,#fff);border-top:1px solid var(--line,#E6DDD0);display:flex;gap:12px;align-items:center;color:var(--ink,#1F1A15)">
+    <div style="display:flex;align-items:center;gap:4px;background:var(--soft,#EFE7DA);border-radius:999px;padding:4px">
+      <button sc-camel-on-click="{{ b.dec }}" style="width:38px;height:38px;border-radius:50%;border:0;background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">remove</span></button>
+      <div style="min-width:24px;text-align:center;font-weight:780;font-size:16px">{{ b.qty }}</div>
+      <button sc-camel-on-click="{{ b.inc }}" style="width:38px;height:38px;border-radius:50%;border:0;background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">add</span></button>
+    </div>
+    <button sc-camel-on-click="{{ b.add }}" style="flex:1;height:54px;border-radius:var(--rb,14px);background:var(--cta,#B5321A);color:var(--oncta,#fff);border:0;font:780 16px 'Archivo';display:flex;justify-content:space-between;align-items:center;padding:0 18px;cursor:pointer"><span>{{ t.add }}</span><span>{{ b.total }}</span></button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:40;background:var(--bg,#fff);animation:jjUp .32s cubic-bezier(.2,.8,.2,1)">
+  <div style="position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding-bottom:130px;box-sizing:border-box"><div style="position:sticky;top:0;height:56px;margin-bottom:-56px;z-index:6;pointer-events:none;background:linear-gradient(var(--bg,#F5EFE6) 46px, rgba(245,239,230,0) 56px)"></div>
+    <div style="background:var(--hdr,#2E6B1F);color:var(--onhdr,#fff);padding:56px 16px 18px;display:flex;align-items:center;gap:12px">
+      <button sc-camel-on-click="{{ closeOverlay }}" style="width:40px;height:40px;border-radius:50%;border:0;background:var(--card,#fff);box-shadow:0 0 0 1px var(--line,#E6DDD0);color:inherit;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">arrow_back</span></button>
+      <div style="flex:1;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 25px);line-height:1;text-shadow:var(--dsh,3px 3px 0 #CFE0C4)">{{ t.cart }}</div>
+      <div style="font-size:13px;font-weight:700;color:var(--onhdr2,rgba(255,255,255,.84))">{{ cartCountLabel }}</div>
+    </div>
+    <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:60px 32px;gap:12px;color:var(--onbg,#1F1A15)">
+        <div style="width:140px;height:140px"><dc-import name="PizzaArt" tops="{{ demoHalf }}" hint-size="140px,140px" style="width:140px;height:140px"></dc-import></div>
+        <div style="font-weight:780;font-size:18px;margin-top:8px">{{ t.emptyCart }}</div>
+        <div style="font-size:14px;color:var(--onbg2,#6F665C)">{{ t.emptySub }}</div>
+        <button sc-camel-on-click="{{ goMenu }}" style="margin-top:8px;height:46px;padding:0 22px;border-radius:var(--rb,14px);border:0;background:var(--cta,#B5321A);color:var(--oncta,#fff);font:700 15px 'Archivo';cursor:pointer">{{ t.seeMenu }}</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ cartHas }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:14px;padding:16px">
+      <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:14px;color:var(--ink,#1F1A15);display:flex;flex-direction:column;gap:12px">
+        <div style="font-weight:780;font-size:15px">{{ t.orderType }}</div>
+        <div style="display:flex;gap:4px;background:var(--soft,#EFE7DA);padding:4px;border-radius:var(--rb,14px)">
+          <sc-for list="{{ modes }}" as="m" hint-placeholder-count="3">
+            <button sc-camel-on-click="{{ m.pick }}" style="flex:1;height:40px;border:0;border-radius:var(--rb,11px);background:{{ m.cbg }};color:{{ m.cfg }};font:700 12.5px 'Archivo';display:flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:background .2s"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">{{ m.icon }}</span>{{ m.label }}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ isPickup }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">storefront</span><div style="font-size:13.5px;line-height:1.35">{{ t.pickupAt }}</div></div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ times }}" as="tm" hint-placeholder-count="3"><button sc-camel-on-click="{{ tm.pick }}" style="height:36px;padding:0 12px;border-radius:999px;border:2px solid {{ tm.bd }};background:{{ tm.bg }};color:{{ tm.fg }};font:700 12.5px 'Archivo';cursor:pointer">{{ tm.label }}</button></sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isDelivery }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:8px;height:46px;border-radius:12px;background:var(--soft,#EFE7DA);padding:0 12px"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">location_on</span><input value="{{ address }}" sc-camel-on-change="{{ onAddress }}" placeholder="{{ t.address }}" style="flex:1;min-width:0;border:0;outline:0;background:transparent;font:600 14px 'Archivo';color:var(--ink,#1F1A15)"></div>
+          <div style="font-size:12.5px;font-weight:700;color:var(--pri,#2E6B1F)">{{ freeDelMsg }}</div>
+          <div style="height:6px;border-radius:3px;background:var(--soft,#EFE7DA);overflow:hidden"><div style="height:100%;width:{{ freeDelPct }}%;background:var(--pri,#2E6B1F);border-radius:3px;transition:width .3s"></div></div>
+        </sc-if>
+        <sc-if value="{{ isDine }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">table_restaurant</span>
+            <div style="flex:1;font-weight:700;font-size:15px">{{ t.table }}</div>
+            <div style="display:flex;align-items:center;gap:4px;background:var(--soft,#EFE7DA);border-radius:999px;padding:3px">
+              <button sc-camel-on-click="{{ tableDec }}" style="width:32px;height:32px;border-radius:50%;border:0;background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">remove</span></button>
+              <div style="min-width:26px;text-align:center;font-weight:780">{{ table }}</div>
+              <button sc-camel-on-click="{{ tableInc }}" style="width:32px;height:32px;border-radius:50%;border:0;background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">add</span></button>
+            </div>
+          </div>
+          <div style="font-size:12.5px;color:var(--mut,#6F665C);display:flex;align-items:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;width:18px;height:18px;overflow:hidden;display:block">qr_code_scanner</span>{{ t.tableHint }}</div>
+        </sc-if>
+      </div>
+
+      <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);color:var(--ink,#1F1A15);overflow:hidden">
+        <sc-for list="{{ cartLines }}" as="ln" hint-placeholder-count="2">
+          <div style="display:flex;gap:12px;padding:14px;border-bottom:1px solid var(--line,#E6DDD0)">
+            <div style="width:58px;height:58px;flex:none;border-radius:12px;background:var(--soft,#EFE7DA);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+              <sc-if value="{{ ln.isPizza }}" hint-placeholder-val="{{ false }}"><dc-import name="PizzaArt" tops="{{ ln.tops }}" sauce="{{ ln.sauce }}" cheese="{{ ln.cheese }}" dough="{{ ln.dough }}" edge="{{ ln.edge }}" hint-size="52px,52px" style="width:52px;height:52px"></dc-import></sc-if>
+              <sc-if value="{{ ln.notPizza }}" hint-placeholder-val="{{ false }}"><img loading="lazy" decoding="async" src="{{ ln.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;gap:8px;align-items:baseline"><div style="flex:1;font-weight:700;font-size:14.5px;line-height:1.2">{{ ln.name }}</div><div style="font-weight:780;font-size:14.5px;color:{{ ln.priceColor }}">{{ ln.price }}</div></div>
+              <div style="font-size:12px;color:var(--mut,#6F665C);line-height:1.35;margin-top:3px">{{ ln.detail }}</div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:8px">
+                <button sc-camel-on-click="{{ ln.dec }}" style="width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line,#E6DDD0);background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1;width:17px;height:17px;overflow:hidden;display:block">{{ ln.decIcon }}</span></button>
+                <div style="min-width:26px;text-align:center;font-weight:780;font-size:14px">{{ ln.qty }}</div>
+                <button sc-camel-on-click="{{ ln.inc }}" style="width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line,#E6DDD0);background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1;width:17px;height:17px;overflow:hidden;display:block">add</span></button>
+                <sc-if value="{{ ln.isFree }}" hint-placeholder-val="{{ false }}"><span style="margin-left:8px;font-size:10.5px;font-weight:780;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--stamp,#B5321A);color:var(--onstamp,#fff)">{{ t.reward }}</span></sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+        <button sc-camel-on-click="{{ goMenu }}" style="width:100%;height:50px;border:0;background:none;color:var(--pri,#2E6B1F);font:700 14px 'Archivo';display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">add</span>{{ t.addMore }}</button>
+      </div>
+
+      <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:14px;color:var(--ink,#1F1A15);display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:780;font-size:15px">{{ t.coupon }}</div>
+        <sc-if value="{{ couponApplied }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:2px dashed var(--pri,#2E6B1F)">
+            <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">sell</span>
+            <div style="flex:1"><div style="font:700 14px ui-monospace,Menlo,monospace">{{ couponCode }}</div><div style="font-size:12px;color:var(--mut,#6F665C);margin-top:2px">{{ couponDesc }}</div></div>
+            <button sc-camel-on-click="{{ removeCoupon }}" style="border:0;background:none;color:var(--price,#B5321A);font:700 13px 'Archivo';cursor:pointer">{{ t.remove }}</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noCoupon }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:8px">
+            <input value="{{ couponInput }}" sc-camel-on-change="{{ onCouponInput }}" placeholder="{{ t.code }}" style="flex:1;min-width:0;height:42px;border-radius:12px;border:1px solid var(--line,#E6DDD0);background:var(--soft,#EFE7DA);padding:0 12px;font:700 14px ui-monospace,Menlo,monospace;color:var(--ink,#1F1A15);text-transform:uppercase;outline:0">
+            <button sc-camel-on-click="{{ applyCoupon }}" style="height:42px;padding:0 16px;border-radius:12px;border:0;background:var(--pri,#2E6B1F);color:var(--onpri,#fff);font:700 13px 'Archivo';cursor:pointer">{{ t.apply }}</button>
+          </div>
+          <sc-if value="{{ hasCouponErr }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:var(--price,#B5321A);font-weight:700">{{ couponErr }}</div></sc-if>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ availCoupons }}" as="cp" hint-placeholder-count="2"><button sc-camel-on-click="{{ cp.apply }}" style="padding:7px 10px;border-radius:10px;border:1px dashed var(--pri,#2E6B1F);background:transparent;color:var(--ink,#1F1A15);cursor:pointer;text-align:left"><div style="font:700 12px ui-monospace,Menlo,monospace;color:var(--pri,#2E6B1F)">{{ cp.code }}</div><div style="font-size:11px;color:var(--mut,#6F665C);margin-top:1px">{{ cp.desc }}</div></button></sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:4px 14px;color:var(--ink,#1F1A15)">
+        <div style="font-weight:780;font-size:15px;padding:12px 0 6px">{{ t.payment }}</div>
+        <sc-for list="{{ payOpts }}" as="po" hint-placeholder-count="2">
+          <button sc-camel-on-click="{{ po.pick }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:12px 0;border:0;border-top:1px solid var(--line,#E6DDD0);background:none;text-align:left;color:var(--ink,#1F1A15);cursor:pointer">
+            <span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block;color:var(--pri,#2E6B1F)">{{ po.icon }}</span>
+            <div style="flex:1"><div style="font-weight:700;font-size:14.5px">{{ po.label }}</div><div style="font-size:12px;color:var(--mut,#6F665C);margin-top:2px">{{ po.sub }}</div></div>
+            <div style="width:22px;height:22px;border-radius:50%;border:2px solid {{ po.ring }};display:flex;align-items:center;justify-content:center;box-sizing:border-box"><div style="width:10px;height:10px;border-radius:50%;background:var(--pri,#2E6B1F);opacity:{{ po.dot }}"></div></div>
+          </button>
+        </sc-for>
+        <sc-if value="{{ isZelle }}" hint-placeholder-val="{{ false }}"><div style="margin:0 0 12px;padding:12px;border-radius:12px;background:var(--soft,#EFE7DA);font-size:12.5px;line-height:1.45">{{ zelleNote }}</div></sc-if>
+      </div>
+
+      <div style="background:var(--card,#fff);border:1px solid var(--line,#E6DDD0);border-radius:var(--r,16px);padding:14px;color:var(--ink,#1F1A15);display:flex;flex-direction:column;gap:8px;font-size:14px">
+        <div style="display:flex;justify-content:space-between"><span>{{ t.subtotal }}</span><span>{{ sumSub }}</span></div>
+        <sc-if value="{{ hasDisc }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;color:var(--pri,#2E6B1F);font-weight:700"><span>{{ t.discount }}</span><span>{{ sumDisc }}</span></div></sc-if>
+        <sc-if value="{{ isDelivery }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between"><span>{{ t.deliveryFee }}</span><span>{{ sumFee }}</span></div></sc-if>
+        <div style="display:flex;justify-content:space-between;color:var(--mut,#6F665C)"><span>{{ t.tax }}</span><span>{{ sumTax }}</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:780;font-size:18px;padding-top:8px;border-top:1px solid var(--line,#E6DDD0)"><span>{{ t.total }}</span><span>{{ sumTotal }}</span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:4px;padding:10px 12px;border-radius:12px;background:var(--soft,#EFE7DA);color:var(--pri,#2E6B1F);font-weight:700;font-size:13px"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block;font-variation-settings:'FILL' 1">local_pizza</span>{{ stampsEarnMsg }}</div>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ cartHas }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 30px;background:var(--card,#fff);border-top:1px solid var(--line,#E6DDD0)">
+      <button sc-camel-on-click="{{ placeOrder }}" style="width:100%;height:56px;border-radius:var(--rb,14px);background:var(--cta,#B5321A);color:var(--oncta,#fff);border:0;font:780 16px 'Archivo';display:flex;justify-content:space-between;align-items:center;padding:0 20px;cursor:pointer;opacity:{{ placeOp }}"><span>{{ placeLabel }}</span><span>{{ placeRight }}</span></button>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWheel }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:40;background:#1E3F16;color:#fff;overflow-y:auto;scrollbar-width:none;animation:jjUp .32s cubic-bezier(.2,.8,.2,1)">
+  <div style="padding:56px 16px 0;display:flex;align-items:center;gap:12px">
+    <button sc-camel-on-click="{{ closeOverlay }}" style="width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:inherit;display:flex;align-items:center;justify-content:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;width:24px;height:24px;overflow:hidden;display:block">arrow_back</span></button>
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 25px);line-height:1;text-shadow:var(--dsh,3px 3px 0 #CFE0C4)">{{ t.wheel }}</div>
+  </div>
+  <div style="font-size:14px;padding:12px 24px 0;text-align:center;color:rgba(255,255,255,.78);line-height:1.4">{{ t.wheelSub }}</div>
+  <div style="position:relative;width:310px;height:310px;margin:26px auto 0">
+    <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:17px solid transparent;border-right:17px solid transparent;border-top:28px solid #fff;z-index:3;filter:drop-shadow(0 3px 3px rgba(0,0,0,.3))"></div>
+    <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--wa,#2E6B1F) 0deg 45deg, var(--wb,#F6EBD3) 45deg 90deg, var(--wc,#B5321A) 90deg 135deg, var(--wb,#F6EBD3) 135deg 180deg, var(--wa,#2E6B1F) 180deg 225deg, var(--wb,#F6EBD3) 225deg 270deg, var(--wc,#B5321A) 270deg 315deg, var(--wb,#F6EBD3) 315deg 360deg);border:8px solid #fff;box-sizing:border-box;box-shadow:0 20px 44px rgba(0,0,0,.32);transform:rotate({{ wheelDeg }}deg);transition:{{ wheelTransition }}">
+      <sc-for list="{{ wheelSegs }}" as="sg" hint-placeholder-count="8">
+        <div style="position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate({{ sg.rot }}deg)">
+          <div style="position:absolute;left:-40px;bottom:0;width:80px;height:140px;display:flex;flex-direction:column;align-items:center;padding-top:14px;box-sizing:border-box;text-align:center;color:{{ sg.tc }}">
+            <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block">{{ sg.icon }}</span>
+            <span style="font:780 11px/1.05 'Archivo';text-transform:uppercase;margin-top:4px">{{ sg.label }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:50%;top:50%;width:76px;height:76px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center"><div style="width:64px;height:64px;border-radius:50%;overflow:hidden;position:relative"><img src="img/img-25eaf398.jpg" alt="" style="position:absolute;width:146%;height:146%;left:-23%;top:-23%;max-width:none"></div></div>
+  </div>
+  <div style="padding:28px 16px 40px;display:flex;flex-direction:column;gap:12px">
+    <sc-if value="{{ canSpin }}" hint-placeholder-val="{{ true }}">
+      <button sc-camel-on-click="{{ spin }}" style="height:60px;border-radius:var(--rb,14px);border:0;background:var(--cta,#B5321A);color:var(--oncta,#fff);font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 21px);cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,.2);opacity:{{ spinOp }}">{{ spinLabel }}</button>
+    </sc-if>
+    <sc-if value="{{ showPrize }}" hint-placeholder-val="{{ false }}">
+      <div style="background:var(--card,#fff);color:var(--ink,#1F1A15);border-radius:var(--r,16px);padding:18px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;animation:jjFade .4s">
+        <div style="font-size:11px;font-weight:780;letter-spacing:.12em;text-transform:uppercase;color:var(--mut,#6F665C)">{{ prizeEyebrow }}</div>
+        <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 26px);line-height:1;color:var(--price,#B5321A)">{{ prizeTitle }}</div>
+        <div style="font-size:13.5px;color:var(--mut,#6F665C);line-height:1.4">{{ prizeDesc }}</div>
+        <sc-if value="{{ hasPrizeBtn }}" hint-placeholder-val="{{ false }}"><button sc-camel-on-click="{{ prizeAction }}" style="margin-top:8px;height:46px;padding:0 20px;border-radius:var(--rb,14px);border:0;background:var(--cta,#B5321A);color:var(--oncta,#fff);font:700 14px 'Archivo';cursor:pointer">{{ prizeBtn }}</button></sc-if>
+      </div>
+    </sc-if>
+    <button sc-camel-on-click="{{ resetSpin }}" style="align-self:center;border:0;background:none;color:rgba(255,255,255,.78);font:700 12.5px 'Archivo';text-decoration:underline;cursor:pointer">{{ t.resetSpin }}</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isItemSheet }}" hint-placeholder-val="{{ false }}">
+  <div sc-camel-on-click="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:50;animation:jjFade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;max-height:86%;z-index:51;background:var(--card,#fff);border-radius:24px 24px 0 0;overflow:hidden;animation:jjUp .3s cubic-bezier(.2,.8,.2,1);color:var(--ink,#1F1A15);display:flex;flex-direction:column">
+    <div style="flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:16px">
+      <div style="position:relative;height:240px;background:var(--soft,#EFE7DA)">
+        <img loading="lazy" decoding="async" src="{{ s.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+        <button sc-camel-on-click="{{ closeSheet }}" style="position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#1F1A15;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;width:22px;height:22px;overflow:hidden;display:block">close</span></button>
+      </div>
+      <div style="padding:18px 18px 0">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <div style="flex:1;font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 22px);line-height:1.02">{{ s.name }}</div>
+          <button sc-camel-on-click="{{ s.fav }}" style="border:0;background:none;padding:0;color:{{ s.favColor }};cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:26px;line-height:1;width:26px;height:26px;overflow:hidden;display:block;font-variation-settings:'FILL' {{ s.favFill }}">favorite</span></button>
+        </div>
+        <div style="font-size:14px;color:var(--mut,#6F665C);line-height:1.45;margin-top:8px">{{ s.desc }}</div>
+      </div>
+      <sc-for list="{{ s.groups }}" as="g" hint-placeholder-count="1">
+        <div style="padding:18px 18px 0">
+          <div style="display:flex;align-items:center;gap:8px"><div style="flex:1;font-weight:780;font-size:15px">{{ g.label }}</div><span style="font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--soft,#EFE7DA);color:var(--mut,#6F665C)">{{ g.req }}</span></div>
+          <div style="display:flex;flex-direction:column;margin-top:4px">
+            <sc-for list="{{ g.choices }}" as="c" hint-placeholder-count="3">
+              <button sc-camel-on-click="{{ c.pick }}" style="display:flex;align-items:center;gap:12px;padding:12px 0;border:0;border-bottom:1px solid var(--line,#E6DDD0);background:none;text-align:left;color:var(--ink,#1F1A15);font:500 15px 'Archivo';cursor:pointer">
+                <span style="width:22px;height:22px;border-radius:{{ c.shape }};border:2px solid {{ c.bd }};background:{{ c.bg }};display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none;color:var(--onpri,#fff)"><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1;width:16px;height:16px;overflow:hidden;display:block;opacity:{{ c.op }}">check</span></span>
+                <span style="flex:1">{{ c.label }}</span><span style="font-size:13.5px;color:var(--mut,#6F665C)">{{ c.delta }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:12px 16px 30px;border-top:1px solid var(--line,#E6DDD0);display:flex;gap:12px;align-items:center">
+      <div style="display:flex;align-items:center;gap:4px;background:var(--soft,#EFE7DA);border-radius:999px;padding:4px">
+        <button sc-camel-on-click="{{ s.dec }}" style="width:38px;height:38px;border-radius:50%;border:0;background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">remove</span></button>
+        <div style="min-width:24px;text-align:center;font-weight:780;font-size:16px">{{ s.qty }}</div>
+        <button sc-camel-on-click="{{ s.inc }}" style="width:38px;height:38px;border-radius:50%;border:0;background:var(--card,#fff);color:var(--ink,#1F1A15);cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;width:20px;height:20px;overflow:hidden;display:block">add</span></button>
+      </div>
+      <button sc-camel-on-click="{{ s.add }}" style="flex:1;height:54px;border-radius:var(--rb,14px);background:var(--cta,#B5321A);color:var(--oncta,#fff);border:0;font:780 16px 'Archivo';display:flex;justify-content:space-between;align-items:center;padding:0 18px;cursor:pointer"><span>{{ t.add }}</span><span>{{ s.total }}</span></button>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isRateSheet }}" hint-placeholder-val="{{ false }}">
+  <div sc-camel-on-click="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:50;animation:jjFade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:51;background:var(--card,#fff);border-radius:24px 24px 0 0;padding:22px 18px 34px;animation:jjUp .3s cubic-bezier(.2,.8,.2,1);color:var(--ink,#1F1A15);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+    <div style="width:40px;height:5px;border-radius:3px;background:var(--line,#E6DDD0)"></div>
+    <div style="font-family:var(--disp,'Archivo'),sans-serif;font-weight:var(--dw,900);font-stretch:var(--ds,125%);text-transform:var(--dtt,uppercase);letter-spacing:var(--dt,.01em);font-size:calc(var(--dk,1) * 22px);line-height:1">{{ t.rate }}</div>
+    <div style="font-size:14px;color:var(--mut,#6F665C);margin-top:-6px">{{ rateFor }}</div>
+    <div style="display:flex;gap:6px">
+      <sc-for list="{{ rateStars }}" as="rs" hint-placeholder-count="5"><button sc-camel-on-click="{{ rs.pick }}" style="border:0;background:none;padding:0;color:{{ rs.c }};cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:42px;line-height:1;width:42px;height:42px;overflow:hidden;display:block;font-variation-settings:'FILL' {{ rs.fill }}">star</span></button></sc-for>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+      <sc-for list="{{ rateTags }}" as="rt" hint-placeholder-count="4"><button sc-camel-on-click="{{ rt.pick }}" style="height:36px;padding:0 14px;border-radius:999px;border:2px solid {{ rt.bd }};background:{{ rt.bg }};color:{{ rt.fg }};font:700 13px 'Archivo';cursor:pointer">{{ rt.label }}</button></sc-for>
+    </div>
+    <textarea placeholder="{{ t.commentPh }}" rows="2" style="width:100%;box-sizing:border-box;border-radius:12px;border:1px solid var(--line,#E6DDD0);background:var(--soft,#EFE7DA);padding:10px 12px;font:500 14px 'Archivo';color:var(--ink,#1F1A15);resize:none;outline:0"></textarea>
+    <button sc-camel-on-click="{{ sendRate }}" style="width:100%;height:52px;border-radius:var(--rb,14px);border:0;background:var(--cta,#B5321A);color:var(--oncta,#fff);font:780 15px 'Archivo';cursor:pointer;opacity:{{ rateOp }}">{{ t.send }}</button>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasNotif }}" hint-placeholder-val="{{ false }}">
+  <div sc-camel-on-click="{{ tapNotif }}" style="position:absolute;top:54px;left:8px;right:8px;z-index:80;border-radius:24px;background:rgba(246,246,246,.9);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);box-shadow:0 10px 30px rgba(0,0,0,.28);padding:12px 14px;display:flex;gap:12px;align-items:center;color:#111;cursor:pointer;animation:jjDrop .5s cubic-bezier(.2,.9,.25,1.15)">
+    <div style="width:40px;height:40px;border-radius:10px;overflow:hidden;position:relative;background:#fff;flex:none"><img src="img/img-25eaf398.jpg" alt="" style="position:absolute;width:146%;height:146%;left:-23%;top:-23%;max-width:none"></div>
+    <div style="flex:1;min-width:0">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b6b6b"><span style="font-weight:700;letter-spacing:.04em">JJ PIZZA</span><span>{{ t.now }}</span></div>
+      <div style="font-size:14.5px;font-weight:700;margin-top:1px">{{ notifTitle }}</div>
+      <div style="font-size:13.5px;color:#333;line-height:1.3">{{ notifBody }}</div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:50%;bottom:{{ toastBottom }}px;transform:translateX(-50%);z-index:70;background:#141414;color:#fff;border-radius:999px;padding:10px 16px;font:700 14px 'Archivo';display:flex;gap:8px;align-items:center;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.3);animation:jjToast .25s"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;width:19px;height:19px;overflow:hidden;display:block;color:#7BD86A;font-variation-settings:'FILL' 1">check_circle</span>{{ toastMsg }}</div>
+</sc-if>
+
+</div>
+</x-import>
+</div>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;estilo&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;letrero&quot;,&quot;horno&quot;,&quot;pancarta&quot;],&quot;default&quot;:&quot;letrero&quot;,&quot;tsType&quot;:&quot;'letrero'|'horno'|'pancarta'&quot;},&quot;idioma&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;es&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en'|'es'&quot;},&quot;sellos&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0,&quot;max&quot;:10,&quot;step&quot;:1,&quot;default&quot;:7,&quot;tsType&quot;:&quot;number&quot;},&quot;demoSegundos&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:2,&quot;max&quot;:15,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;default&quot;:6,&quot;tsType&quot;:&quot;number&quot;}}">
+const money = n => '$' + (Math.round(n * 100) / 100).toFixed(2);
+const fmt = (s, o) => String(s).replace(/\{(\w+)\}/g, (_, k) => o[k]);
+const by = (arr, id) => arr.find(x => x.id === id) || arr[0];
+const ICON = '"Material Symbols Rounded"';
+const mkPizza = (itemId, size, J) => { const it = J.ITEMS.find(i => i.id === itemId); return { itemId, size, dough:'hand', edge:'classic', sauce: it.sauce || 'red', cheese:'reg', tops: { ...(it.tops || {}) } }; };
+const ON = 'var(--pri,#2E6B1F)', ONF = 'var(--onpri,#fff)';
+const SK = 'jjpizza.orders.v1', HK = 'jjpizza.admin.v1', SOLD = 'jjpizza.soldout.v1', STORE = 'jjpizza.store.v1';
+const readLS = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
+
+class Component extends DCLogic {
+  state = {
+    lang:null, estilo:null, tab:'home', cat:'pizza', query:'', overlay:null, sheet:null, b:null, s:null,
+    cart:[], mode:'pickup', table:5, address:'2410 Lone Tree Way, Antioch, CA', when:0,
+    pay:'cash', coupon:null, couponInput:'', couponErr:null, extraCoupons:[],
+    stamps:null, favs:['pepperoni','jj','wings'], orders:null, active:null,
+    spun:false, spinning:false, wheelDeg:0, prize:null, prizeUsed:false, challenge:1, log:null,
+    notif:null, toast:null, rate:{stars:0,tags:[]}, rateId:null, birthday:'1992-03-14',
+    np:{ready:true,promos:true,spin:false}, newStamps:0, ready:!!window.JJ, soldout:[], storeOpen:true, adminLive:false,
+  };
+  rootRef = el => { this._root = el; if (el) { el._th = null; this.applyTheme(); } };
+  componentDidMount() { if (!window.JJ) this._poll = setInterval(() => { if (window.JJ) { clearInterval(this._poll); this.setState({ ready:true }); } }, 50); this.applyTheme();
+    if (/[?&]embed=1/.test(location.search)) { document.documentElement.style.background = 'transparent'; document.body.style.background = 'transparent'; }
+    const readStore = () => ({ soldout:readLS(SOLD, []), storeOpen:readLS(STORE, {}).accepting !== false });
+    this.setState({ ...readStore(), adminLive:this.adminLive() });
+    this._live = setInterval(() => { const v = this.adminLive(); if (v !== this.state.adminLive) this.setState({ adminLive:v }); }, 2000);
+    this._onStorage = e => { if (e.key === SOLD || e.key === STORE) this.setState(readStore()); if (e.key === SK) this.onRemote(); };
+    window.addEventListener('storage', this._onStorage); }
+  adminLive() { try { return Date.now() - Number(localStorage.getItem(HK) || 0) < 6000; } catch (e) { return false; } }
+  summary(a) { return { id:a.id, src:'app', name:'María González', phone:'(925) 555-0142', mode:a.mode, table:a.table, address:this.state.address, pay:a.pay, total:a.total, pizzas:a.pizzas, step:a.step, placed:a.placed,
+    lines:a.lines.map(l => ({ qty:l.qty, name:this.lineName(l, 0) + (l.free || l.cfg.reward ? ' (reward)' : ''), detail:this.lineDetail(l, 0) })) }; }
+  pushOrder(a) { try { const arr = readLS(SK, []), i = arr.findIndex(x => x.id === a.id), o = { ...(i >= 0 ? arr[i] : {}), ...this.summary(a) }; if (i >= 0) arr[i] = o; else arr.push(o); localStorage.setItem(SK, JSON.stringify(arr.slice(-40))); } catch (e) {} }
+  onRemote() { const a = this.state.active; if (!a) return; const o = readLS(SK, []).find(x => x.id === a.id); if (o && o.step > a.step) this.applyStep(o.step, true); }
+  componentDidUpdate(pp) {
+    if (pp.estilo !== this.props.estilo && this.state.estilo) this.setState({ estilo:null });
+    if (pp.idioma !== this.props.idioma && this.state.lang) this.setState({ lang:null });
+    if (pp.sellos !== this.props.sellos && this.state.stamps != null) this.setState({ stamps:null });
+    this.applyTheme();
+  }
+  componentWillUnmount() { [this._t, this._n, this._toast, this._spin].forEach(clearTimeout); clearInterval(this._poll); clearInterval(this._live); window.removeEventListener('storage', this._onStorage); }
+  sty() { return this.state.estilo || this.props.estilo || 'letrero'; }
+  applyTheme() { const el = this._root, J = window.JJ; if (!el || !J) return; const k = this.sty(); if (el._th === k) return; el._th = k; const th = J.THEMES[k]; Object.keys(th).forEach(v => el.style.setProperty(v, th[v])); }
+  Li() { return (this.state.lang || this.props.idioma || 'en') === 'es' ? 1 : 0; }
+  stamps() { return this.state.stamps ?? (this.props.sellos ?? 7); }
+  orders() { const J = window.JJ; return this.state.orders || [
+    { id:'JJ-1038', date:['Sep 28','28 sep'], mode:'pickup', stars:5, lines:[{kind:'pizza',itemId:'pepperoni',cfg:mkPizza('pepperoni','L',J),qty:2},{kind:'item',itemId:'wings',cfg:{sel:{count:'10',flavor:'buffalo',dip:'ranch'}},qty:1}] },
+    { id:'JJ-1021', date:['Sep 19','19 sep'], mode:'delivery', stars:0, lines:[{kind:'pizza',itemId:'jj',cfg:mkPizza('jj','XL',J),qty:1},{kind:'item',itemId:'pupusa',cfg:{sel:{fill:'revuelta'}},qty:3}] },
+  ]; }
+  log() { return this.state.log || [
+    { d:['Sep 28','28 sep'], t:['Order #JJ-1038','Pedido #JJ-1038'], n:2 }, { d:['Sep 22','22 sep'], t:['Ana joined with your code','Ana se unió con tu código'], n:1 },
+    { d:['Sep 19','19 sep'], t:['Order #JJ-1021','Pedido #JJ-1021'], n:1 }, { d:['Sep 12','12 sep'], t:['Order #JJ-1009','Pedido #JJ-1009'], n:3 } ]; }
+
+  // pricing
+  pizzaUnit(c) { const J = window.JJ, it = J.ITEMS.find(i => i.id === c.itemId), sz = by(J.SIZES, c.size), tp = J.TOP_PRICE[sz.id], rec = it.tops || {};
+    let tops = 0; Object.entries(c.tops || {}).forEach(([id, m]) => { if (rec[id] === 'W') return; tops += m === 'W' ? tp : tp / 2; });
+    if (c.reward) tops = Math.max(0, tops - 3 * tp);
+    return (c.reward ? 0 : it.p + sz.add) + tops + by(J.DOUGHS, c.dough).add + by(J.EDGES, c.edge).add + by(J.SAUCES, c.sauce).add + by(J.CHEESES, c.cheese).add; }
+  itemUnit(id, sel) { const J = window.JJ, it = J.ITEMS.find(i => i.id === id); let p = it.prices ? it.prices[sel.count || '6'] : it.p;
+    (J.OPTS[it.opt] || []).forEach(g => { const v = sel[g.id]; g.ch.forEach(ch => { if ((Array.isArray(v) ? v.includes(ch.id) : v === ch.id) && ch.add) p += ch.add; }); }); return p; }
+  lineUnit(l) { return l.free ? 0 : l.kind === 'pizza' ? this.pizzaUnit(l.cfg) : this.itemUnit(l.itemId, l.cfg.sel || {}); }
+  lineStamps(l) { const it = window.JJ.ITEMS.find(i => i.id === l.itemId); if (l.free || l.cfg.reward) return 0; return l.kind === 'pizza' ? l.qty : (it.stamps || 0) * l.qty; }
+  lineName(l, L) { const it = window.JJ.ITEMS.find(i => i.id === l.itemId); return l.cfg.reward ? window.JJ.S.freePizza[L] : it.n[L]; }
+  pizzaDetail(c, L) { const J = window.JJ, it = J.ITEMS.find(i => i.id === c.itemId), sz = by(J.SIZES, c.size), rec = it.tops || {}, TN = id => J.TOPS.find(t => t.id === id).n[L];
+    const parts = [sz.inch + ' ' + sz.n[L], by(J.DOUGHS, c.dough).n[L]];
+    if (c.edge !== 'classic') parts.push(by(J.EDGES, c.edge).n[L]);
+    if (c.sauce !== (it.sauce || 'red')) parts.push(by(J.SAUCES, c.sauce).n[L]);
+    if (c.cheese !== 'reg') parts.push((L ? 'Queso ' : 'Cheese ') + by(J.CHEESES, c.cheese).n[L].toLowerCase());
+    const half = m => m === 'L' ? (L ? ' (izq.)' : ' (left)') : m === 'R' ? (L ? ' (der.)' : ' (right)') : '';
+    const extra = Object.entries(c.tops || {}).filter(([id, m]) => rec[id] !== 'W' || m !== 'W').map(([id, m]) => TN(id) + half(m));
+    const removed = Object.keys(rec).filter(id => !c.tops[id]).map(id => (L ? 'sin ' : 'no ') + TN(id).toLowerCase());
+    return parts.join(' · ') + (extra.length ? ' · + ' + extra.join(', ') : '') + (removed.length ? ' · ' + removed.join(', ') : ''); }
+  itemDetail(id, sel, L) { const J = window.JJ, it = J.ITEMS.find(i => i.id === id); const out = [];
+    (J.OPTS[it.opt] || []).forEach(g => { const v = sel[g.id]; g.ch.forEach(ch => { if (Array.isArray(v) ? v.includes(ch.id) : v === ch.id) out.push(ch.n[L]); }); }); return out.join(' · '); }
+  lineDetail(l, L) { return l.kind === 'pizza' ? this.pizzaDetail(l.cfg, L) : this.itemDetail(l.itemId, l.cfg.sel || {}, L); }
+  totals() { const J = window.JJ, st = this.state, sub = st.cart.reduce((a, l) => a + this.lineUnit(l) * l.qty, 0);
+    let disc = 0; const c = st.coupon && J.COUPONS[st.coupon];
+    if (c) { if (c.pct) disc = sub * c.pct / 100; else if (c.off) disc = sub >= c.min ? c.off : 0;
+      else if (c.bogo) { const units = []; st.cart.forEach(l => { if (l.kind === 'pizza' && !l.cfg.reward && !l.free) for (let i = 0; i < l.qty; i++) units.push(this.pizzaUnit(l.cfg)); }); if (units.length >= 2) disc = Math.min(...units); } }
+    const base = sub - disc, fee = st.mode === 'delivery' ? (base >= 30 ? 0 : 3.99) : 0, tax = base * 0.0975;
+    return { sub, disc, fee, tax, total: base + fee + tax, base }; }
+
+  // actions
+  toast(msg) { clearTimeout(this._toast); this.setState({ toast: msg }); this._toast = setTimeout(() => this.setState({ toast:null }), 2200); }
+  notify(title, body) { clearTimeout(this._n); this.setState({ notif:{ title, body } }); this._n = setTimeout(() => this.setState({ notif:null }), 5000); }
+  addLine(line) { const key = JSON.stringify([line.itemId, line.cfg, !!line.free]);
+    this.setState(s => { const cart = s.cart.slice(); const i = cart.findIndex(l => l.key === key); if (i >= 0) cart[i] = { ...cart[i], qty: cart[i].qty + line.qty }; else cart.push({ ...line, key }); return { cart }; }); }
+  openBuilder(itemId, reward) { const J = window.JJ; const c = mkPizza(itemId, reward ? 'L' : 'L', J); this.setState({ overlay:'builder', sheet:null, b:{ ...c, reward:!!reward, qty:1 } }); }
+  openItem(id) { const J = window.JJ, it = J.ITEMS.find(i => i.id === id); if (it.cat === 'pizza') return this.openBuilder(id);
+    if (it.cat === 'promo') { this.addLine({ kind:'item', itemId:id, cfg:{ sel:{} }, qty:1 }); return this.toast(J.S.added[this.Li()]); }
+    const sel = {}; (J.OPTS[it.opt] || []).forEach(g => { sel[g.id] = g.many ? [] : (g.req ? (g.id === 'count' ? '10' : g.ch[0].id) : null); });
+    this.setState({ sheet:'item', s:{ itemId:id, sel, qty:1 } }); }
+  toggleFav(id) { this.setState(s => ({ favs: s.favs.includes(id) ? s.favs.filter(f => f !== id) : [...s.favs, id] })); }
+  placeOrder() { const st = this.state, T = this.totals(), L = this.Li();
+    const pizzas = st.cart.reduce((a, l) => a + this.lineStamps(l), 0), hasReward = st.cart.some(l => l.cfg.reward);
+    if (!st.storeOpen) return this.toast(window.JJ.S.closedNow[L]);
+    const id = 'JJ-' + String(Date.now()).slice(-4);
+    const active = { id, mode:st.mode, table:st.table, step:0, lines:st.cart.map(l => ({ ...l })), total:T.total, pizzas, pay:st.pay, placed:Date.now(), date:[new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}), new Date().toLocaleDateString('es-MX',{month:'short',day:'numeric'})], stars:0 };
+    this.setState({ active, cart:[], coupon:null, couponInput:'', overlay:null, tab:'orders', stamps: hasReward ? Math.max(0, this.stamps() - 10) : this.stamps(), prizeUsed: st.prizeUsed }, () => this.pushOrder(active));
+    this.schedule(); }
+  schedule() { clearTimeout(this._t); this._t = setTimeout(() => { if (this.adminLive()) return this.schedule(); this.advance(); }, (this.props.demoSegundos ?? 6) * 1000); }
+  advance() { const a = this.state.active; if (!a || a.step >= 3) return; this.applyStep(a.step + 1, false); }
+  applyStep(step, remote) { const a = this.state.active; if (!a || step <= a.step) return; const J = window.JJ, L = this.Li();
+    const next = { ...a, step };
+    if (a.step < 2 && step >= 2 && this.state.np.ready) { const k = a.mode === 'pickup' ? 'P' : a.mode === 'delivery' ? 'D' : 'T'; this.notify(J.S['nTitle' + k][L], fmt(J.S['nBody' + k][L], { t:a.table })); }
+    let upd = { active: next };
+    if (step >= 3) { const n = a.pizzas; let s = Math.min(10, this.stamps() + n); let ch = this.state.challenge; const log = this.log().slice(); const today = next.date;
+      if (n) log.unshift({ d:today, t:['Order #' + a.id, 'Pedido #' + a.id], n });
+      if (ch < 2 && ch + n >= 2) { s = Math.min(10, s + 1); log.unshift({ d:today, t:['Weekly challenge','Reto de la semana'], n:1 }); }
+      ch = Math.min(2, ch + n);
+      upd = { ...upd, stamps:s, challenge:ch, log, newStamps:n, orders:[next, ...this.orders()] };
+      if (n) setTimeout(() => this.notify(fmt(J.S.nStampsT[L], { n }), fmt(J.S.nStampsB[L], { s })), 5600); }
+    this.setState(upd, () => { if (!remote) this.pushOrder(next); }); if (remote) clearTimeout(this._t); else if (step < 3) this.schedule(); }
+  spin() { const J = window.JJ, st = this.state; if (st.spun || st.spinning) return;
+    const tot = J.PRIZES.reduce((a, p) => a + p.w, 0); let r = Math.random() * tot, idx = 0; for (; idx < J.PRIZES.length; idx++) { r -= J.PRIZES[idx].w; if (r <= 0) break; }
+    idx = Math.min(idx, 7); const c = idx * 45 + 22.5, base = Math.ceil(st.wheelDeg / 360) * 360 + 360 * 6, deg = base + (360 - c) + (Math.random() * 24 - 12);
+    this.setState({ spinning:true, wheelDeg:deg, prize:null });
+    this._spin = setTimeout(() => { const p = J.PRIZES[idx], L = this.Li(); const upd = { spinning:false, spun:true, prize:idx, prizeUsed:false };
+      if (p.stamps) { upd.stamps = Math.min(10, this.stamps() + p.stamps); upd.log = [{ d:['Today','Hoy'], t:['JJ Wheel','Ruleta JJ'], n:p.stamps }, ...this.log()]; }
+      if (p.coupon) upd.extraCoupons = [...new Set([...this.state.extraCoupons, p.coupon])];
+      this.setState(upd); }, 4800); }
+
+  renderVals() {
+    const J = window.JJ; if (!J) return {};
+    const st = this.state, L = this.Li(), t = Object.fromEntries(Object.entries(J.S).map(([k, v]) => [k, v[L]])), set = o => () => this.setState(o);
+    const stamps = this.stamps(), left = 10 - stamps, T = this.totals();
+    const tab = st.overlay ? null : st.tab;
+    const go = tabId => () => this.setState({ tab:tabId, overlay:null, sheet:null });
+    const CATICON = Object.fromEntries(J.CATS.map(c => [c.id, c.icon]));
+    const itemCard = it => { const isPizza = it.cat === 'pizza', out = st.soldout.includes(it.id); return { id:it.id, icon:CATICON[it.cat] || 'restaurant', op:out ? .5 : 1, tagColor:out ? 'var(--price,#B5321A)' : 'var(--pri,#2E6B1F)', name:it.n[L], desc:it.d[L], isPizza, notPizza:!isPizza, tops:it.tops || {}, sauce:it.sauce || 'red', slotId:'foto-' + it.id, ph:(L ? 'Foto: ' : 'Photo: ') + it.n[L], img:it.img,
+      priceLabel:(isPizza || it.prices ? t.from + ' ' : '') + money(it.p), open:() => out ? this.toast(t.soldOutToast) : this.openItem(it.id), tag:out ? t.soldOut : it.tag ? it.tag[L] : '', hasTag:out || !!it.tag,
+      fav:e => { e.stopPropagation(); this.toggleFav(it.id); }, favFill:st.favs.includes(it.id) ? 1 : 0, favColor:st.favs.includes(it.id) ? 'var(--price,#B5321A)' : 'var(--mut,#6F665C)' }; };
+    const ITEM = id => J.ITEMS.find(i => i.id === id);
+    const modeIds = [['pickup','mPickup','storefront'],['delivery','mDelivery','delivery_dining'],['dine','mDine','table_restaurant']];
+    const modes = modeIds.map(([id, k, icon]) => { const on = st.mode === id; return { label:t[k], icon, pick:set({ mode:id }), hbg:on ? 'var(--onhdr,#fff)' : 'transparent', hfg:on ? 'var(--hdr,#2E6B1F)' : 'var(--onhdr,#fff)', cbg:on ? ON : 'transparent', cfg:on ? ONF : 'var(--ink,#1F1A15)' }; });
+    const modeWhere = st.mode === 'pickup' ? '1139 E 18th St · ~20 min' : st.mode === 'delivery' ? st.address.split(',')[0] : t.table + ' ' + st.table;
+    const stampsMsg = left <= 0 ? t.unlocked : left === 1 ? t.left1 : fmt(t.leftN, { n:left });
+    const lastO = this.orders()[0];
+    const linesSummary = lines => lines.map(l => l.qty + '× ' + this.lineName(l, L) + (l.kind === 'pizza' ? ' ' + by(J.SIZES, l.cfg.size).inch : '')).join(', ');
+    const orderTotal = o => o.total ?? o.lines.reduce((a, l) => a + this.lineUnit(l) * l.qty, 0) * 1.0975;
+    const reorder = o => () => { o.lines.forEach(l => this.addLine({ ...l, free:false, cfg:{ ...l.cfg, reward:false } })); this.setState({ overlay:'cart', sheet:null }); };
+
+    // builder
+    let b = {};
+    if (st.b) { const c = st.b, it = ITEM(c.itemId), unit = this.pizzaUnit(c), tp = J.TOP_PRICE[c.size], upd = o => this.setState(s => ({ b:{ ...s.b, ...o } }));
+      const chip = (arr, key) => arr.map(o => { const on = c[key] === o.id; return { label:o.n[L], price:o.add ? '+' + money(o.add) : '', pick:() => upd({ [key]:o.id }), bg:on ? ON : 'var(--card,#fff)', fg:on ? ONF : 'var(--ink,#1F1A15)', bd:on ? ON : 'var(--line,#E6DDD0)' }; });
+      const row = tp0 => { const m = c.tops[tp0.id]; return { name:tp0.n[L], c:tp0.c, thumb:'img/builder/top-' + tp0.id + '-0.webp', fw:m ? 800 : 500, opts:['L','W','R'].map(k => { const on = m === k, col = on ? ONF : 'var(--mut,#6F665C)';
+        return { title:k === 'L' ? t.L : k === 'R' ? t.R : (L ? 'Toda' : 'Whole'), bg:on ? ON : 'var(--soft,#EFE7DA)', fg:col, fill:k === 'W' ? col : `linear-gradient(90deg, ${k === 'L' ? col : 'transparent'} 50%, ${k === 'R' ? col : 'transparent'} 50%)`,
+          pick:() => this.setState(s => { const tops = { ...s.b.tops }; if (tops[tp0.id] === k) delete tops[tp0.id]; else tops[tp0.id] = k; return { b:{ ...s.b, tops } }; }) }; }) }; };
+      const split = Object.values(c.tops).some(m => m !== 'W'), isFav = st.favs.includes(c.itemId);
+      b = { name:c.reward ? t.freePizza : it.n[L], eyebrow:c.reward ? t.reward : t.buildTitle, summary:this.pizzaDetail(c, L), tops:c.tops, sauce:c.sauce, cheese:c.cheese, dough:c.dough, edge:c.edge, split,
+        scale:[0.78, 0.86, 0.93, 1][J.SIZES.findIndex(x => x.id === c.size)],
+        sizes:J.SIZES.map(o => { const on = c.size === o.id, dis = c.reward && o.id !== 'L'; return { inch:o.inch, label:o.n[L], dot:o.dot, price:c.reward ? (o.id === 'L' ? t.free : '—') : money(it.p + o.add), op:dis ? .4 : 1, pick:() => !dis && upd({ size:o.id }), bg:on ? ON : 'var(--card,#fff)', fg:on ? ONF : 'var(--ink,#1F1A15)', bd:on ? ON : 'var(--line,#E6DDD0)' }; }),
+        groups:[{ label:t.dough, opts:chip(J.DOUGHS, 'dough') }, { label:t.edge, opts:chip(J.EDGES, 'edge') }, { label:t.sauce, opts:chip(J.SAUCES, 'sauce') }, { label:t.cheese, opts:chip(J.CHEESES, 'cheese') }],
+        topPriceLabel:c.reward ? (L ? '3 gratis' : '3 free') : (L ? 'Entera ' : 'Whole ') + '+' + money(tp) + ' · ' + (L ? 'mitad ' : 'half ') + '+' + money(tp / 2),
+        topGroups:[{ label:t.meats, rows:J.TOPS.filter(x => x.g === 'm').map(row) }, { label:t.veggies, rows:J.TOPS.filter(x => x.g === 'v').map(row) }],
+        qty:c.qty, dec:() => upd({ qty:Math.max(1, c.qty - 1) }), inc:() => upd({ qty:c.qty + 1 }), total:money(unit * c.qty),
+        favFill:isFav ? 1 : 0, fav:() => this.toggleFav(c.itemId),
+        add:() => { const { qty, ...cfg } = c; this.addLine({ kind:'pizza', itemId:c.itemId, cfg, qty }); this.setState({ overlay:null, b:null }); this.toast(t.added); } }; }
+
+    // item sheet
+    let s = {};
+    if (st.s) { const c = st.s, it = ITEM(c.itemId), groups = J.OPTS[it.opt] || [], unit = this.itemUnit(c.itemId, c.sel), isFav = st.favs.includes(c.itemId);
+      s = { name:it.n[L], desc:it.d[L], icon:CATICON[it.cat] || 'restaurant', img:it.img, slotId:'foto-' + it.id, ph:(L ? 'Foto: ' : 'Photo: ') + it.n[L], qty:c.qty, total:money(unit * c.qty),
+        favFill:isFav ? 1 : 0, favColor:isFav ? 'var(--price,#B5321A)' : 'var(--mut,#6F665C)', fav:() => this.toggleFav(c.itemId),
+        dec:() => this.setState(x => ({ s:{ ...x.s, qty:Math.max(1, x.s.qty - 1) } })), inc:() => this.setState(x => ({ s:{ ...x.s, qty:x.s.qty + 1 } })),
+        groups:groups.map(g => ({ label:g.n[L], req:g.req ? t.required : t.optional, choices:g.ch.map(ch => { const v = c.sel[g.id], on = Array.isArray(v) ? v.includes(ch.id) : v === ch.id;
+          return { label:ch.n[L], delta:g.priced ? money(it.prices[ch.id]) : ch.add ? '+' + money(ch.add) : '', shape:g.many ? '6px' : '50%', bd:on ? ON : 'var(--mut,#6F665C)', bg:on ? ON : 'transparent', op:on ? 1 : 0,
+            pick:() => this.setState(x => { const sel = { ...x.s.sel }; if (g.many) { const a = sel[g.id] || []; sel[g.id] = a.includes(ch.id) ? a.filter(i => i !== ch.id) : [...a, ch.id]; } else sel[g.id] = ch.id; return { s:{ ...x.s, sel } }; }) }; }) })),
+        add:() => { this.addLine({ kind:'item', itemId:c.itemId, cfg:{ sel:c.sel }, qty:c.qty }); this.setState({ sheet:null, s:null }); this.toast(t.added); } }; }
+
+    // cart
+    const cartQty = st.cart.reduce((a, l) => a + l.qty, 0), pizzasInCart = st.cart.reduce((a, l) => a + this.lineStamps(l), 0);
+    const now = new Date(), slot = m => { const d = new Date(Math.ceil(now.getTime() / 1800000) * 1800000 + m * 60000); return d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' }); };
+    const avail = ['JJBIENVENIDO', 'MARTES2X1', ...st.extraCoupons];
+    const tryCoupon = code => { code = (code || '').trim().toUpperCase(); if (!J.COUPONS[code]) return this.setState({ couponErr:t.badCode }); this.setState({ coupon:code, couponErr:null, couponInput:'' }); };
+
+    // active order
+    let act = {}; const a = st.active;
+    if (a) { const k = a.mode === 'pickup' ? 'P' : a.mode === 'delivery' ? 'D' : 'T', labels = t['st' + k], titles = t['title' + k], icons = ['receipt_long','local_fire_department', a.mode === 'delivery' ? 'two_wheeler' : a.mode === 'dine' ? 'table_restaurant' : 'shopping_bag','check_circle'];
+      const eta = new Date(a.placed + (a.mode === 'delivery' ? 35 : 20) * 60000).toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' }), done = a.step >= 3;
+      const rated = (st.orders || []).find(o => o.id === a.id)?.stars;
+      act = { idLabel:t.orderNo + ' #' + a.id + ' · ' + t[{ pickup:'mPickup', delivery:'mDelivery', dine:'mDine' }[a.mode]], title:titles[a.step], sub:done ? t.done : fmt(t.eta, { t:eta }),
+        steps:labels.map((lb, i) => ({ label:lb, icon:icons[i], bar:i <= a.step ? 'var(--pri,#2E6B1F)' : 'var(--soft,#EFE7DA)', c:i <= a.step ? 'var(--ink,#1F1A15)' : 'var(--mut,#6F665C)', anim:i === a.step && !done ? 'jjPulse 1.4s infinite' : 'none' })),
+        isPickup:a.mode === 'pickup', isDelivery:a.mode === 'delivery', isDine:a.mode === 'dine', tableLabel:t.table + ' ' + a.table,
+        items:linesSummary(a.lines), total:money(a.total), payLabel:a.pay === 'cash' ? t.cash : t.transfer, done, notDone:!done,
+        stampsAdded:a.pizzas ? fmt(t.stampsAdded, { n:a.pizzas }) : t.earns0, canRate:done && !rated, rate:() => this.setState({ sheet:'rate', rateId:a.id, rate:{ stars:0, tags:[] } }), advance:() => this.advance() }; }
+
+    // wheel
+    const prize = st.prize != null ? J.PRIZES[st.prize] : null;
+    let prizeDesc = '', prizeBtn = '', prizeAction = null;
+    if (prize) { if (prize.stamps) { prizeDesc = L ? 'Ya está en tu tarjeta de sellos.' : 'Already on your stamp card.'; prizeBtn = t.seeStamps; prizeAction = () => this.setState({ overlay:null, tab:'rewards' }); }
+      else if (prize.coupon) { prizeDesc = (L ? 'Código ' : 'Code ') + prize.coupon + (L ? ' · válido 7 días' : ' · valid 7 days'); prizeBtn = t.useNow; prizeAction = () => { this.setState({ coupon:prize.coupon, overlay:'cart' }); }; }
+      else if (prize.item) { prizeDesc = L ? 'Se agrega gratis a tu próximo pedido.' : 'Added free to your next order.'; prizeBtn = st.prizeUsed ? '' : t.addFree; prizeAction = () => { this.addLine({ kind:'item', itemId:prize.item, cfg:{ sel:prize.sel }, qty:1, free:true }); this.setState({ prizeUsed:true }); this.toast(t.added); }; }
+      else prizeDesc = t.comeBack; }
+
+    const rateOrder = (st.orders || []).find(o => o.id === st.rateId) || this.orders().find(o => o.id === st.rateId);
+    const sw = (on, toggle) => ({ bg:on ? 'var(--pri,#2E6B1F)' : '#CFC7BB', left:on ? 23 : 3, toggle });
+    const rewardInCart = st.cart.some(l => l.cfg.reward);
+
+    return {
+      t, rootRef:this.rootRef,
+      pagePad:/[?&]embed=1/.test(location.search) ? '0' : '36px 24px 60px', showPanel:!/[?&]embed=1/.test(location.search),
+      adminHref:/\.dc\.html$/i.test(decodeURIComponent(location.pathname)) ? 'JJ Pizza Admin.dc.html' : 'admin.html',
+      link:st.adminLive ? { label:'Connected. Orders you place show up in the store app, and it controls the order status.', color:'#2E6B1F' } : { label:'Store app not open. Orders move on their own every ' + (this.props.demoSegundos ?? 6) + ' seconds.', color:'#8A8177' },
+      placeOp:st.storeOpen ? 1 : .55, placeLabel:st.storeOpen ? t.place : t.closedBtn, placeRight:st.storeOpen ? money(T.total) : '',
+      isHome:tab === 'home', isMenu:tab === 'menu', isRewards:tab === 'rewards', isOrders:tab === 'orders', isProfile:tab === 'profile',
+      isBuilder:st.overlay === 'builder' && !!st.b, isCart:st.overlay === 'cart', isWheel:st.overlay === 'wheel', statusLight:st.overlay === 'wheel',
+      isItemSheet:st.sheet === 'item' && !!st.s, isRateSheet:st.sheet === 'rate',
+      showTabs:!st.overlay, showCartBar:!st.overlay && cartQty > 0 && (st.tab === 'home' || st.tab === 'menu'),
+      toggleLang:() => this.setState({ lang:L ? 'en' : 'es' }), langOther:L ? 'EN' : 'ES',
+      modes, modeWhere, stampsLabel:stamps + '/10', stampsMsg,
+      stampDots:Array.from({ length:10 }, (_, i) => ({ bg:i < stamps ? 'var(--stamp,#B5321A)' : 'var(--soft,#EFE7DA)', bd:i < stamps ? 'transparent' : i === 9 ? 'var(--price,#B5321A)' : 'transparent', bs:i === 9 && i >= stamps ? 'dashed' : 'solid', op:i < stamps ? 1 : 0 })),
+      goRewards:go('rewards'), goMenu:go('menu'),
+      promos:[
+        { tag:L ? 'Solo martes' : 'Tuesdays only', title:L ? '2×1 en pizzas' : '2-for-1 pizzas', sub:L ? 'La segunda pizza va por nuestra cuenta. Cupón MARTES2X1.' : 'Second pizza is on us. Code MARTES2X1.', cta:L ? 'Usar cupón' : 'Use coupon', img:'img/menu/deal2x1.webp', tagc:'var(--cta,#B5321A)', act:() => { this.setState({ coupon:'MARTES2X1' }); this.toast(L ? 'Cupón MARTES2X1 listo' : 'MARTES2X1 ready'); } },
+        { tag:L ? 'Para la familia' : 'Feeds the family', title:L ? 'Combo familiar $39.99' : 'Family combo $39.99', sub:L ? '2 grandes de 1 ingrediente, 10 alitas y refresco de 2 L.' : '2 large 1-topping, 10 wings and a 2-liter.', cta:L ? 'Agregar' : 'Add', img:'img/menu/combo.webp', tagc:'var(--pri,#2E6B1F)', act:() => this.openItem('combo') },
+        { tag:L ? 'Primer pedido' : 'First order', title:L ? '15% de bienvenida' : '15% welcome', sub:L ? 'En tu primer pedido desde la app. Cupón JJBIENVENIDO.' : 'On your first app order. Code JJBIENVENIDO.', cta:L ? 'Usar cupón' : 'Use coupon', img:'img/menu/hero.webp', tagc:'var(--mut,#6F665C)', act:() => { this.setState({ coupon:'JJBIENVENIDO' }); this.toast(L ? 'Cupón JJBIENVENIDO listo' : 'JJBIENVENIDO ready'); } },
+      ],
+      hasLast:!!lastO, lastSummary:lastO ? linesSummary(lastO.lines) + ' · ' + money(orderTotal(lastO)) : '', reorderLast:lastO ? reorder(lastO) : null,
+      catTiles:J.CATS.map(c => ({ label:c.n[L], icon:c.icon, img:c.img, go:() => this.setState({ tab:'menu', cat:c.id, query:'' }) })),
+      demoHalf:{ pep:'L', mus:'R', bpp:'R', oni:'W' }, openCustom:() => this.openBuilder('custom'),
+      popular:['pepperoni','jj','wings','pupusa','bbq'].map(id => itemCard(ITEM(id))),
+      openWheel:() => this.setState({ overlay:'wheel' }), spinStatus:st.spun ? t.spinUsed : t.spinReady,
+      challengeText:st.challenge >= 2 ? t.challengeDone : t.challengeText + ' · ' + st.challenge + '/2', challengePct:st.challenge * 50,
+      query:st.query, onQuery:e => this.setState({ query:e.target.value }), clearQuery:set({ query:'' }), hasQuery:!!st.query,
+      catTabs:J.CATS.map(c => { const on = st.cat === c.id && !st.query; return { label:c.n[L], pick:() => this.setState({ cat:c.id, query:'' }), bg:on ? 'var(--ink,#1F1A15)' : 'var(--card,#fff)', fg:on ? 'var(--bg,#F5EFE6)' : 'var(--ink,#1F1A15)' }; }),
+      menuItems:(() => { const q = st.query.trim().toLowerCase(); return J.ITEMS.filter(i => i.cat !== 'promo' && i.id !== 'custom' && (q ? (i.n[0] + ' ' + i.n[1] + ' ' + i.d[L]).toLowerCase().includes(q) : i.cat === st.cat)).map(itemCard); })(),
+      showBuildRow:st.cat === 'pizza' && !st.query,
+      noResults:!!st.query && !J.ITEMS.some(i => i.cat !== 'promo' && i.id !== 'custom' && (i.n[0] + ' ' + i.n[1] + ' ' + i.d[L]).toLowerCase().includes(st.query.trim().toLowerCase())),
+      tabs:[['home','tabHome','home'],['menu','tabMenu','restaurant_menu'],['rewards','tabStamps','loyalty'],['orders','tabOrders','receipt_long'],['profile','tabProfile','person']].map(([id, k, icon]) => ({ label:t[k], icon, go:go(id), color:st.tab === id ? 'var(--tabon,#2E6B1F)' : 'var(--tabink,#8A8177)', fill:st.tab === id ? 1 : 0, dot:id === 'orders' && !!a && a.step < 3 })),
+      cartQty, cartSubLabel:money(T.sub), openCart:() => this.setState({ overlay:'cart' }), closeOverlay:() => this.setState({ overlay:null }), closeSheet:() => this.setState({ sheet:null }),
+      b, s,
+      cartEmpty:!st.cart.length, cartHas:st.cart.length > 0, cartCountLabel:cartQty === 1 ? t.items1 : fmt(t.itemsN, { n:cartQty }),
+      isPickup:st.mode === 'pickup', isDelivery:st.mode === 'delivery', isDine:st.mode === 'dine',
+      times:[t.asap, slot(30), slot(60)].map((label, i) => { const on = st.when === i; return { label, pick:set({ when:i }), bg:on ? ON : 'transparent', fg:on ? ONF : 'var(--ink,#1F1A15)', bd:on ? ON : 'var(--line,#E6DDD0)' }; }),
+      address:st.address, onAddress:e => this.setState({ address:e.target.value }),
+      freeDelMsg:T.base >= 30 ? t.freeDel : fmt(t.freeDelLeft, { x:money(30 - T.base) }), freeDelPct:Math.min(100, T.base / 30 * 100),
+      table:st.table, tableDec:() => this.setState({ table:Math.max(1, st.table - 1) }), tableInc:() => this.setState({ table:Math.min(30, st.table + 1) }),
+      cartLines:st.cart.map(l => { const isPizza = l.kind === 'pizza', c = l.cfg; return { name:this.lineName(l, L), detail:this.lineDetail(l, L), qty:l.qty, isPizza, notPizza:!isPizza, isFree:!!(l.free || c.reward),
+        price:l.free ? t.free : money(this.lineUnit(l) * l.qty), priceColor:l.free ? 'var(--pri,#2E6B1F)' : 'var(--ink,#1F1A15)', tops:c.tops, sauce:c.sauce, cheese:c.cheese, dough:c.dough, edge:c.edge,
+        icon:CATICON[ITEM(l.itemId).cat] || 'restaurant', img:ITEM(l.itemId).img, slotId:'foto-' + l.itemId, ph:(L ? 'Foto: ' : 'Photo: ') + this.lineName(l, L), decIcon:l.qty === 1 ? 'delete' : 'remove',
+        dec:() => this.setState(s0 => ({ cart:s0.cart.map(x => x.key === l.key ? { ...x, qty:x.qty - 1 } : x).filter(x => x.qty > 0) })),
+        inc:() => this.setState(s0 => ({ cart:s0.cart.map(x => x.key === l.key ? { ...x, qty:x.qty + 1 } : x) })) }; }),
+      couponApplied:!!st.coupon, noCoupon:!st.coupon, couponCode:st.coupon || '', couponDesc:st.coupon ? J.COUPONS[st.coupon].d[L] + (T.disc === 0 ? (L ? ' · aún no aplica' : ' · not applied yet') : '') : '',
+      removeCoupon:set({ coupon:null }), couponInput:st.couponInput, onCouponInput:e => this.setState({ couponInput:e.target.value, couponErr:null }), applyCoupon:() => tryCoupon(st.couponInput),
+      couponErr:st.couponErr || '', hasCouponErr:!!st.couponErr, availCoupons:avail.map(code => ({ code, desc:J.COUPONS[code].d[L], apply:() => tryCoupon(code) })),
+      payOpts:[['cash','payments', t.cash, st.mode === 'pickup' ? t.cashP : st.mode === 'delivery' ? t.cashD : t.cashT], ['zelle','account_balance', t.transfer, t.transferSub]].map(([id, icon, label, sub]) => ({ icon, label, sub, pick:set({ pay:id }), ring:st.pay === id ? ON : 'var(--line,#D3C9BB)', dot:st.pay === id ? 1 : 0 })),
+      isZelle:st.pay === 'zelle', zelleNote:fmt(t.zelleNote, { x:money(T.total) }),
+      sumSub:money(T.sub), hasDisc:T.disc > 0, sumDisc:'−' + money(T.disc), sumFee:T.fee ? money(T.fee) : t.free, sumTax:money(T.tax), sumTotal:money(T.total),
+      stampsEarnMsg:pizzasInCart === 0 ? t.earns0 : pizzasInCart === 1 ? t.earns1 : fmt(t.earnsN, { n:pizzasInCart }), placeOrder:() => this.placeOrder(),
+      hasActive:!!a, noActive:!a, act, notifySw:sw(st.np.ready, () => this.setState({ np:{ ...st.np, ready:!st.np.ready } })),
+      pastOrders:this.orders().filter(o => !a || o.id !== a.id).map(o => ({ head:t.orderNo + ' #' + o.id + ' · ' + t[{ pickup:'mPickup', delivery:'mDelivery', dine:'mDine' }[o.mode]], date:o.date[L], items:linesSummary(o.lines), total:money(orderTotal(o)),
+        stars:o.stars ? '★★★★★'.slice(0, o.stars) : '', canRate:!o.stars, rate:() => this.setState({ sheet:'rate', rateId:o.id, rate:{ stars:0, tags:[] } }), reorder:reorder(o) })),
+      bigStamps:Array.from({ length:10 }, (_, i) => { const on = i < stamps; return { on, freeSlot:!on && i === 9, empty:!on && i !== 9, n:i + 1, ring:on ? 'transparent' : 'rgba(127,127,127,.5)', anim:on && i >= stamps - st.newStamps ? 'jjPop .6s both ' + ((i - (stamps - st.newStamps)) * 0.15) + 's' : 'none', freeLabel:L ? 'GRATIS' : 'FREE' }; }),
+      cardFull:stamps >= 10, redeemLabel:rewardInCart ? t.inCart : t.redeem, redeem:() => { if (!rewardInCart) this.openBuilder('custom', true); },
+      ways:[
+        { icon:'casino', title:t.wheel, sub:st.spun ? t.spinUsed : t.spinReady, badge:'', go:() => this.setState({ overlay:'wheel' }) },
+        { icon:'emoji_events', title:t.challenge, sub:st.challenge >= 2 ? t.challengeDone : t.challengeText, badge:st.challenge + '/2', go:go('menu') },
+        { icon:'group_add', title:t.invite, sub:t.inviteSub, badge:'+1', go:go('profile') },
+        { icon:'cake', title:t.birthday, sub:t.birthdaySub, badge:'', go:go('profile') } ],
+      howSteps:[t.how1, t.how2, t.how3].map((text, i) => ({ n:i + 1, text })),
+      logRows:this.log().map(l => ({ t:l.t[L], d:l.d[L], n:'+' + l.n })),
+      wheelDeg:st.wheelDeg, wheelTransition:st.spinning ? 'transform 4.6s cubic-bezier(.12,.6,.1,1)' : 'none',
+      wheelSegs:J.PRIZES.map((p, i) => ({ rot:i * 45 + 22.5, icon:p.icon, label:p.n[L], tc:['var(--wat,#fff)','var(--wbt,#1F1A15)','var(--wct,#fff)','var(--wbt,#1F1A15)'][i % 4] })),
+      canSpin:!st.spun, spin:() => this.spin(), spinLabel:st.spinning ? t.spinning : t.spin, spinOp:st.spinning ? .7 : 1,
+      showPrize:!!prize && !st.spinning, prizeEyebrow:prize && prize.icon !== 'replay' ? t.won : (L ? 'Esta vez no' : 'Not this time'), prizeTitle:prize ? prize.n[L] : '', prizeDesc, prizeBtn, hasPrizeBtn:!!prizeBtn, prizeAction,
+      resetSpin:() => this.setState({ spun:false, prize:null, spinning:false }),
+      langOpts:[['en','EN'],['es','ES']].map(([id, label]) => { const on = (L ? 'es' : 'en') === id; return { label, pick:set({ lang:id }), bg:on ? ON : 'transparent', fg:on ? ONF : 'var(--ink,#1F1A15)' }; }),
+      favItems:st.favs.map(ITEM).filter(Boolean).map(itemCard), hasFavs:st.favs.length > 0, noFavs:!st.favs.length,
+      copyCode:() => { try { navigator.clipboard.writeText('JJ-MARIA7'); } catch (e) {} this.toast(t.copied); },
+      birthday:st.birthday, onBirthday:e => this.setState({ birthday:e.target.value }),
+      notifRows:[['ready','nReady','notifications_active'],['promos','nPromos','sell'],['spin','nSpin','casino']].map(([k, lk, icon]) => ({ label:t[lk], icon, ...sw(st.np[k], () => this.setState({ np:{ ...st.np, [k]:!st.np[k] } })) })),
+      rateFor:rateOrder ? t.orderNo + ' #' + rateOrder.id : '',
+      rateStars:[1,2,3,4,5].map(n => ({ fill:n <= st.rate.stars ? 1 : 0, c:n <= st.rate.stars ? '#E3A92E' : 'var(--line,#D3C9BB)', pick:() => this.setState({ rate:{ ...st.rate, stars:n } }) })),
+      rateTags:t.tags.map(label => { const on = st.rate.tags.includes(label); return { label, bg:on ? ON : 'transparent', fg:on ? ONF : 'var(--ink,#1F1A15)', bd:on ? ON : 'var(--line,#E6DDD0)', pick:() => this.setState({ rate:{ ...st.rate, tags:on ? st.rate.tags.filter(x => x !== label) : [...st.rate.tags, label] } }) }; }),
+      rateOp:st.rate.stars ? 1 : .5,
+      sendRate:() => { if (!st.rate.stars) return; const n = st.rate.stars; const orders = this.orders().map(o => o.id === st.rateId ? { ...o, stars:n } : o); this.setState({ orders, sheet:null }); this.toast(t.thanks); },
+      hasNotif:!!st.notif, notifTitle:st.notif?.title || '', notifBody:st.notif?.body || '', tapNotif:() => this.setState({ notif:null, tab:'orders', overlay:null }),
+      hasToast:!!st.toast, toastMsg:st.toast || '', toastBottom:st.overlay ? 104 : (cartQty > 0 && (st.tab === 'home' || st.tab === 'menu') ? 164 : 104),
+      styleOpts:J.STYLE_META.map(m => ({ name:m.name, desc:m.desc, c1:m.c[0], c2:m.c[1], c3:m.c[2], bd:this.sty() === m.id ? '#1F1A15' : 'transparent', pick:() => this.setState({ estilo:m.id }) })),
+      jumpOpts:[['Home','home'],['Menu','menu'],['Build a pizza','builder'],['Cart','cart'],['Order tracking','track'],['Stamps','rewards'],['Prize wheel','wheel'],['Profile','profile']].map(([label, id]) => ({ label, go:() => {
+        if (id === 'builder') return this.openBuilder('custom');
+        if (id === 'wheel') return this.setState({ overlay:'wheel', sheet:null });
+        if (id === 'cart') { if (!st.cart.length) { this.addLine({ kind:'pizza', itemId:'pepperoni', cfg:mkPizza('pepperoni','L',J), qty:1 }); this.addLine({ kind:'item', itemId:'wings', cfg:{ sel:{ count:'10', flavor:'bbq', dip:'ranch' } }, qty:1 }); } return this.setState({ overlay:'cart', sheet:null }); }
+        if (id === 'track') { if (!a || a.step >= 3) { this.setState({ cart:[{ key:'d1', kind:'pizza', itemId:'jj', cfg:mkPizza('jj','L',J), qty:1 }, { key:'d2', kind:'item', itemId:'pupusa', cfg:{ sel:{ fill:'revuelta' } }, qty:2 }] }, () => this.placeOrder()); return; } return this.setState({ tab:'orders', overlay:null, sheet:null }); }
+        this.setState({ tab:id, overlay:null, sheet:null }); } })),
+    };
+  }
+}
+</script>
+
+
+</body></html>

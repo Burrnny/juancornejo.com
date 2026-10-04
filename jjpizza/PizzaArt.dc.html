@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="position:relative;width:100%;height:100%;border-radius:50%">
+  <img loading="lazy" decoding="async" src="{{ baseSrc }}" alt="" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 6px 10px rgba(40,22,8,.28))">
+  <sc-for list="{{ dots }}" as="d" hint-placeholder-count="0">
+    <img loading="lazy" decoding="async" src="{{ d.src }}" alt="" draggable="false" style="position:absolute;left:{{ d.x }}%;top:{{ d.y }}%;width:{{ d.w }}%;height:auto;transform:translate(-50%,-50%) rotate({{ d.rot }}deg);filter:drop-shadow(0 1px 1px rgba(30,15,5,.35))">
+  </sc-for>
+  <sc-if value="{{ split }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:50%;top:9%;bottom:9%;border-left:1.5px dashed rgba(255,255,255,.85);transform:translateX(-.75px)"></div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:240,&quot;height&quot;:240},&quot;tops&quot;:{&quot;editor&quot;:null,&quot;default&quot;:{&quot;pep&quot;:&quot;L&quot;,&quot;mus&quot;:&quot;R&quot;,&quot;oni&quot;:&quot;W&quot;},&quot;tsType&quot;:&quot;Record&lt;string,'L'|'W'|'R'&gt;&quot;},&quot;sauce&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;red&quot;,&quot;white&quot;,&quot;bbq&quot;,&quot;pesto&quot;,&quot;buffalo&quot;],&quot;default&quot;:&quot;red&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cheese&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;reg&quot;,&quot;light&quot;,&quot;extra&quot;,&quot;vegan&quot;],&quot;default&quot;:&quot;reg&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dough&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;hand&quot;,&quot;thin&quot;,&quot;pan&quot;,&quot;gf&quot;],&quot;default&quot;:&quot;hand&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;edge&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;classic&quot;,&quot;stuffed&quot;,&quot;garlic&quot;],&quot;default&quot;:&quot;classic&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;split&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+// Pizza compuesta con fotografía: una base por salsa y piezas reales de cada
+// ingrediente, recortadas y repartidas al azar (pero siempre igual para la misma
+// combinación) por mitades. Las imágenes viven en img/builder/.
+const BASES = { red:'red', white:'white', bbq:'bbq', pesto:'pesto', buffalo:'buffalo' };
+// tamaño de cada pieza (% del diámetro), cuántas lleva una pizza entera, variantes recortadas
+const V = {
+  pep:[13.5,11,8], sau:[7,16,6], bac:[11,10,8], ham:[7.5,14,8], chk:[8.5,12,8], bef:[5,22,8], mus:[9,12,8],
+  bpp:[11,11,8], oni:[10,9,8], oli:[6,14,8], jal:[7.5,12,8], pin:[7.5,12,8], tom:[13,7,3], spi:[11,9,8], bas:[9,7,8],
+};
+function rng(seed){ let a = seed; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function hash(s){ let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return h; }
+
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props, tops = p.tops || {};
+    const dots = []; let split = false;
+    const extra = p.cheese === 'extra' ? 1.12 : p.cheese === 'light' ? .85 : 1;
+    Object.keys(tops).forEach(id => {
+      const mode = tops[id], v = V[id]; if (!v || !mode) return;
+      if (mode !== 'W') split = true;
+      const [size, n, variants] = v;
+      // Espiral de ángulo áureo con desorden: cubre la pizza de forma pareja sin
+      // verse geométrica. Se reparte sobre la pizza entera y luego se filtra por mitad.
+      const r = rng(hash(id + (p.sauce || 'red'))), turn = r() * Math.PI * 2;
+      const step = 33 / Math.sqrt(n);
+      for (let k = 0; k < n; k++) {
+        const rad = Math.sqrt((k + .5) / n) * 31 + (r() - .5) * step * .55;
+        const a = turn + k * 2.39996 + (r() - .5) * .5;
+        const x = 50 + Math.cos(a) * rad, y = 50 + Math.sin(a) * rad;
+        const pick = Math.floor(r() * variants), w = size * (.88 + r() * .24) * extra, rot = Math.round(r() * 360);
+        if (mode === 'L' && x > 48) continue;
+        if (mode === 'R' && x < 52) continue;
+        dots.push({ src:'img/builder/top-' + id + '-' + pick + '.webp', x:x.toFixed(1), y:y.toFixed(1), w:w.toFixed(1), rot });
+      }
+    });
+    return { baseSrc:'img/builder/base-' + (BASES[p.sauce] || 'red') + '.webp', dots, split:!!(p.split ?? split) && split };
+  }
+}
+</script>
+</body>
+</html>

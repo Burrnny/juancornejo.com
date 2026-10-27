@@ -18,7 +18,7 @@
 </head>
 <body>
 <h1>ShineBright — Privacy Policy</h1>
-<p class="updated">Last updated: September 19, 2026 (v1.1)</p>
+<p class="updated">Last updated: October 26, 2026 (v1.2)</p>
 
 <p>ShineBright is the booking app for the ShineBright cleaning service (Los Angeles,
 California). This policy explains what information the app handles, why, and the choices
@@ -42,14 +42,19 @@ through the app. Privacy contact:
   with its <strong>map coordinates</strong>, which is how our team finds the door. If you
   tap “use my location” while placing the pin, your device location is read once for that
   pin. We never collect your location in the background, and the app asks for no
-  background-location permission.</li>
-  <li><strong>Birthday month (optional) and preferred language:</strong> the month lets us
-  send you a birthday offer, and the language setting keeps the app and our messages in
-  English or Spanish.</li>
+  background-location permission. What you type into address search and the location you
+  pick are also sent to a map service to find matches and draw the map (see section
+  4).</li>
+  <li><strong>Birthday (month and day, no year; optional) and preferred language:</strong>
+  your birthday lets us send you a birthday offer during your birthday month and a greeting
+  on the day, and the language setting keeps the app and our messages in English or
+  Spanish.</li>
   <li><strong>Bookings and messages:</strong> your service requests, appointment details,
   the notes you write on them, chat messages with our team, and ratings you leave after a
   visit. Your history of booked and paid cleanings stays on your account so you can see it
   and so loyalty rewards add up.</li>
+  <li><strong>Notes and labels from our team:</strong> internal notes and labels our team
+  adds to your account while serving you (for example a reminder about gate access).</li>
   <li><strong>Payment proof (optional):</strong> if you pay by Zelle, you may upload a
   screenshot of your transfer so we can confirm it. We never see or store card numbers —
   the app has no card processing; cash/card payments happen in person.</li>
@@ -73,11 +78,23 @@ personal information.</p>
   Android.</li>
 </ul>
 
-<h2>4. Where it is stored</h2>
+<h2>4. Where it is stored and who processes it</h2>
 <p>Data is stored in <strong>Firebase (Google LLC)</strong> on servers in the United
-States (us-central1), protected by Google's security measures and by per-account security
+States, protected by Google's security measures and by per-account security
 rules: your account can only read and write its own data. Google acts as our processor;
 see <a href="https://firebase.google.com/support/privacy">Firebase Privacy &amp; Security</a>.</p>
+<p>To find your address and show it on a map, the app also uses a map service that
+processes this data on our behalf:</p>
+<ul>
+  <li>On <strong>Android</strong>, the map is drawn by <strong>Google Maps</strong> (Google
+  LLC), and address search and “use my location” go through your phone’s built-in
+  address-lookup service, which on most Android phones is provided by Google.</li>
+  <li>On <strong>iPhone</strong>, the map and address search are Apple Maps
+  (<strong>MapKit</strong>, Apple Inc.).</li>
+</ul>
+<p>These services receive what you type into address search, your device location when you
+tap “use my location”, and the map area you are viewing, along with the technical details
+any internet request carries (such as your IP address). We do not use them for advertising.</p>
 
 <h2>5. Retention and deleting your account</h2>
 <p>The full, step-by-step version of this section, including how to ask for deletion if you
@@ -85,15 +102,36 @@ no longer have the app installed, is on our
 <a href="/shinebright/delete-account.html">account deletion page</a>.</p>
 <p>You can delete your account at any time from <strong>Profile → Delete account</strong>
 inside the app, or by emailing us if you no longer have it installed.</p>
-<p>As soon as the account is closed we remove your name and your saved addresses. Signing in
-with the same phone number within 90 days reopens the account.</p>
-<p>Within 90 days of closing it we permanently erase your phone number from your profile,
-your push notification identifiers, the payment receipts you uploaded, the addresses and
-arrival notes stored on your past bookings, the notes you wrote on them, and your entire chat
-history with our team.</p>
-<p>What we keep after that carries no personal details: the date, service and amount of each
-completed cleaning, which we need for our accounting and tax records and which can no longer
-be traced back to you.</p>
+<p>As soon as the account is closed we remove your name and your saved addresses, and we stop
+using the account. Until the 90 days below have passed, signing in with the same phone
+number reopens it (you enter your name and an address again).</p>
+<p>Once the account has been closed for 90 days, a daily clean-up job permanently erases:
+your phone number, both from your profile and from our sign-in system (Firebase
+Authentication); your birthday and language setting; your push notification identifiers;
+the payment receipts you uploaded; the street address, ZIP code, map coordinates, gate code
+and arrival notes stored on your past bookings (only the city and state of each visit
+remain); the notes you wrote on those bookings; the notes and labels our team added to your
+account; and your entire chat history and message inbox. After that the account cannot be
+reopened: signing in again with the same phone number starts a new, empty account. One
+exception: a receipt for a payment that is still unsettled (for example a Zelle transfer we
+have not yet confirmed) is kept until that payment is settled, and is then erased.</p>
+<p>What we keep after that carries no name, phone number, street address or contact detail:
+for each visit, its date, service, amount, payment status, the city and state where it
+took place and your rating (without any comment), plus account totals (completed visits,
+lifetime spend, date of last visit) under an internal account ID. We need these for our
+accounting and tax records. Once your sign-in record is erased, that ID no longer leads to
+your name or phone number, with the exception described next.</p>
+<p>Three things work differently. First, so that a one-time offer cannot be claimed twice (one
+birthday gift per phone number each year, one friend-referral reward per phone number), we
+keep a one-way scrambled fingerprint (a hash) of your phone number together with that
+internal ID and the date. It does not show your number, but someone who already has the
+number could match it against the fingerprint. Second, the encrypted database backups we
+keep for disaster recovery can still contain data we have already erased, for up to 98
+more days until they expire; a backup cannot be edited selectively. Third, if our team
+blocked your account for abuse or fraud, we keep its sign-in record (your phone number and
+its internal ID) after the clean-up, so the block cannot be bypassed by signing up again;
+the rest is erased as described above. The same applies to members of our own team, whose
+sign-in record also opens the team app.</p>
 
 <h2>6. Your rights (California and elsewhere)</h2>
 <p>You may request access to, correction of, or deletion of your personal information —

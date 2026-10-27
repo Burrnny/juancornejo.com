@@ -21,7 +21,7 @@
 <body>
 
 <h1>Delete your ShineBright account</h1>
-<p class="updated">Last updated: September 19, 2026 · <a href="#es">Español</a></p>
+<p class="updated">Last updated: October 26, 2026 · <a href="#es">Español</a></p>
 
 <p>ShineBright (ShineBright Cleaning Service LLC) lets you delete your account and your
 data at any time.</p>
@@ -44,17 +44,43 @@ the request and reply when it is done.</p>
 <h2>What is deleted</h2>
 <p>As soon as the account is closed we remove your name and your saved addresses, and we
 stop using the account. If you change your mind, signing in with the same phone number
-within 90 days reopens it.</p>
-<p>Within 90 days of closing the account we also permanently erase: your phone number from
-your profile, your push notification tokens, the payment receipts you uploaded, the
-addresses and arrival notes stored on your past bookings, the notes you wrote on those
-bookings, and your entire chat history with our team. After that the account cannot be
-reopened and the profile is empty.</p>
+before the 90 days below have passed reopens it (you enter your name and an address
+again).</p>
+<p>Once the account has been closed for 90 days, a daily clean-up job also permanently
+erases: your phone number, both from your profile and from our sign-in system (Firebase
+Authentication); your birthday and language setting; your push notification tokens; the
+payment receipts you uploaded; the street address, ZIP code, map coordinates, gate code and
+arrival notes stored on your past bookings (only the city and state of each visit remain);
+the notes you wrote on those bookings; the notes and labels our team added to your
+account; and your entire chat history and message inbox. After that the account cannot be
+reopened: signing in again with the same phone number starts a new, empty account.</p>
+<p>One exception: a receipt for a payment that is still unsettled (for example a Zelle
+transfer we have not yet confirmed) is kept until that payment is settled, and is then
+erased.</p>
 
 <h2>What we keep, and why</h2>
-<p>We keep a record of each completed cleaning with no personal details attached to it:
-date, service and amount. We need these for our own accounting and tax records. They cannot
-be traced back to you once the 90-day erasure has run.</p>
+<p>After the 90-day erasure we keep only:</p>
+<ul>
+  <li>A record of each completed cleaning with no name, phone number, street address or
+  contact detail attached: date, service, amount, payment status, the city and state where
+  it took place, and your rating without any comment. We need these for our own accounting
+  and tax records.</li>
+  <li>Account totals (completed visits, lifetime spend, date of last visit) under an
+  internal account ID. Once your sign-in record is erased, that ID no longer leads to your
+  name or phone number, with the exception in the next point.</li>
+  <li>So that a one-time offer cannot be claimed twice (one birthday gift per phone number
+  each year, one friend-referral reward per phone number), a one-way scrambled fingerprint
+  (a hash) of your phone number together with that internal ID and the date. It does not
+  show your number, but someone who already has the number could match it against the
+  fingerprint.</li>
+</ul>
+<p>If our team blocked the account for abuse or fraud, we keep its sign-in record (the phone
+number and its internal ID) after the 90-day erasure, so the block cannot be bypassed by
+signing up again. The rest is erased as described above. The same applies to members of our
+own team, whose sign-in record also opens the team app.</p>
+<p>Our encrypted database backups, kept for disaster recovery, can still contain data we
+have already erased for up to 98 more days, until they expire. A backup cannot be edited
+selectively.</p>
 
 <p>How we handle your data is described in full in our
 <a href="/shinebright/privacy.html">Privacy Policy</a>.</p>
@@ -64,7 +90,7 @@ be traced back to you once the 90-day erasure has run.</p>
 <hr>
 
 <h1 id="es" lang="es">Elimina tu cuenta de ShineBright</h1>
-<p class="updated" lang="es">Última actualización: 19 de septiembre de 2026 ·
+<p class="updated" lang="es">Última actualización: 26 de octubre de 2026 ·
 <a href="#">English</a></p>
 
 <div lang="es">
@@ -88,19 +114,46 @@ siguientes a la solicitud y te avisamos cuando esté hecho.</p>
 
 <h2>Qué se elimina</h2>
 <p>En cuanto se cierra la cuenta quitamos tu nombre y tus direcciones guardadas, y dejamos
-de usarla. Si cambias de opinión, iniciar sesión con el mismo número dentro de los 90 días
-siguientes la reabre.</p>
-<p>Dentro de los 90 días siguientes al cierre borramos además, de forma permanente: tu
-número de teléfono de tu perfil, tus identificadores de notificaciones, los comprobantes de
-pago que subiste, las direcciones y notas de llegada guardadas en tus reservas anteriores,
-las notas que escribiste en ellas y todo tu historial de chat con nuestro equipo. Después
-de eso la cuenta no se puede reabrir y el perfil queda vacío.</p>
+de usarla. Si cambias de opinión, iniciar sesión con el mismo número antes de que pasen los
+90 días de abajo la reabre (volverás a escribir tu nombre y una dirección).</p>
+<p>Cuando la cuenta lleva 90 días cerrada, una tarea diaria de limpieza borra además, de
+forma permanente: tu número de teléfono, tanto de tu perfil como de nuestro sistema de
+inicio de sesión (Firebase Authentication); tu cumpleaños y tu idioma; tus identificadores
+de notificaciones; los comprobantes de pago que subiste; la calle, el código postal, las
+coordenadas del mapa, el código de acceso y las notas de llegada guardadas en tus reservas
+anteriores (solo quedan la ciudad y el estado de cada visita); las notas que escribiste en
+esas reservas; las notas y etiquetas que nuestro equipo añadió a tu cuenta; y todo tu
+historial de chat y tu bandeja de mensajes. Después de eso la cuenta no se puede reabrir:
+iniciar sesión otra vez con el mismo número empieza una cuenta nueva y vacía.</p>
+<p>Una excepción: el comprobante de un pago que aún no está resuelto (por ejemplo, una
+transferencia de Zelle que todavía no hemos confirmado) se conserva hasta que ese pago se
+resuelva y entonces se borra.</p>
 
 <h2>Qué conservamos, y por qué</h2>
-<p>Conservamos el registro de cada limpieza realizada sin ningún dato personal asociado:
-fecha, servicio e importe. Los necesitamos para nuestra contabilidad y nuestras
-obligaciones fiscales. Una vez corrido el borrado de los 90 días, no pueden vincularse
-contigo.</p>
+<p>Pasado el borrado de los 90 días conservamos solamente:</p>
+<ul>
+  <li>El registro de cada limpieza realizada, sin nombre, teléfono, calle ni dato de
+  contacto asociado: fecha, servicio, importe, estado del pago, la ciudad y el estado donde
+  se hizo, y tu calificación sin ningún comentario. Los necesitamos para nuestra
+  contabilidad y nuestras obligaciones fiscales.</li>
+  <li>Los totales de la cuenta (visitas completadas, gasto acumulado, fecha de la última
+  visita) bajo un identificador interno de cuenta. Una vez borrado tu registro de inicio de
+  sesión, ese identificador ya no lleva a tu nombre ni a tu teléfono, salvo por la
+  excepción del punto siguiente.</li>
+  <li>Para que una oferta de un solo uso no se pueda canjear dos veces (un regalo de
+  cumpleaños al año, una recompensa por referido por número de teléfono), una huella
+  irreversible (un hash) de tu número de teléfono junto con ese identificador interno y la
+  fecha. No muestra tu número, pero quien ya lo tenga podría compararlo con la huella.</li>
+</ul>
+<p>Si nuestro equipo bloqueó la cuenta por abuso o fraude, conservamos su registro de inicio
+de sesión (el número de teléfono y su identificador interno) después del borrado de los 90
+días, para que el bloqueo no se pueda saltar registrándose otra vez. El resto se borra como
+se describe arriba. Lo mismo vale para los miembros de nuestro equipo, cuyo registro de
+inicio de sesión también abre la app del equipo.</p>
+<p>Nuestras copias de seguridad cifradas de la base de datos, que guardamos para
+recuperación ante desastres, pueden contener todavía datos ya borrados durante hasta 98
+días más, hasta que caducan. Una copia de seguridad no se puede editar de forma
+selectiva.</p>
 
 <p>El tratamiento completo de tus datos está en nuestro
 <a href="/shinebright/privacy.html">aviso de privacidad</a>.</p>
